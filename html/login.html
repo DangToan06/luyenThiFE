@@ -23,23 +23,24 @@
                 <img src="../assets/logoRikkei.png" class="logo">
                 <h1>Đăng nhập</h1>
                 <p>Tận hưởng trải nghiệm học tập cá nhân hóa và theo dõi tiến độ của bạn. Hãy đăng nhập ngay!</p>
-                <div class="input-group">
+                <form class="input-group">
                     <label for="email">Email/Số điện thoại</label>
                     <div class="input-box">
                         <i class="fa-regular fa-envelope"></i>
-                        <input type="email" placeholder=" you@company.com">
+                        <input type="email" placeholder=" you@company.com" autocomplete="username"
+                            id="input-name-sign-in">
                     </div>
                     <label for="passwd">Mật khẩu</label>
                     <div class="input-box">
                         <i class="fa-solid fa-lock"></i>
-                        <input type="password" placeholder=" ********">
-                        <i class="fa-solid fa-eye show-passwd"></i>
-                        <i class="fa-solid fa-eye-slash hidde-passwd"></i>
+                        <input type="password" placeholder=" ********" autocomplete="new-password"
+                            id="input-passwd-sign-in">
+                        <i class="fa-solid fa-eye show-hide-passwd" id="toggle-password"></i>
                     </div>
                     <p><a href="">Quên mật khẩu ?</a></p>
-                    <button>Đăng nhập</button>
+                    <button type="button" id="btn-login">Đăng nhập</button>
                     <p>Chưa có tài khoản? <a id="link-to-sign-up">Đăng ký</a></p>
-                </div>
+                </form>
             </div>
         </div>
     </section>
@@ -51,7 +52,7 @@
                 <img src="../assets/logoRikkei.png" class="logo">
                 <h1>Đăng ký</h1>
                 <p>Đăng ký ngay để bắt đầu lộ trình luyện thi FE và nâng cao cơ hội thành công của bạn!</p>
-                <div class="input-group-sign-up">
+                <form class="input-group-sign-up">
                     <div class="input-name-date">
                         <div>
                             <label for="">Họ và tên</label>
@@ -70,31 +71,33 @@
                     <label for="">Email/Số điện thoại</label>
                     <div class="input-box">
                         <i class="fa-regular fa-envelope"></i>
-                        <input type="email" placeholder=" you@company.com" id="input-email-sign-up">
+                        <input type="text" placeholder=" you@company.com" id="input-email-sign-up"
+                            autocomplete="username">
                     </div>
                     <label for="">Mật khẩu</label>
-                    <div class="input-box">
+                    <div class="input-box" id="input-box">
                         <i class="fa-solid fa-lock"></i>
-                        <input type="password" placeholder=" ********" id="input-passwd-sign-up">
-                        <i class="fa-solid fa-eye show-passwd-sign-up"></i>
-                        <i class="fa-solid fa-eye-slash hidde-passwd-sign-up"></i>
+                        <input type="password" placeholder=" ********" id="input-passwd-sign-up"
+                            autocomplete="new-password">
+                        <i class="fa-solid fa-eye show-hide-passwd" id="toggle-password"></i>
                     </div>
                     <label for="">Xác nhận mật khẩu</label>
-                    <div class="input-box">
+                    <div class="input-box" id="input-box">
                         <i class="fa-solid fa-lock"></i>
-                        <input type="password" placeholder=" ********" id="input-repasswd-sign-up">
-                        <i class="fa-solid fa-eye show-passwd-sign-up"></i>
-                        <i class="fa-solid fa-eye-slash hidde-passwd-sign-up"></i>
+                        <input type="password" placeholder=" ********" id="input-repasswd-sign-up"
+                            autocomplete="new-password">
+                        <i class="fa-solid fa-eye show-hide-passwd" id="toggle-preassword"></i>
                     </div>
                     <div class="input-check-box">
                         <input type="checkbox" id="checkbox-sign-up">
                         <label for="">Tôi đồng ý với điều khản sử dụng và chính sách dịch vụ</label>
                     </div>
-                    <button id="btn-sign-up">Đăng ký</button>
-                    <p>Đã có tài khoản? <a id="link-to-login" >Đăng nhập</a></p>
-                </div>
+                    <button id="btn-sign-up" type="button">Đăng ký</button>
+                    <p>Đã có tài khoản? <a id="link-to-login">Đăng nhập</a></p>
+                </form>
             </div>
         </div>
+
         <!-- PHẦN ẢNH LỚN -->
         <div class="container-image">
             <img src="../assets/city.jpg" class="image-mountain">
@@ -105,8 +108,8 @@
     <div><img src="../assets/street.png" class="image-street"></div>
 
     <!-- THÔNG BÁO SAI MẬT KHẨU -->
-    
 
+    <script src="../js/data.js"></script>
     <script src="../js/login.js"></script>
 </body>
 

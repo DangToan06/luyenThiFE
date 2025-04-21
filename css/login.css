@@ -106,13 +106,7 @@
 .input-group i {
     color: #A7A7A7;
 }
-
-.show-passwd {
-    display: none;
-}
-
-.show-passwd,
-.hidde-passwd:hover {
+.input-group i:hover {
     color: #2D2C2C;
 }
 
@@ -288,12 +282,7 @@
     color: #A7A7A7;
 }
 
-.show-passwd-sign-up {
-    display: none;
-}
-
-.show-passwd-sign-up,
-.hidde-passwd-sign-up:hover {
+.input-group-sign-up i:hover {
     color: #2D2C2C;
 }
 
