@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css">
+    </link>
+    <link rel="stylesheet" href="../css/login.css">
+</head>
+
+<body>
+    <section class="login" id="login">
+        <!-- PHẦN ẢNH LỚN -->
+        <div class="container-image">
+            <img src="../assets/mountain.jpg" class="image-mountain">
+        </div>
+
+        <!-- PHẦN ĐĂNG NHẬP -->
+        <div class="container">
+            <div class="container-login">
+                <img src="../assets/logoRikkei.png" class="logo">
+                <h1>Đăng nhập</h1>
+                <p>Tận hưởng trải nghiệm học tập cá nhân hóa và theo dõi tiến độ của bạn. Hãy đăng nhập ngay!</p>
+                <div class="input-group">
+                    <label for="email">Email/Số điện thoại</label>
+                    <div class="input-box">
+                        <i class="fa-regular fa-envelope"></i>
+                        <input type="email" placeholder=" you@company.com">
+                    </div>
+                    <label for="passwd">Mật khẩu</label>
+                    <div class="input-box">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" placeholder=" ********">
+                        <i class="fa-solid fa-eye show-passwd"></i>
+                        <i class="fa-solid fa-eye-slash hidde-passwd"></i>
+                    </div>
+                    <p><a href="">Quên mật khẩu ?</a></p>
+                    <button>Đăng nhập</button>
+                    <p>Chưa có tài khoản? <a id="link-to-sign-up">Đăng ký</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="sign-up" id="sign-up">
+        <!-- PHẦN ĐĂNG KÝ -->
+        <div class="container">
+            <div class="container-sign-up">
+                <img src="../assets/logoRikkei.png" class="logo">
+                <h1>Đăng ký</h1>
+                <p>Đăng ký ngay để bắt đầu lộ trình luyện thi FE và nâng cao cơ hội thành công của bạn!</p>
+                <div class="input-group-sign-up">
+                    <div class="input-name-date">
+                        <div>
+                            <label for="">Họ và tên</label>
+                            <div class="input-box">
+                                <i class="fa-regular fa-user"></i>
+                                <input type="text" placeholder=" you@company.com" id="input-name-sign-up">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="">Ngày sinh</label>
+                            <div class="input-box">
+                                <input type="date" id="input-date-sign-up">
+                            </div>
+                        </div>
+                    </div>
+                    <label for="">Email/Số điện thoại</label>
+                    <div class="input-box">
+                        <i class="fa-regular fa-envelope"></i>
+                        <input type="email" placeholder=" you@company.com" id="input-email-sign-up">
+                    </div>
+                    <label for="">Mật khẩu</label>
+                    <div class="input-box">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" placeholder=" ********" id="input-passwd-sign-up">
+                        <i class="fa-solid fa-eye show-passwd-sign-up"></i>
+                        <i class="fa-solid fa-eye-slash hidde-passwd-sign-up"></i>
+                    </div>
+                    <label for="">Xác nhận mật khẩu</label>
+                    <div class="input-box">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" placeholder=" ********" id="input-repasswd-sign-up">
+                        <i class="fa-solid fa-eye show-passwd-sign-up"></i>
+                        <i class="fa-solid fa-eye-slash hidde-passwd-sign-up"></i>
+                    </div>
+                    <div class="input-check-box">
+                        <input type="checkbox" id="checkbox-sign-up">
+                        <label for="">Tôi đồng ý với điều khản sử dụng và chính sách dịch vụ</label>
+                    </div>
+                    <button id="btn-sign-up">Đăng ký</button>
+                    <p>Đã có tài khoản? <a id="link-to-login" >Đăng nhập</a></p>
+                </div>
+            </div>
+        </div>
+        <!-- PHẦN ẢNH LỚN -->
+        <div class="container-image">
+            <img src="../assets/city.jpg" class="image-mountain">
+        </div>
+    </section>
+
+    <!-- DẢI ẢNH BÊN DƯỚI -->
+    <div><img src="../assets/street.png" class="image-street"></div>
+
+    <!-- THÔNG BÁO SAI MẬT KHẨU -->
+    
+
+    <script src="../js/login.js"></script>
+</body>
+
+</html>
