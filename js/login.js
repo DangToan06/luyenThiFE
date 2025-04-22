@@ -83,15 +83,8 @@ btnSignUp.addEventListener("click", () => {
         Account.password = inputPasswdSignUpValue;
         listAccount.push(Account);
         localStorage.setItem("listAccount", JSON.stringify(listAccount));
-
-        //////////////////////////////////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////////////////////////////////
-        ////////////// TẠO ANIMATION Ở ĐÂY NHÉ QUANG /////////////////////////////////////////
-        //////////////////////////////////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////////////////////////////////
-
+        generateOTP();
+        window.location.href = "page/otp.html";
     }
 });
 
@@ -134,7 +127,7 @@ function existEmail(email) {
 
 //Ẩn hiện passwd
 
-const togglePassword = document.getElementById('toggle-password');
+const togglePassword = document.getElementById('toggle-password-sign-up');
 const passwordInput = document.getElementById('input-passwd-sign-up');
 
 togglePassword.addEventListener('click', () => {
@@ -175,20 +168,28 @@ toggleRePassword.addEventListener('click', () => {
 const btnLogin = document.getElementById("btn-login");
 
 btnLogin.addEventListener('click', () => {
+    let adminEmail = "quangvippro@gmail.com";
+    let adminPasswd = "quangvippro123";
     let inputPasswdSignInValue = document.getElementById("input-passwd-sign-in").value;
     let inputNameSignInValue = document.getElementById("input-name-sign-in").value;
-
+    if (inputNameSignInValue === adminEmail && inputPasswdSignInValue === adminPasswd) {
+        console.log("login as admin");
+        // window.location.href = "page/adimPase.html";
+        //////////////////////////////////////////////////////////////////////////////////////
+        return;
+    }
     if(!searchAccInList(inputNameSignInValue, inputPasswdSignInValue)){
-        console.log("email or password incorrect");    
+        console.log("email or password incorrect");      
     }else{
-        console.log("login correct");
+        console.log("login as user");
+        // window.location.href = "page/home.html";
     }
 
 });
 
 function searchAccInList(name, passwd){
     for (let i = 0; i < listAccount.length; i++) {
-        if(name === listAccount[i].name && passwd === listAccount[i].password){
+        if(name === listAccount[i].email && passwd === listAccount[i].password){
             return true;
         }
     }
