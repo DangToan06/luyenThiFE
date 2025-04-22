@@ -23,19 +23,20 @@ function getUserOTP() {
 function checkOTP() {
     var storedOTP = sessionStorage.getItem('OTP');
     var userOTP = getUserOTP();
-
+    console.log(storedOTP);
     if (userOTP.length < 6) {
         alert("Vui lòng nhập đầy đủ 6 số.");
         return;
     }
-
     if (userOTP === storedOTP) {
-        alert("Xác thực thành công!");
+        nextPage();
     } else {
         alert("Mã OTP không đúng. Vui lòng thử lại.");
     }
 }
-
+function nextPage() {
+    window.location.href = "../index.html";
+}
 function setupInputBehavior() {
     var inputs = document.querySelectorAll("#input-number-OTP input");
 
