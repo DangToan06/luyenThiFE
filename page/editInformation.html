@@ -4,242 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chỉnh sửa thông tin</title>
+    <link rel="stylesheet" href="../css/editInformation.css">
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      }
-      body {
-        color: #333;
-      }
-      .container {
-        max-width: 1200px;
-        margin: 20px auto;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-      }
-      .left-column {
-        flex: 1;
-        min-width: 300px;
-      }
-      .right-column {
-        flex: 2;
-        min-width: 300px;
-      }
-      h1 {
-        font-size: 28px;
-        margin-bottom: 20px;
-        font-weight: bold;
-      }
-      h2 {
-        font-size: 20px;
-        margin-bottom: 15px;
-        font-weight: bold;
-      }
-      .description {
-        margin-bottom: 20px;
-        font-size: 14px;
-        color: #555;
-      }
-      .profile-image-container {
-        position: relative;
-        width: 300px;
-        height: 300px;
-        border-radius: 50%;
-        overflow: hidden;
-        margin-bottom: 20px;
-      }
-      .profile-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-      .camera-icon {
-        position: absolute;
-        bottom: 15px;
-        right: 15px;
-        width: 40px;
-        height: 40px;
-        background-color: rgba(255, 255, 255, 0.7);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-      }
-      .form-group {
-        margin-bottom: 15px;
-      }
-      label {
-        display: block;
-        margin-bottom: 5px;
-        font-weight: 500;
-      }
-      input[type="text"],
-      input[type="email"],
-      input[type="tel"],
-      input[type="date"] {
-        width: 100%;
-        padding: 12px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        font-size: 14px;
-        background-color: #f9f9f9;
-      }
-      .action-buttons {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 15px;
-        margin-top: 15px;
-      }
-      .btn {
-        padding: 12px 25px;
-        border-radius: 8px;
-        font-weight: 500;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        transition: background-color 0.2s;
-        border: none;
-      }
-      .btn-password {
-        background-color: #f8f0f0;
-        color: #d32f2f;
-      }
-      .btn-edit {
-        background-color: #f0f5fb;
-        color: #1976d2;
-      }
-      .btn:hover {
-        opacity: 0.9;
-      }
-      .icon {
-        width: 18px;
-        height: 18px;
-      }
-      .header-page-home {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        padding: 22px 120px;
-        background-color: #fff;
-        border: 1px solid #ddd;
-        align-items: center;
-      }
-
-      .acc-lang {
-        display: flex;
-        flex-direction: row;
-        gap: 12px;
-        align-items: center;
-      }
-
-      .header-page-home .fa-bars {
-        display: none;
-      }
-
-      .header-page-home .logo-head {
-        width: 167px;
-        height: 36px;
-      }
-
-      .header-page-home .avatar {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        border: 4px solid #f8e9ea;
-        cursor: pointer;
-      }
-
-      .header-page-home .group {
-        border-right: 1px solid #a7a7a7;
-        padding-right: 12px;
-        display: flex;
-        flex-direction: row;
-        gap: 12px;
-        align-items: center;
-      }
-
-      .header-page-home .group i:nth-last-of-type(1) {
-        cursor: pointer;
-      }
-      @media (max-width: 768px) {
-        .container {
-          flex-direction: column;
-        }
-      }
-      .footer {
-        background-image: url("/assets/img/backgroud-1.png");
-        background-size: cover;
-        color: white;
-        padding: 40px 20px;
-        font-family: Arial, sans-serif;
-      }
-
-      .footer-container {
-        max-width: 1200px;
-        margin: auto;
-      }
-
-      h3 {
-        font-size: 24px;
-        margin-bottom: 20px;
-        border-bottom: 1px solid #fafafa;
-        padding-bottom: 5px;
-      }
-
-      .locations {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 20px;
-      }
-
-      .location h4 {
-        margin-bottom: 5px;
-        font-size: 16px;
-        border-bottom: 1px solid #fafafa;
-      }
-
-      .footer-bottom {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        margin-top: 40px;
-        gap: 20px;
-      }
-
-      .left {
-        flex: 1;
-        min-width: 250px;
-      }
-
-      .left .qr {
-        width: 220px;
-        margin-top: 10px;
-      }
-
-      .right .banner {
-        width: 892px;
-        height: 310px;
-        top: 570px;
-        left: 428px;
-        border-radius: 12px;
-      }
-
-      a {
-        color: #ddd;
-        text-decoration: underline;
-      }
-
-      .copy {
-        font-size: 12px;
-        margin-top: 10px;
-      }
+      
     </style>
   </head>
   <body>
@@ -251,15 +18,21 @@
           <span>VN</span>
           <i class="fa-solid fa-chevron-down"></i>
         </span>
-        <img src="../assets/img/hq720.jpg" alt="avarta" class="avatar" />
+        <img src="../assets/img/hq720.jpg" alt="avarta" class="avatar" onclick="openModal('avatarModal')" />
         <i class="fa-solid fa-bars"></i>
       </div>
     </nav>
-    <div class="container" >
+    <div class="container">
       <div class="left-column">
         <h1>Chỉnh sửa thông tin</h1>
-        <div class="profile-image-container">
+        <div class="profile-image-container" onclick="openModal('avatarModal')">
           <img class="profile-image" src="/assets/img/city.jpg" alt="Ảnh đại diện" />
+          <div class="camera-icon">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+              <circle cx="12" cy="13" r="4"></circle>
+            </svg>
+          </div>
         </div>
       </div>
       <div class="right-column">
@@ -283,29 +56,91 @@
           <label for="birthday">Ngày sinh</label>
           <input type="date" id="birthday" value="2006-07-04" disabled />
         </div>
-        <!-- <div class="form-group">
-          <label for="phone">Số điện thoại</label>
-          <input type="tel" id="phone" value="0355061509" disabled />
-        </div>
-        <div class="form-group">
-          <label for="studentId">Mã sinh viên</label>
-          <input type="text" id="studentId" value="PTIT-HN-065" disabled />
-        </div> -->
         <div class="action-buttons">
-          <button class="btn btn-password">
+          <button class="btn btn-password" onclick="openModal('passwordModal')">
             <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
               <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
             </svg>
             Đổi mật khẩu
           </button>
-          <button class="btn btn-edit">
+          <button class="btn btn-edit" onclick="openModal('editInfoModal')">
             <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
               <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
             </svg>
             Đổi thông tin
           </button>
+        </div>
+      </div>
+    </div>
+    <!-- Modal Đổi Mật Khẩu -->
+    <div class="modal" id="passwordModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Đổi mật khẩu</h3>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="currentPassword">Mật khẩu hiện tại</label>
+            <input type="password" id="currentPassword" placeholder="Nhập mật khẩu hiện tại" />
+          </div>
+          <div class="form-group">
+            <label for="newPassword">Mật khẩu mới</label>
+            <input type="password" id="newPassword" placeholder="Nhập mật khẩu mới" />
+          </div>
+          <div class="form-group">
+            <label for="confirmPassword">Xác nhận mật khẩu mới</label>
+            <input type="password" id="confirmPassword" placeholder="Xác nhận mật khẩu mới" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-cancel" onclick="closeModal('passwordModal')">Hủy</button>
+          <button class="btn btn-save">Lưu</button>
+        </div>
+      </div>
+    </div>
+    <!-- Modal Đổi Thông Tin -->
+    <div class="modal" id="editInfoModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Đổi thông tin</h3>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="editLastName">Họ</label>
+            <input type="text" id="editLastName" value="Trần" />
+          </div>
+          <div class="form-group">
+            <label for="editFirstName">Tên</label>
+            <input type="text" id="editFirstName" value="Minh Quang" />
+          </div>
+          <div class="form-group">
+            <label for="editBirthday">Ngày sinh</label>
+            <input type="date" id="editBirthday" value="2006-07-04" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-cancel" onclick="closeModal('editInfoModal')">Hủy</button>
+          <button class="btn btn-save">Lưu</button>
+        </div>
+      </div>
+    </div>
+    <!-- Modal Đổi Ảnh Đại Diện -->
+    <div class="modal" id="avatarModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Đổi ảnh đại diện</h3>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="avatarUrl">Link ảnh đại diện mới</label>
+            <input type="url" id="avatarUrl" placeholder="Nhập link ảnh (URL)" value="/assets/img/city.jpg" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-cancel" onclick="closeModal('avatarModal')">Hủy</button>
+          <button class="btn btn-save">Lưu</button>
         </div>
       </div>
     </div>
@@ -354,12 +189,11 @@
             <p><i class="fa-solid fa-phone-volume" style="color: #ffffff"></i> 0962 703 893</p>
           </div>
         </div>
-
         <div class="footer-bottom">
           <div class="left">
             <p>Website: <a href="http://rikkei.edu.vn">http://rikkei.edu.vn</a></p>
             <img src="/assets/img/Group 38.png" alt="QR code" class="qr" />
-            <p class="copy">&copy; 2024 By Rikkei Academy - All rights reserved.</p>
+            <p class="copy">© 2024 By Rikkei Academy - All rights reserved.</p>
           </div>
           <div class="right">
             <img src="/assets/img/Frame 3733.png" alt="Học viên Rikkei" class="banner" />
@@ -368,5 +202,6 @@
       </div>
     </footer>
     <script src="https://kit.fontawesome.com/aee2c1f27c.js" crossorigin="anonymous"></script>
+    <script src="/js/editInformation.js"></script>
   </body>
 </html>

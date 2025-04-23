@@ -1,3 +1,4 @@
+/* Reset mặc định */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -12,7 +13,7 @@ body {
   align-items: center;
   padding: 22px 120px;
   background-color: #fff;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
 }
 
 .logo-head {
@@ -63,7 +64,6 @@ body {
   font-size: 14px;
   cursor: pointer;
   padding: 4px;
-  color: #333;
 }
 
 .language-dropdown {
@@ -77,7 +77,6 @@ body {
   width: 160px;
   padding: 8px 0;
   z-index: 50;
-  margin-top: 8px;
 }
 
 .language-wrapper:hover .language-dropdown {
@@ -92,7 +91,6 @@ body {
   font-size: 14px;
   cursor: pointer;
   transition: background 0.2s ease;
-  color: #333;
 }
 
 .language-option:hover {
@@ -108,37 +106,37 @@ body {
 
 /* Main page content */
 .exam-page {
-  max-width: 1000vh;
-  padding: 20px 120px;
+  width: 90%;
+  margin: auto;
+  padding: 30px 16px;
 }
 
 .breadcrumb {
   color: #888;
   font-size: 14px;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 }
 
 .title {
   font-size: 28px;
   font-weight: bold;
-  margin-bottom: 24px;
-  color: #333;
+  margin-bottom: 20px;
 }
 
 /* Tabs */
 .tabs {
   display: flex;
-  gap: 12px;
+  gap: 8px;
+  margin-bottom: 2px;
 }
 
 .tab {
-  padding: 12px 24px;
+  padding: 10px 16px;
   background: #f1f3f5;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   font-weight: 500;
-  color: #666;
 }
 
 .tab.active {
@@ -149,69 +147,50 @@ body {
 /* Box content */
 .main-box {
   background: white;
-  padding: 60px;
+  padding: 40px;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   text-align: center;
-  max-width: 100%;
-  margin-bottom: 110px;
-}
-
-.mascot-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
 
 .mascot-img {
   width: 180px;
-  margin-bottom: 24px;
+  margin-bottom: 12px;
 }
 
-.mascot-section h2 {
-  font-size: 24px;
-  color: #333;
-  margin-bottom: 8px;
+.speech {
+  display: inline-block;
+  background: #d32f2f;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  margin-bottom: 12px;
 }
 
-.mascot-section p {
-  color: #666;
-  margin-bottom: 24px;
-}
-
+/* Button bắt đầu */
 .start-btn {
   background: rgb(171, 31, 36);
   color: white;
   border: none;
-  padding: 12px 32px;
+  padding: 10px 20px;
   border-radius: 8px;
   font-size: 16px;
-  font-weight: 500;
+  margin-top: 20px;
   cursor: pointer;
 }
-
-.start-btn:hover {
-  background: rgb(151, 27, 31);
-}
-
-.start-btn i {
-  margin-left: 8px;
-}
-
 /* footer */
 .footer {
-  background-image: url("../assets/Screenshot\ 2025-04-22\ 102815.png");
+  background-image: url("../assets/img/backgroud-1.png");
   background-size: cover;
   color: white;
-  padding: 40px 0;
+  padding: 40px 20px;
   font-family: Arial, sans-serif;
 }
 
 .footer-container {
-  max-width: 1200vh;
-  padding: 0 120px;
-  margin: 0 auto;
+  max-width: 1200px;
+  margin: auto;
 }
 
 h3 {
@@ -223,66 +202,48 @@ h3 {
 
 .locations {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 30px;
-  margin-bottom: 40px;
-}
-
-.location {
-  margin-bottom: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
 }
 
 .location h4 {
-  margin-bottom: 15px;
+  margin-bottom: 5px;
   font-size: 16px;
   border-bottom: 1px solid #fafafa;
-  padding-bottom: 5px;
-}
-
-.location p {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  margin-bottom: 10px;
-  font-size: 14px;
-  line-height: 1.5;
-}
-
-.location i {
-  margin-top: 4px;
-  font-size: 14px;
 }
 
 .footer-bottom {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  align-items: flex-start;
   margin-top: 40px;
+  gap: 20px;
 }
 
-.left p {
-  margin-bottom: 10px;
-  font-size: 25px;
+.left {
+  flex: 1;
+  min-width: 250px;
 }
 
 .left .qr {
-  width: 365px;
+  width: 220px;
   margin-top: 10px;
 }
 
 .right .banner {
-  width: auto;
-  max-width: 100%;
-  height: auto;
+  width: 892px;
+  height: 310px;
+  top: 570px;
+  left: 428px;
   border-radius: 12px;
-  object-fit: contain;
 }
 
 a {
-  color: #fff;
+  color: #ddd;
+  text-decoration: underline;
 }
 
 .copy {
-  margin-top: 50px;
-  color: #ffffffbb;
+  font-size: 12px;
+  margin-top: 10px;
 }
