@@ -13,17 +13,41 @@
 <body>
     <header>
         <nav class="header-page-home">
-            <img src="../assets/img/logoRikkei.png" alt="logo" class="logo-head">
+            <img src="../assets/img/logoRikkei.png" alt="logo" class="logo-head" />
+      
             <div class="acc-lang">
-                <span class="group">
-                    <img src="../assets/icon/global.png" alt="icon" class="icon-global">
-                    <span>VN</span>
-                    <i class="fa-solid fa-chevron-down"></i>
-                </span>
-                <img src="../assets/img/hq720.jpg" alt="avarta" class="avatar">
-                <i class="fa-solid fa-bars"></i>
+              <!-- Ngôn ngữ -->
+              <div class="language-wrapper">
+                <button class="language-toggle">
+                  <img src="../assets/icon/global.png" alt="icon-global" class="icon-global">
+                  <span>VN</span>
+                  <i class="fa-solid fa-chevron-down"></i>
+                </button>
+      
+                <div class="language-dropdown">
+                  <div class="language-option">
+                    <img src="../assets/img/VN.png" alt="VN" />
+                    Tiếng Việt
+                  </div>
+                  <div class="language-option">
+                    <img src="../assets/img/JP.png" alt="JP" />
+                    Tiếng Nhật
+                  </div>
+                  <div class="language-option">
+                    <img src="../assets/img/GB.png" alt="EN" />
+                    Tiếng Anh
+                  </div>
+                </div>
+              </div>
+      
+              <div class="divider"></div>
+      
+              <!-- Avatar -->
+              <img src="../assets/Dropdown.png" alt="avatar" class="avatar" />
+      
+              <i class="fa-solid fa-bars"></i>
             </div>
-        </nav>
+          </nav>
 
         <div class="title">
             <div class="text-title">
@@ -176,7 +200,7 @@
                     </div>
                 </section>
 
-                <section>
+                <section class="tip-container">
                     <div class="tip-box">
                         <h2><i class="fa-solid fa-circle-exclamation"></i> Mẹo làm bài thi</h2>
 
@@ -225,7 +249,7 @@
                 </section>
 
 
-                <section>
+                <section class="rule-container">
                     <div class="rule-box">
                         <h2><i class="fa-solid fa-book"></i> Quy định làm bài</h2>
 
