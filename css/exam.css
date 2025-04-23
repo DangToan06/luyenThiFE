@@ -1,0 +1,288 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f9f9f9;
+}
+
+/* Header */
+.header-page-home {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 120px;
+  background-color: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.logo-head {
+  width: 167px;
+  height: 36px;
+}
+
+/* Account & Language section */
+.acc-lang {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+}
+
+/* Avatar */
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 4px solid #f8e9ea;
+  cursor: pointer;
+}
+
+/* Mobile menu icon (ẩn trên desktop) */
+.fa-bars {
+  display: none;
+}
+
+/* Divider line */
+.divider {
+  width: 1px;
+  height: 28px;
+  background-color: #ccc;
+}
+
+/* Ngôn ngữ dropdown */
+.language-wrapper {
+  position: relative;
+}
+
+.language-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 4px;
+  color: #333;
+}
+
+.language-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 160px;
+  padding: 8px 0;
+  z-index: 50;
+  margin-top: 8px;
+}
+
+.language-wrapper:hover .language-dropdown {
+  display: block;
+}
+
+.language-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  color: #333;
+}
+
+.language-option:hover {
+  background-color: #f5f5f5;
+}
+
+.language-option img {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Main page content */
+.exam-page {
+  max-width: 1000vh;
+  padding: 20px 120px;
+}
+
+.breadcrumb {
+  color: #888;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 24px;
+  color: #333;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 12px;
+}
+
+.tab {
+  padding: 12px 24px;
+  background: #f1f3f5;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  color: #666;
+}
+
+.tab.active {
+  background: #d32f2f;
+  color: white;
+}
+
+/* Box content */
+.main-box {
+  background: white;
+  padding: 60px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  max-width: 100%;
+  margin-bottom: 110px;
+}
+
+.mascot-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.mascot-img {
+  width: 180px;
+  margin-bottom: 24px;
+}
+
+.mascot-section h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.mascot-section p {
+  color: #666;
+  margin-bottom: 24px;
+}
+
+.start-btn {
+  background: rgb(171, 31, 36);
+  color: white;
+  border: none;
+  padding: 12px 32px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.start-btn:hover {
+  background: rgb(151, 27, 31);
+}
+
+.start-btn i {
+  margin-left: 8px;
+}
+
+/* footer */
+.footer {
+  background-image: url("../assets/Screenshot\ 2025-04-22\ 102815.png");
+  background-size: cover;
+  color: white;
+  padding: 40px 0;
+  font-family: Arial, sans-serif;
+}
+
+.footer-container {
+  max-width: 1200vh;
+  padding: 0 120px;
+  margin: 0 auto;
+}
+
+h3 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #fafafa;
+  padding-bottom: 5px;
+}
+
+.locations {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.location {
+  margin-bottom: 20px;
+}
+
+.location h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  border-bottom: 1px solid #fafafa;
+  padding-bottom: 5px;
+}
+
+.location p {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.location i {
+  margin-top: 4px;
+  font-size: 14px;
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 40px;
+}
+
+.left p {
+  margin-bottom: 10px;
+  font-size: 25px;
+}
+
+.left .qr {
+  width: 365px;
+  margin-top: 10px;
+}
+
+.right .banner {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  object-fit: contain;
+}
+
+a {
+  color: #fff;
+}
+
+.copy {
+  margin-top: 50px;
+  color: #ffffffbb;
+}
