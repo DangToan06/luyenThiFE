@@ -1,57 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>exam</title>
-    <link rel="stylesheet" href="../css/exam.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-    />
-  </head>
-  <body>
-    <nav class="app-header">
-      <img src="../assets/img/logoRikkei.png" alt="logo" class="app-logo" />
 
-      <div class="app-account-language">
-        <!-- Ngôn ngữ -->
-        <div class="app-language-container">
-          <button class="app-language-selector">
-            <i class="fa-solid fa-globe"></i>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>exam</title>
+  <link rel="stylesheet" href="../css/exam.css" />
+  <link rel="stylesheet" href="../css/nav.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+</head>
+
+<body>
+  <header>
+    <nav class="header-page-admin">
+      <img src="../assets/img/logoRikkei.png" alt="logo" class="logo-head" />
+      <div class="acc-lang">
+        <div class="language-wrapper">
+          <button class="language-toggle">
+            <img src="../assets/img/global.png" alt="icon-global" class="icon-global" />
             <span>VN</span>
             <i class="fa-solid fa-chevron-down"></i>
           </button>
-
-          <div class="app-language-dropdown">
-            <div class="app-language-option">
+          <div class="language-dropdown">
+            <div class="language-option">
               <img src="../assets/img/VN.png" alt="VN" />
               Tiếng Việt
             </div>
-            <div class="app-language-option">
+            <div class="language-option">
               <img src="../assets/img/JP.png" alt="JP" />
               Tiếng Nhật
             </div>
-            <div class="app-language-option">
+            <div class="language-option">
               <img src="../assets/img/GB.png" alt="EN" />
               Tiếng Anh
             </div>
           </div>
         </div>
-        
-    </nav>
-    <main class="exam-page">
-      <nav class="breadcrumb">Trang chủ / <strong>Đề thi số 1</strong></nav>
-      <h1 class="title">Đề thi số 1</h1>
-
-        <div class="app-divider"></div>
-
-        <!-- Avatar -->
-        <img src="../assets/img/Dropdown.png" alt="avatar" class="app-avatar" />
-        <span class="fa-bars"><i class="fa-solid fa-bars"></i></span>
+        <div class="divider"></div>
+        <img src="" alt="avatar" class="avatar" />
       </div>
+      <i class="fa-solid fa-bars icon-menu" id="menu-nav"></i>
+      <i class="fa-solid fa-xmark" style="display: none;" id="close-menu-nav"></i>
     </nav>
 
+    <div class="menu" id="menu" style="display: none;">
+      <div class="menu-header" id="menu-header">
+        <span>Ngôn ngữ</span>
+        <i class="fa-solid fa-chevron-down" id="arrow"></i>
+      </div>
+      <ul class="menu-content" id="menuContent">
+        <li>Tiếng Việt</li>
+        <li>Tiếng Anh</li>
+        <li>Tiếng Nhật</li>
+        <li class="menu-account">
+          <div>
+            <img src="../assets/Dropdown.png" alt="avatar">
+            <div class="name-email-nav">
+              <span>Đặng Toàn</span>
+              <span>toan@gmail.com</span>
+            </div>
+          </div>
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        </li>
+      </ul>
+    </div>
+
+    </div>
+  </header>
     <main class="app-main-content">
       <nav class="app-breadcrumb">Trang chủ / <strong>Đề thi số 1</strong></nav>
       <h1 class="app-title">Đề thi số 1</h1>
@@ -63,11 +79,7 @@
 
       <section class="app-main-section">
         <div class="app-mascot-section">
-          <img
-            src="../assets/img/Cat.png"
-            alt="Mascot"
-            class="app-mascot-image"
-          />
+          <img src="../assets/img/Cat.png" alt="Mascot" class="app-mascot-image" />
           <h2>Luyện Thi FE</h2>
           <p>Nắm chắc thành công ngay từ hôm nay</p>
           <button class="start-btn">
@@ -187,15 +199,14 @@
             <img src="../assets/img/Group 38.png" alt="QR code" class="qr" />
           </div>
           <div class="right">
-            <img
-              src="../assets/img/Img-footer.png"
-              alt="Học viên Rikkei"
-              class="banner"
-            />
+            <img src="../assets/img/Img-footer.png" alt="Học viên Rikkei" class="banner" />
           </div>
         </div>
         <p class="copy">&copy; 2024 By Rikkei Academy - All rights reserved.</p>
       </div>
     </footer>
-  </body>
+    <script src="../js/navMenu.js"></script>
+    <script src="../js/changeLanguage.js"></script>
+</body>
+
 </html>
