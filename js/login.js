@@ -174,7 +174,7 @@ btnLogin.addEventListener('click', () => {
     let inputNameSignInValue = document.getElementById("input-name-sign-in").value;
     if (inputNameSignInValue === adminEmail && inputPasswdSignInValue === adminPasswd) {
         console.log("login as admin");
-        // window.location.href = "page/adimPase.html";
+        window.location.href = "page/adminPage.html";
         //////////////////////////////////////////////////////////////////////////////////////
         return;
     }
@@ -182,7 +182,7 @@ btnLogin.addEventListener('click', () => {
         console.log("email or password incorrect");      
     }else{
         console.log("login as user");
-        // window.location.href = "page/home.html";
+        window.location.href = "page/home.html";
     }
 
 });
