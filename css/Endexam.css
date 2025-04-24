@@ -181,7 +181,7 @@ body {
   margin-bottom: 24px;
 }
 
-.start-btn {
+.app-start-button {
   background: rgb(171, 31, 36);
   color: white;
   border: none;
@@ -192,11 +192,11 @@ body {
   cursor: pointer;
 }
 
-.start-btn:hover {
+.app-start-button:hover {
   background: rgb(151, 27, 31);
 }
 
-.start-btn i {
+.app-start-button i {
   margin-left: 8px;
 }
 
