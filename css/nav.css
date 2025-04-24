@@ -103,7 +103,7 @@
     height: 24px;
 }
 
-.fa-bars {
+.header-page-admin .fa-bars {
     display: none;
 }
 
@@ -117,7 +117,7 @@
         display: none;
     }
 
-    .fa-bars {
+    .header-page-admin .fa-bars {
         display: flex ;
     }
 
