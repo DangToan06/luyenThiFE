@@ -8,47 +8,39 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css">
     </link>
     <link rel="stylesheet" href="../css/home.css">
+    <link rel="stylesheet" href="../css/nav.css">
+    <link rel="stylesheet" href="../css/footer.css">
 </head>
 
 <body>
     <header>
-        <nav class="header-page-home">
+        <nav class="header-page-admin">
             <img src="../assets/img/logoRikkei.png" alt="logo" class="logo-head" />
-
             <div class="acc-lang">
-                <!-- Ngôn ngữ -->
-                <div class="language-wrapper">
-                    <button class="language-toggle">
-                        <img src="../assets/global.png" alt="icon-global" class="icon-global">
-                        <span>VN</span>
-                        <i class="fa-solid fa-chevron-down"></i>
-                    </button>
-
-                    <div class="language-dropdown">
-                        <div class="language-option">
-                            <img src="../assets/img/VN.png" alt="VN" />
-                            Tiếng Việt
-                        </div>
-                        <div class="language-option">
-                            <img src="../assets/img/JP.png" alt="JP" />
-                            Tiếng Nhật
-                        </div>
-                        <div class="language-option">
-                            <img src="../assets/img/GB.png" alt="EN" />
-                            Tiếng Anh
-                        </div>
-                    </div>
+              <div class="language-wrapper">
+                <button class="language-toggle">
+                  <img src="../assets/img/global.png" alt="icon-global" class="icon-global" />
+                  <span>VN</span>
+                  <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="language-dropdown">
+                  <div class="language-option">
+                    <img src="../assets/img/VN.png" alt="VN" />
+                    Tiếng Việt
+                  </div>
+                  <div class="language-option">
+                    <img src="../assets/img/JP.png" alt="JP" />
+                    Tiếng Nhật
+                  </div>
+                  <div class="language-option">
+                    <img src="../assets/img/GB.png" alt="EN" />
+                    Tiếng Anh
+                  </div>
                 </div>
-
-                <div class="divider"></div>
-
-                <!-- Avatar -->
-                <img src="../assets/Dropdown.png" alt="avatar" class="avatar" />
-
+              </div>
+              <div class="divider"></div>
+              <img src="../assets/Dropdown.png" alt="avatar" class="avatar" />
             </div>
-            <i class="fa-solid fa-bars" id="menu-nav"></i>
-            <i class="fa-solid fa-xmark" style="display: none;" id="close-menu-nav"></i>
-
         </nav>
 
         <div class="menu" id="menu">
@@ -399,6 +391,7 @@
         </div>
     </footer>
     <script src="../js/home.js"></script>
+    <script src="/js/changeLanguage.js"></script>
 </body>
 
 </html>
