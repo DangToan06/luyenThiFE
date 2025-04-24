@@ -285,6 +285,10 @@ a {
     display: none;
   }
 
+  .fa-bars {
+    display: flex;
+  }
+
   .app-avatar,
   .app-divider {
     display: none;
