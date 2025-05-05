@@ -56,7 +56,7 @@
                 <li>Tiếng Nhật</li>
                 <li class="menu-account">
                     <div>
-                        <img src="../assets/Dropdown.png" alt="avatar">
+                        <!-- <img src="../assets/Dropdown.png" alt="avatar"> -->
                         <div class="name-email-nav">
                             <span>Đặng Toàn</span>
                             <span>toan@gmail.com</span>
@@ -112,7 +112,7 @@
                                 tới Dev Mode - giúp thực hành code song song khi xem...</p>
                             <div class="time-minutes">
                                 <i class="fa-solid fa-clock"></i>
-                                <span>8 tháng trước</span>
+                                <span>8 tháng trước </span>
                                 <i class="fas fa-book-open"></i>
                                 <span>10-15 phút đọc</span>
                             </div>
@@ -140,72 +140,7 @@
 
                 <h2 style="margin-top: 32px;">Đề thi mới nhất</h2>
 
-                <section class="exam-grid">
-                    <div class="exam-card">
-                        <h3>Đề thi số 2</h3>
-                        <div class="info">
-                            <div><i class="fa-solid fa-clock"></i> 120 phút</div>
-                            <div><i class="fa-solid fa-book-open"></i> 2 bài thi</div>
-                        </div>
-                        <div class="info">
-                            <div><i class="fa-solid fa-comment-dots"></i> 100 câu hỏi</div>
-                            <div><i class="fa-solid fa-users"></i> 1024 học viên</div>
-                        </div>
-                        <button class="btn-do-exam">Làm bài</button>
-                    </div>
-
-                    <div class="exam-card">
-                        <h3>Đề thi số 2</h3>
-                        <div class="info">
-                            <div><i class="fa-solid fa-clock"></i> 120 phút</div>
-                            <div><i class="fa-solid fa-book-open"></i> 2 bài thi</div>
-                        </div>
-                        <div class="info">
-                            <div><i class="fa-solid fa-comment-dots"></i> 100 câu hỏi</div>
-                            <div><i class="fa-solid fa-users"></i> 1024 học viên</div>
-                        </div>
-                        <button class="btn-do-exam">Làm bài</button>
-                    </div>
-
-                    <div class="exam-card">
-                        <h3>Đề thi số 2</h3>
-                        <div class="info">
-                            <div><i class="fa-solid fa-clock"></i> 120 phút</div>
-                            <div><i class="fa-solid fa-book-open"></i> 2 bài thi</div>
-                        </div>
-                        <div class="info">
-                            <div><i class="fa-solid fa-comment-dots"></i> 100 câu hỏi</div>
-                            <div><i class="fa-solid fa-users"></i> 1024 học viên</div>
-                        </div>
-                        <button class="btn-do-exam">Làm bài</button>
-                    </div>
-
-                    <div class="exam-card">
-                        <h3>Đề thi số 2</h3>
-                        <div class="info">
-                            <div><i class="fa-solid fa-clock"></i> 120 phút</div>
-                            <div><i class="fa-solid fa-book-open"></i> 2 bài thi</div>
-                        </div>
-                        <div class="info">
-                            <div><i class="fa-solid fa-comment-dots"></i> 100 câu hỏi</div>
-                            <div><i class="fa-solid fa-users"></i> 1024 học viên</div>
-                        </div>
-                        <button class="btn-do-exam">Làm bài</button>
-                    </div>
-
-                    <div class="exam-card">
-                        <h3>Đề thi số 2</h3>
-                        <div class="info">
-                            <div><i class="fa-solid fa-clock"></i> 120 phút</div>
-                            <div><i class="fa-solid fa-book-open"></i> 2 bài thi</div>
-                        </div>
-                        <div class="info">
-                            <div><i class="fa-solid fa-comment-dots"></i> 100 câu hỏi</div>
-                            <div><i class="fa-solid fa-users"></i> 1024 học viên</div>
-                        </div>
-                        <button class="btn-do-exam">Làm bài</button>
-                    </div>
-
+                <section class="exam-grid" id="list-Exam">
                     <div class="exam-card">
                         <h3>Đề thi số 2</h3>
                         <div class="info">
@@ -219,6 +154,15 @@
                         <button class="btn-do-exam">Làm bài</button>
                     </div>
                 </section>
+
+                <!-- Chuyển trang -->
+                <div class="pagination" id = "pagination">
+                    <button id="prevBtn" class="prevBtn">❮ Previous</button>
+                    <div id="pageNumbers">
+                        <button class="pageNumbers">1</button>
+                    </div>
+                    <button id="nextBtn" class="nextBtn">Next ❯</button>
+                </div>
 
                 <section class="tip-container">
                     <div class="tip-box">
@@ -392,6 +336,7 @@
             <p class="copy">&copy; 2024 By Rikkei Academy - All rights reserved.</p>
         </div>
     </footer>
+    <script src="../js/data.js"></script>
     <script src="../js/home.js"></script>
     <script src="/js/changeLanguage.js"></script>
     <script src="../js/navMenu.js"></script>
