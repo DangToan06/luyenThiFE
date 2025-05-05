@@ -66,15 +66,15 @@ btnSignUp.addEventListener("click", () => {
     let checkboxSignUpValue = document.getElementById("checkbox-sign-up").checked;
 
     if (!validBlank(inputNameSignUpValue, inputDateSignUpValue, inputEmailSignUpValue, inputPasswdSignUpValue, inputRepasswdSignUpValue, checkboxSignUpValue)) {
-        console.log("input is not blank");
+        showWarning("input is not blank");
     } else if (!isValidEmail(inputEmailSignUpValue)) {
-        console.log("email format is incorrect");
+        showWarning("email format is incorrect");
     } else if (!isValidPasswd(inputPasswdSignUpValue)) {
-        console.log("password must be 8 characters");
+        showWarning("password must be 8 characters");
     } else if (!isRePasswd(inputPasswdSignUpValue, inputRepasswdSignUpValue)) {
-        console.log("Password does not match");
+        showWarning("Password does not match");
     } else if (existEmail(inputEmailSignUpValue)) {
-        console.log("Email exist");
+        showWarning("Email exist");
     } else {
         console.log("create account success");
         Account.nameUser = inputNameSignUpValue;
@@ -84,7 +84,11 @@ btnSignUp.addEventListener("click", () => {
         listAccount.push(Account);
         localStorage.setItem("listAccount", JSON.stringify(listAccount));
         generateOTP();
-        window.location.href = "page/otp.html";
+        // ????????????????????????
+        showSuccessful("Creative account successful")
+        setTimeout(() => {
+            window.location.href = "page/otp.html";
+        });
     }
 });
 
@@ -174,15 +178,19 @@ btnLogin.addEventListener('click', () => {
     let inputNameSignInValue = document.getElementById("input-name-sign-in").value;
     if (inputNameSignInValue === adminEmail && inputPasswdSignInValue === adminPasswd) {
         console.log("login as admin");
-        window.location.href = "page/adminPage.html";
-        //////////////////////////////////////////////////////////////////////////////////////
-        return;
+        showSuccessful("Login ADMIN");
+        setTimeout(() => {
+            window.location.href = "page/adminPage.html";
+        }, 800);
     }
     if(!searchAccInList(inputNameSignInValue, inputPasswdSignInValue)){
-        console.log("email or password incorrect");      
+         showWarning("Email or password incorrect");     
     }else{
         console.log("login as user");
-        window.location.href = "page/home.html";
+        showSuccessful("Login successful");
+        setTimeout(() => {
+            window.location.href = "page/home.html";
+        }, 800)
     }
 
 });
@@ -207,3 +215,52 @@ togglePasswordLogin.addEventListener('click', () => {
     togglePasswordLogin.classList.toggle('fa-eye');
     togglePasswordLogin.classList.toggle('fa-eye-slash');
 });
+
+// Thông báo nhập sai passwd
+
+const MAX_WARNINGS = 4;
+const container = document.getElementById("container-warning");
+const warningQueue = [];
+
+function showWarning(message) {
+    if (container.children.length >= MAX_WARNINGS) {
+        warningQueue.push(message);
+        return;
+    }
+
+    const warning = document.createElement("div");
+    warning.className = "warning";
+    warning.innerHTML = `
+        <i class="fa-solid fa-circle-xmark"></i>
+        <span>${message}</span>
+    `;
+    container.appendChild(warning);
+
+    setTimeout(() => {
+        warning.classList.add("slide-out");
+        setTimeout(() => {
+            warning.remove();
+
+            if (warningQueue.length > 0) {
+                const nextMessage = warningQueue.shift();
+                showWarning(nextMessage);
+            }
+        }, 400);
+    }, 3000);
+}
+
+const containerSuccessful = document.getElementById("container-successful");
+
+function showSuccessful(message) {
+    const Successful = document.createElement("div");
+    Successful.className = "login-successful";
+    Successful.innerHTML = `
+        <i class="fa-solid fa-circle-check"></i>
+        <span>${message}</span>
+    `;
+    containerSuccessful.appendChild(Successful);
+    // setTimeout(() => {
+    //     Successful.classList.add("slide-out");
+    // }, 3000);
+}
+

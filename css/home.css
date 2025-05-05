@@ -357,6 +357,63 @@
 
 /* ///////////// */
 
+/* Thanh phân trang */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1%;
+    margin-bottom: 30px;
+    flex-direction: row;
+}
+
+.pagination .prevBtn,.nextBtn{
+    padding: 1% 2%;
+    border: none;
+    cursor: pointer;
+    background-color: #BC2228;
+    opacity: 0.9;
+    border-radius: 3px;
+    color: #fff;
+    align-content: center;
+}
+
+.pagination .prevBtn:hover,.nextBtn:hover{
+    opacity: 1;
+    background-color: #d12b30;
+}
+
+.pagination .prevBtn:active,.nextBtn:active{
+    opacity: 0.8;
+}
+
+.pagination .pageNumbers {
+    background-color: #fef3f2;
+    border: 1px solid #f04438;
+    border-radius: 3px;
+    width: 2rem;
+    height: 2rem;
+    text-align: center;
+    align-content: center;
+    color: #BC2228;
+    cursor: pointer;
+}
+
+.pagination .pageNumbers:hover{
+    background-color: #BC2228;
+    color: #fff
+}
+
+.pagination .pageNumbers:active{
+    background-color: #fef3f2;
+    color: #BC2228;
+}
+
+.pagination .active{
+    background-color: #BC2228;
+    color: #fff
+}
+
 @media screen and (max-width: 768px) {
 
     .list-post li p {
