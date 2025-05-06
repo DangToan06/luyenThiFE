@@ -1,5 +1,5 @@
 //KIỂM TRA TRÊN LOCAL CÓ MẢNG LƯU DANH SÁCH TÀI KHOẢN CHƯA NẾU CHƯA CÓ THÌ THÊM VÀO
-let listAccount = [];
+let Account ={};
 if (!localStorage.getItem("listAccount")) {
     localStorage.setItem("listAccount", JSON.stringify(listAccount));
 } else {
@@ -76,7 +76,7 @@ btnSignUp.addEventListener("click", () => {
     } else if (existEmail(inputEmailSignUpValue)) {
         showWarning("Email exist");
     } else {
-        console.log("create account success");
+        Account.id = Math.floor(1000 + Math.random() * 9000);
         Account.nameUser = inputNameSignUpValue;
         Account.date = inputDateSignUpValue;
         Account.email = inputEmailSignUpValue;
@@ -183,10 +183,17 @@ btnLogin.addEventListener('click', () => {
             window.location.href = "page/adminPage.html";
         }, 800);
     }
-    if(!searchAccInList(inputNameSignInValue, inputPasswdSignInValue)){
-         showWarning("Email or password incorrect");     
-    }else{
-        console.log("login as user");
+    if (!searchAccInList(inputNameSignInValue, inputPasswdSignInValue)) {
+        showWarning("Email or password incorrect");
+    } else {
+        //Lưu vị trí tài khoản hiện tại
+
+        listAccount.forEach( element => {
+            if(element.email === inputNameSignInValue){
+                localStorage.setItem("AccountNow", JSON.stringify(element));
+            }
+        });
+
         showSuccessful("Login successful");
         setTimeout(() => {
             window.location.href = "page/home.html";
@@ -195,9 +202,9 @@ btnLogin.addEventListener('click', () => {
 
 });
 
-function searchAccInList(name, passwd){
+function searchAccInList(name, passwd) {
     for (let i = 0; i < listAccount.length; i++) {
-        if(name === listAccount[i].email && passwd === listAccount[i].password){
+        if (name === listAccount[i].email && passwd === listAccount[i].password) {
             return true;
         }
     }
