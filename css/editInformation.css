@@ -9,7 +9,7 @@
   }
   .container {
     max-width: 1200px;
-    margin: 20px auto;
+    margin: 5% 2%;
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
@@ -17,6 +17,7 @@
   .left-column {
     flex: 1;
     min-width: 300px;
+    text-align: center;
   }
   .right-column {
     flex: 2;
@@ -38,13 +39,14 @@
     color: #555;
   }
   .profile-image-container {
-    position: relative;
+    justify-self: center;
     width: 300px;
     height: 300px;
     border-radius: 50%;
     overflow: hidden;
     margin-bottom: 20px;
     cursor: pointer;
+
   }
   .profile-image {
     width: 100%;
@@ -52,8 +54,16 @@
     object-fit: cover;
     pointer-events: none;
   }
-  .camera-icon {
+
+  .profile-image-container i{
+    background-color: black;
+    color: black;
+    
     position: absolute;
+  }
+
+  .camera-icon {
+    /* position: absolute; */
     bottom: 15px;
     right: 15px;
     width: 40px;
@@ -74,6 +84,9 @@
     margin-bottom: 5px;
     font-weight: 500;
   }
+
+  
+
   input[type="text"],
   input[type="email"],
   input[type="tel"],
@@ -86,7 +99,19 @@
     border-radius: 8px;
     font-size: 14px;
     background-color: #f9f9f9;
+    outline: none;
   }
+
+  .box-input-edit:hover{
+    border: 1px solid #BC2228;
+    cursor: pointer;
+  }
+
+  .box-input-edit:focus{
+    border: 1px solid #BC2228;
+    cursor: pointer;
+  }
+
   .action-buttons {
     display: flex;
     flex-wrap: wrap;
@@ -178,8 +203,11 @@
     background-color: #f0f0f0;
     color: #333;
   }
+  .btn-cancel:hover{
+    background-color: #dadada;
+  }
   .btn-save {
-    background-color: #1976d2;
+    background-color: #BC2228;
     color: #fff;
   }
   @media (max-width: 768px) {
