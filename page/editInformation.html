@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Chỉnh sửa thông tin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css">
+  </link>
   <link rel="stylesheet" href="../css/editInformation.css">
   <link rel="stylesheet" href="/css/nav.css">
   <link rel="stylesheet" href="../css/footer.css" />
@@ -36,7 +38,7 @@
         </div>
       </div>
       <div class="divider"></div>
-      <img src="../assets/Dropdown.png" alt="avatar" class="avatar" />
+      <img src="" alt="avatar" class="avatar" />
     </div>
     <span class="fa-bars"><i class="fa-solid fa-bars" id="menu-nav"></i></span>
     <i class="fa-solid fa-xmark" style="display: none;" id="close-menu-nav"></i>
@@ -53,7 +55,7 @@
       <li>Tiếng Nhật</li>
       <li class="menu-account">
         <div>
-          <img src="../assets/Dropdown.png" alt="avatar">
+          <img src="" alt="avatar">
           <div class="name-email-nav">
             <span>Đặng Toàn</span>
             <span>toan@gmail.com</span>
@@ -76,29 +78,27 @@
             <circle cx="12" cy="13" r="4"></circle>
           </svg>
         </div>
+        <!-- <i class="fa-solid fa-camera"></i>
+        <button></button> -->
       </div>
     </div>
     <div class="right-column">
       <div class="description">Tại đây bạn có thể xem các thông tin hiển thị của mình và chỉnh sửa ảnh đại diện. Các
         thông tin cá nhân còn lại là mặc định và không thể chỉnh sửa.</div>
       <h2>Thông tin cá nhân</h2>
-      <div class="form-row">
+      <div class="form-row" id="form-row">
         <div class="form-group">
-          <label for="lastName">Họ</label>
-          <input type="text" id="lastName" value="Trần" disabled />
+          <label for="lastName">Họ và Tên</label>
+          <input type="text" id="lastName" value="Trần Minh Quang" disabled />
         </div>
         <div class="form-group">
-          <label for="firstName">Tên</label>
-          <input type="text" id="firstName" value="Minh Quang" disabled />
+          <label for="email">Email</label>
+          <input type="email" id="email" value="quangchsga@gmail.com" disabled />
         </div>
-      </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" value="quangchsga@gmail.com" disabled />
-      </div>
-      <div class="form-group">
-        <label for="birthday">Ngày sinh</label>
-        <input type="date" id="birthday" value="2006-07-04" disabled />
+        <div class="form-group">
+          <label for="birthday">Ngày sinh</label>
+          <input type="date" id="birthday" value="2006-07-04" disabled />
+        </div>
       </div>
       <div class="action-buttons">
         <button class="btn btn-password" onclick="openModal('passwordModal')">
@@ -121,7 +121,10 @@
     </div>
   </div>
   <!-- Modal Đổi Mật Khẩu -->
-  <div class="modal" id="passwordModal">
+  <form class="modal" id="passwordModal">
+    <!-- tránh bị cảnh báo trong dom -->
+    <input type="text" name="username" autocomplete="username" style="display: none;">
+    <!-- //////////////////////////////////////  -->
     <div class="modal-content">
       <div class="modal-header">
         <h3>Đổi mật khẩu</h3>
@@ -129,46 +132,49 @@
       <div class="modal-body">
         <div class="form-group">
           <label for="currentPassword">Mật khẩu hiện tại</label>
-          <input type="password" id="currentPassword" placeholder="Nhập mật khẩu hiện tại" />
+          <input type="password" id="currentPassword" placeholder="Nhập mật khẩu hiện tại" class="box-input-edit"
+            autocomplete="current-password" />
         </div>
         <div class="form-group">
           <label for="newPassword">Mật khẩu mới</label>
-          <input type="password" id="newPassword" placeholder="Nhập mật khẩu mới" />
+          <input type="password" id="newPassword" placeholder="Nhập mật khẩu mới" class="box-input-edit"
+            autocomplete="new-password" />
         </div>
         <div class="form-group">
           <label for="confirmPassword">Xác nhận mật khẩu mới</label>
-          <input type="password" id="confirmPassword" placeholder="Xác nhận mật khẩu mới" />
+          <input type="password" id="confirmPassword" placeholder="Xác nhận mật khẩu mới" class="box-input-edit"
+            autocomplete="new-password" />
         </div>
       </div>
       <div class="modal-footer">
         <button class="btn btn-cancel" onclick="closeModal('passwordModal')">Hủy</button>
-        <button class="btn btn-save">Lưu</button>
+        <button class="btn btn-save" id="btnChangePass">Lưu</button>
       </div>
     </div>
-  </div>
+  </form>
   <!-- Modal Đổi Thông Tin -->
   <div class="modal" id="editInfoModal">
     <div class="modal-content">
       <div class="modal-header">
         <h3>Đổi thông tin</h3>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" id="editInfo">
         <div class="form-group">
-          <label for="editLastName">Họ</label>
-          <input type="text" id="editLastName" value="Trần" />
+          <label for="editName">Họ và Tên</label>
+          <input type="text" id="editName" value="Trần Minh Quang" class="box-input-edit" />
         </div>
         <div class="form-group">
-          <label for="editFirstName">Tên</label>
-          <input type="text" id="editFirstName" value="Minh Quang" />
+          <label for="editEmail">email</label>
+          <input type="email" id="editEmail" value="quangngu@gmail.com" class="box-input-edit" />
         </div>
         <div class="form-group">
           <label for="editBirthday">Ngày sinh</label>
-          <input type="date" id="editBirthday" value="2006-07-04" />
+          <input type="date" id="editBirthday" value="2006-07-04" class="box-input-edit" />
         </div>
       </div>
       <div class="modal-footer">
         <button class="btn btn-cancel" onclick="closeModal('editInfoModal')">Hủy</button>
-        <button class="btn btn-save">Lưu</button>
+        <button class="btn btn-save" id="btnEdit">Lưu</button>
       </div>
     </div>
   </div>
@@ -256,6 +262,7 @@
       <p class="copy">&copy; 2024 By Rikkei Academy - All rights reserved.</p>
     </div>
   </footer>
+  <script src="../js/data.js"></script>
   <script src="https://kit.fontawesome.com/aee2c1f27c.js" crossorigin="anonymous"></script>
   <script src="/js/editInformation.js"></script>
   <script src="/js/changeLanguage.js"></script>

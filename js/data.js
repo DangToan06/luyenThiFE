@@ -1,4 +1,29 @@
-let Account = {};
+let listAccount = JSON.parse(localStorage.getItem("listAccount")) || [
+    {
+        id: 1,
+        nameUser: "toàn",
+        date: "2025-05-15",
+        email: "toan@gmail.com",
+        password: "11111111",
+    },
+    {   
+        id: 2,
+        nameUser: "quang",
+        date: "2025-05-15",
+        email: "quangngu@gmail.com",
+        password: "22222222",
+    },
+    {   
+        id: 3,
+        nameUser: "quangbeo",
+        date: "2025-05-15",
+        email: "quangbeo@gmail.com",
+        password: "33333333",
+    }
+];
+
+
+
 let listQuestion = JSON.parse(localStorage.getItem("listQuestion")) || [
     {
         id: "q101",
@@ -326,4 +351,10 @@ if (!localStorage.getItem("listQuestion")) {
     localStorage.setItem("listQuestion", JSON.stringify(listQuestion));
 } else {
     listQuestion = JSON.parse(localStorage.getItem("listQuestion"));
+}
+
+if (!localStorage.getItem("listAccount")) {
+    localStorage.setItem("listAccount", JSON.stringify(listAccount));
+} else {
+    listAccount = JSON.parse(localStorage.getItem("listAccount"));
 }

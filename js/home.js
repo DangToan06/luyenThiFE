@@ -104,3 +104,11 @@ nextBtn.addEventListener("click", () => {
 
 paginate(currentPage);
 renderPageNumber();
+
+// Chỉnh sửa thông tin người dùng 
+
+const btnAvatar = document.getElementById("avatar");
+
+btnAvatar.addEventListener("click", () => {
+    location.href = "http://127.0.0.1:5501/page/editInformation.html";
+});
