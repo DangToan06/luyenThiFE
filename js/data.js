@@ -242,12 +242,6 @@ let listQuestion = JSON.parse(localStorage.getItem("listQuestion")) || [
     }
 ];
 
-
-
-
-
-
-
 let listExam = JSON.parse(localStorage.getItem("listExam")) || [
     {
         id: "exam001",
@@ -313,9 +307,14 @@ let listExam = JSON.parse(localStorage.getItem("listExam")) || [
         totalQuest: 10,
     }
 ];
-
+const listArticle = JSON.parse(localStorage.getItem("listArticle")) || [
+    {
+        id: "art001",
+        title: "Bài viết số 1",
+        content: "Nội dung bài viết số 1", 
+    }
+];
 // Kiểm tra localStorage xem có listExam chưa, chưa thì thêm VÀO
-
 if (!localStorage.getItem("listExam")) {
     localStorage.setItem("listExam", JSON.stringify(listExam));
 } else {
