@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css" />
+  <link rel="stylesheet" href="../css/admin.css" />
+  <link rel="stylesheet" href="../css/nav.css" />
+  <link rel="stylesheet" href="../css/footer.css" />
+</head>
+
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="logo">
+      <i class="fas fa-graduation-cap"></i>
+      <span>EduAdmin</span>
+    </div>
+
+    <ul class="nav-menu">
+      <li class="nav-item">
+        <a href="#" class="nav-link active">
+          <i class="fas fa-chart-pie"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link">
+          <i class="fas fa-users"></i>
+          <span>Students</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link">
+          <i class="fas fa-clipboard-list"></i>
+          <span>Exam Question</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link">
+          <i class="fas fa-question-circle"></i>
+          <span>Question</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link">
+          <i class="fas fa-newspaper"></i>
+          <span>Article</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- New Header/Navigation -->
+  <nav class="header-page-admin">
+    <img src="../assets/img/logoRikkei.png" alt="logo" class="logo-head" />
+    <div class="acc-lang">
+      <div class="language-wrapper">
+        <button class="language-toggle">
+          <img src="../assets/img/global.png" alt="icon-global" class="icon-global" />
+          <span>VN</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="language-dropdown">
+          <div class="language-option">
+            <img src="../assets/img/VN.png" alt="VN" />
+            Tiếng Việt
+          </div>
+          <div class="language-option">
+            <img src="../assets/img/JP.png" alt="JP" />
+            Tiếng Nhật
+          </div>
+          <div class="language-option">
+            <img src="../assets/img/GB.png" alt="EN" />
+            Tiếng Anh
+          </div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <img src="../assets/Dropdown.png" alt="avatar" class="avatar" />
+    </div>
+    <i class="fa-solid fa-bars" id="menu-nav"></i>
+    <i class="fa-solid fa-xmark" style="display: none;" id="close-menu-nav"></i>
+  </nav>
+
+  <!-- Main Content -->
+  <section id="Dashboard" style="width: 100%;">
+    <div class="main-container">
+        <!-- Stats Section -->
+        <div class="stats-container">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-users blue"></i>
+            </div>
+            <div class="stat-value">2,547</div>
+            <div class="stat-label">Total Students</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-clipboard-list"></i>
+            </div>
+            <div class="stat-value">186</div>
+            <div class="stat-label">Exam Question</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-graduation-cap orange"></i>
+            </div>
+            <div class="stat-value">87.5%</div>
+            <div class="stat-label">Average Grade</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-dollar-sign green"></i>
+            </div>
+            <div class="stat-value">$847,245</div>
+            <div class="stat-label">Revenue</div>
+          </div>
+        </div>
+    
+        <!-- Content Sections -->
+        <div class="content-grid">
+          <!-- Activity Feed -->
+          <div class="content-section">
+            <h3 class="section-title">Recent Activity</h3>
+            <div class="activity-item">
+              <div class="activity-avatar">
+                <img src="../assets/Dropdown.png" alt="Sarah Johnson">
+              </div>
+              <div class="activity-content">
+                <p class="activity-text"><strong>Sarah Johnson</strong> submitted assignment</p>
+                <p class="activity-time">2 hours ago</p>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-avatar">
+                <img src="../assets/Dropdown.png" alt="Mike Peters">
+              </div>
+              <div class="activity-content">
+                <p class="activity-text"><strong>Mike Peters</strong> joined Class 10-A</p>
+                <p class="activity-time">4 hours ago</p>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-avatar">
+                <img src="../assets/Dropdown.png" alt="Emma Wilson">
+              </div>
+              <div class="activity-content">
+                <p class="activity-text"><strong>Emma Wilson</strong> updated profile</p>
+                <p class="activity-time">6 hours ago</p>
+              </div>
+            </div>
+          </div>
+    
+          <!-- Schedule -->
+          <div class="content-section">
+            <h3 class="section-title">Today's Schedule</h3>
+            <div class="schedule-item">
+              <div class="schedule-time">
+                <div class="schedule-hour">09:00</div>
+                <div class="schedule-ampm">AM</div>
+              </div>
+              <div class="schedule-details">
+                <div class="schedule-class">Mathematics - Class 10-A</div>
+                <div class="schedule-room">Room 101</div>
+              </div>
+            </div>
+            <div class="schedule-item">
+              <div class="schedule-time">
+                <div class="schedule-hour">11:00</div>
+                <div class="schedule-ampm">AM</div>
+              </div>
+              <div class="schedule-details science">
+                <div class="schedule-class">Science - Class 9-B</div>
+                <div class="schedule-room">Lab 2</div>
+              </div>
+            </div>
+            <div class="schedule-item">
+              <div class="schedule-time">
+                <div class="schedule-hour">02:00</div>
+                <div class="schedule-ampm">PM</div>
+              </div>
+              <div class="schedule-details english">
+                <div class="schedule-class">English - Class 11-C</div>
+                <div class="schedule-room">Room 205</div>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        <!-- Students Table -->
+        <div class="students-section">
+          <h3 class="section-title">Recent Students</h3>
+          <table class="students-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>#STU001</td>
+                <td>
+                  <div class="student-info">
+                    <div class="student-avatar">
+                      <img src="../assets/Dropdown.png" alt="Sarah Johnson">
+                    </div>
+                    <span class="student-name">Sarah Johnson</span>
+                  </div>
+                </td>
+                <td><span class="status-badge status-active">Active</span></td>
+                <td><a href="#" class="action-link">View Details</a></td>
+              </tr>
+              <tr>
+                <td>#STU002</td>
+                <td>
+                  <div class="student-info">
+                    <div class="student-avatar">
+                      <img src="../assets/Dropdown.png" alt="Mike Peters">
+                    </div>
+                    <span class="student-name">Mike Peters</span>
+                  </div>
+                </td>
+                <td><span class="status-badge status-active">Active</span></td>
+                <td><a href="#" class="action-link">View Details</a></td>
+              </tr>
+              <tr>
+                <td>#STU003</td>
+                <td>
+                  <div class="student-info">
+                    <div class="student-avatar">
+                      <img src="../assets/Dropdown.png" alt="Emma Wilson">
+                    </div>
+                    <span class="student-name">Emma Wilson</span>
+                  </div>
+                </td>
+                <td><span class="status-badge status-leave">On Leave</span></td>
+                <td><a href="#" class="action-link">View Details</a></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="pagination">
+            <button id="firstPage">&laquo;</button>
+            <button id="prevPage">&lsaquo;</button>
+            <span id="pageNumbers"></span>
+            <button id="nextPage">&rsaquo;</button>
+            <button id="lastPage">&raquo;</button>
+          </div>
+        </div>
+      </div>
+  </section>
+  <section id="Students" class="none" style="width: 100%;" >
+    <div class="admin-section main-container" >
+        <h2><i class="fa-solid fa-users"></i> Manage Users</h2>
+        <button class="btn-add">Add New User</button>
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>john_doe</td>
+              <td>john@example.com</td>
+              <td>Student</td>
+              <td class="action-buttons">
+                <button class="btn-edit">Edit</button>
+                <button class="btn-delete">Delete</button>
+              </td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>jane_smith</td>
+              <td>jane@example.com</td>
+              <td>Admin</td>
+              <td class="action-buttons">
+                <button class="btn-edit">Edit</button>
+                <button class="btn-delete">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="pagination">
+            <button id="firstPage">&laquo;</button>
+            <button id="prevPage">&lsaquo;</button>
+            <span id="pageNumbers"></span>
+            <button id="nextPage">&rsaquo;</button>
+            <button id="lastPage">&raquo;</button>
+          </div>
+      </div>
+  </section>
+  <section id="Exam-Question" class="none" style="width: 100%;">
+    <div class="admin-section main-container">
+        <h2><i class="fa-solid fa-book-open"></i> Manage Exams</h2>
+        <button class="btn-add">Add New Exam</button>
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Title</th>
+              <th>Duration</th>
+              <th>Questions</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Đề thi số 1</td>
+              <td>120 minutes</td>
+              <td>100</td>
+              <td class="action-buttons">
+                <button class="btn-edit">Edit</button>
+                <button class="btn-delete">Delete</button>
+              </td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Đề thi số 2</td>
+              <td>120 minutes</td>
+              <td>100</td>
+              <td class="action-buttons">
+                <button class="btn-edit">Edit</button>
+                <button class="btn-delete">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="pagination">
+            <button id="firstPage">&laquo;</button>
+            <button id="prevPage">&lsaquo;</button>
+            <span id="pageNumbers"></span>
+            <button id="nextPage">&rsaquo;</button>
+            <button id="lastPage">&raquo;</button>
+          </div>
+      </div>
+  </section>
+  <section id="Question" class="none" style="width: 100%;">
+    <div class="admin-section main-container">
+        <h2><i class="fa-solid fa-question-circle"></i> Manage Questions</h2>
+        <button class="btn-add">Add New Question</button>
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Question Text</th>
+              <th>Exam ID</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>What is the purpose of useState in React?</td>
+              <td>1</td>
+              <td class="action-buttons">
+                <button class="btn-edit">Edit</button>
+                <button class="btn-delete">Delete</button>
+              </td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Is JavaScript single-threaded?</td>
+              <td>2</td>
+              <td class="action-buttons">
+                <button class="btn-edit">Edit</button>
+                <button class="btn-delete">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="pagination">
+            <button id="firstPage">&laquo;</button>
+            <button id="prevPage">&lsaquo;</button>
+            <span id="pageNumbers"></span>
+            <button id="nextPage">&rsaquo;</button>
+            <button id="lastPage">&raquo;</button>
+          </div>
+      </div>
+  </section>
+  <section id="Article" class="none" style="width: 100%;">
+    <div class="admin-section main-container">
+        <h2><i class="fa-solid fa-newspaper"></i> Manage Posts</h2>
+        <button class="btn-add">Add New Post</button>
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Title</th>
+              <th>Posted Date</th>
+              <th>Author</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Authentication & Authorization</td>
+              <td>8 months ago</td>
+              <td>Admin</td>
+              <td class="action-buttons">
+                <button class="btn-edit">Edit</button>
+                <button class="btn-delete">Delete</button>
+              </td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>ReactJS Best Practices</td>
+              <td>7 months ago</td>
+              <td>Admin</td>
+              <td class="action-buttons">
+                <button class="btn-edit">Edit</button>
+                <button class="btn-delete">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="pagination">
+            <button id="firstPage">&laquo;</button>
+            <button id="prevPage">&lsaquo;</button>
+            <span id="pageNumbers"></span>
+            <button id="nextPage">&rsaquo;</button>
+            <button id="lastPage">&raquo;</button>
+          </div>
+    </div>
+  </section>
+
+  <div class="modal hidden">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <h3>Thêm bài viết mới</h3>
+      <form class="modal-form">
+        <label>Tiêu đề:</label>
+        <input type="text" placeholder="Nhập tiêu đề" required />
+        <label>Ngày đăng:</label>
+        <input type="date" required />
+        <label>Tác giả:</label>
+        <input type="text" placeholder="Nhập tên tác giả" required />
+        <div class="modal-actions">
+          <button type="submit" class="btn-add-post">Lưu</button>
+          <button type="button" class="btn-close">Đóng</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <div class="modal hidden">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <h3>Thêm câu hỏi mới</h3>
+      <form class="modal-form">
+        <label>Câu hỏi:</label>
+        <input type="text" placeholder="Nhập câu hỏi" required />
+        <label>Đáp án:</label>
+        <input type="answer" placeholder="Đáp án 1" required />
+        <input type="answer" placeholder="Đáp án 2" required />
+        <input type="answer" placeholder="Đáp án 3" required />
+        <label>Đáp án đúng:</label>
+        <input type="correctAnswer" placeholder="Nhập đáp án đúng" required />
+        <div class="modal-actions">
+          <button type="submit" class="btn-add-post">Lưu</button>
+          <button type="button" class="btn-close">Đóng</button>
+        </div>
+      </form>
+    </div>
+  </div> 
+  <script src="/js/changeLanguage.js"></script>
+  <script src="../js/navMenu.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>
