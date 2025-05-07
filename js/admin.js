@@ -210,7 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (modalArticle) modalArticle.classList.add('hidden');
       });
     } else {
-      console.error('Không tìm thấy nút đóng modal (Article)');
+      console.log('Không tìm thấy nút đóng modal (Article)');
     }
   
     // Xử lý modal cho Question (Thêm câu hỏi)

@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="../css/admin.css" />
   <link rel="stylesheet" href="../css/nav.css" />
   <link rel="stylesheet" href="../css/footer.css" />
+  <link rel="stylesheet" href="../css/addArticle.css">
 </head>
 
 <body>
@@ -79,7 +80,7 @@
         </div>
       </div>
       <div class="divider"></div>
-      <img src="../assets/Dropdown.png" alt="avatar" class="avatar" />
+      <!-- <img src="../assets/Dropdown.png" alt="avatar" class="avatar" /> -->
     </div>
     <i class="fa-solid fa-bars" id="menu-nav"></i>
     <i class="fa-solid fa-xmark" style="display: none;" id="close-menu-nav"></i>
@@ -379,52 +380,104 @@
         </div>
       </div>
   </section>
+  <!-- bài viết -->
   <section id="Article" class="none" style="width: 100%;">
     <div class="admin-section main-container">
-        <h2><i class="fa-solid fa-newspaper"></i> Manage Posts</h2>
-        <button class="btn-add">Add New Post</button>
-        <table class="admin-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Title</th>
-              <th>Posted Date</th>
-              <th>Author</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody id="articleTableBody">
-            <tr>
-              <td>1</td>
-              <td>Authentication & Authorization</td>
-              <td>8 months ago</td>
-              <td>Admin</td>
-              <td class="action-buttons">
-                <button class="btn-edit">Edit</button>
-                <button class="btn-delete">Delete</button>
-              </td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>ReactJS Best Practices</td>
-              <td>7 months ago</td>
-              <td>Admin</td>
-              <td class="action-buttons">
-                <button class="btn-edit">Edit</button>
-                <button class="btn-delete">Delete</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="pagination">
-            <button id="Article-firstPage">&laquo;</button>
-            <button id="Article-prevPage">&lsaquo;</button>
-            <span id="Article-pageNumbers"></span>
-            <button id="Article-nextPage">&rsaquo;</button>
-            <button id="Article-lastPage">&raquo;</button>
-        </div>
+      <h2><i class="fa-solid fa-newspaper"></i> Manage Posts</h2>
+      <button class="btn-add">Add New Post</button>
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Posted Date</th>
+            <th>Author</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="article-list">
+          <!-- Bài viết sẽ được hiển thị ở đây -->
+        </tbody>
+      </table>
+      <div class="pagination">
+        <button id="firstPage">&laquo;</button>
+        <button id="prevPage">&lsaquo;</button>
+        <span id="pageNumbers"></span>
+        <button id="nextPage">&rsaquo;</button>
+        <button id="lastPage">&raquo;</button>
+      </div>
     </div>
   </section>
+
+
+  <!-- Modal Thêm bài viết -->
+  <div class="modal modal-add hidden">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <h3>Thêm bài viết mới</h3>
+      <form class="modal-form-add">
+        <label>Tiêu đề:</label>
+        <input type="text"  />
+        <label>Nội dung:</label>
+        <input type="text"  />
+        <label>Ngày đăng:</label>
+        <input type="date"  />
+        <label>Thời gian đọc (phút):</label>
+        <input type="number"  min="5" max="120" />
+        <label>Tác giả:</label>
+        <input type="text"  />
+        <div class="modal-actions">
+          <button type="submit" class="btn-add-post">Lưu</button>
+          <button type="button" class="btn-close">Đóng</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Sửa bài viết -->
+  <div class="modal modal-edit hidden">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <h3>Sửa bài viết</h3>
+      <form class="modal-form-edit">
+        <label>Tiêu đề:</label>
+        <input type="text" name="title"  />
+        <label>Nội dung:</label>
+        <input type="text" name="content"  />
+        <label>Ngày đăng:</label>
+        <input type="date" name="date"  />
+        <label>Thời gian đọc (phút):</label>
+        <input type="number" name="time"  min="5" max="50" />
+        <label>Tác giả:</label>
+        <input type="text" name="author"  />
+        <div class="modal-actions">
+          <button type="submit" class="btn-save-edit">Lưu</button>
+          <button type="button" class="btn-close">Đóng</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal xác nhận xoá -->
+  <div class="modal modal-delete hidden">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <h3>Xác nhận xoá bài viết</h3>
+      <p>Bạn có chắc chắn muốn xoá bài viết này không?</p>
+      <div class="modal-actions">
+        <button class="btn-confirm-delete">Xoá</button>
+        <button class="btn-close-delete">Huỷ</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- modal thông báo lỗi -->
+  <div class="modal-error">
+    <div>
+      <i class="fa-solid fa-circle-exclamation" style="color: #d21e1e;"></i>
+    </div>
+    <p id="notification">Vui lòng điền đầy đủ thông tin</p>
+  </div>
 
   <div class="modal hidden">
     <div class="modal-overlay"></div>
@@ -512,7 +565,8 @@
 </div>
   <script src="/js/data.js"></script>
   <script src="/js/changeLanguage.js"></script>
-  <script src="../js/navMenu.js"></script>
+  <!-- <script src="../js/navMenu.js"></script> -->
   <script src="/js/admin.js"></script>
+  <script src="/js/addArticle.js"></script>
 </body>
 </html>
