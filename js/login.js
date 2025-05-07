@@ -81,6 +81,7 @@ btnSignUp.addEventListener("click", () => {
         Account.date = inputDateSignUpValue;
         Account.email = inputEmailSignUpValue;
         Account.password = inputPasswdSignUpValue;
+        Account.status = true;
         listAccount.push(Account);
         localStorage.setItem("listAccount", JSON.stringify(listAccount));
         generateOTP();

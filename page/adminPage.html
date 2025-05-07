@@ -244,13 +244,6 @@
               </tr>
             </tbody>
           </table>
-          <div class="pagination">
-            <button id="firstPage">&laquo;</button>
-            <button id="prevPage">&lsaquo;</button>
-            <span id="pageNumbers"></span>
-            <button id="nextPage">&rsaquo;</button>
-            <button id="lastPage">&raquo;</button>
-          </div>
         </div>
       </div>
   </section>
@@ -268,15 +261,14 @@
               <th>Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="userTableBody">
             <tr>
               <td>1</td>
               <td>john_doe</td>
               <td>john@example.com</td>
               <td>Student</td>
               <td class="action-buttons">
-                <button class="btn-edit">Edit</button>
-                <button class="btn-delete">Delete</button>
+                <button class="btn-delete">Lock</button>
               </td>
             </tr>
             <tr>
@@ -285,19 +277,18 @@
               <td>jane@example.com</td>
               <td>Admin</td>
               <td class="action-buttons">
-                <button class="btn-edit">Edit</button>
-                <button class="btn-delete">Delete</button>
+                <button class="btn-delete">Lock</button>
               </td>
             </tr>
           </tbody>
         </table>
         <div class="pagination">
-            <button id="firstPage">&laquo;</button>
-            <button id="prevPage">&lsaquo;</button>
-            <span id="pageNumbers"></span>
-            <button id="nextPage">&rsaquo;</button>
-            <button id="lastPage">&raquo;</button>
-          </div>
+            <button id="Students-firstPage">&laquo;</button>
+            <button id="Students-prevPage">&lsaquo;</button>
+            <span id="Students-pageNumbers"></span>
+            <button id="Students-nextPage">&rsaquo;</button>
+            <button id="Students-lastPage">&raquo;</button>
+        </div>
       </div>
   </section>
   <section id="Exam-Question" class="none" style="width: 100%;">
@@ -314,7 +305,7 @@
               <th>Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="examTableBody">
             <tr>
               <td>1</td>
               <td>Đề thi số 1</td>
@@ -338,12 +329,12 @@
           </tbody>
         </table>
         <div class="pagination">
-            <button id="firstPage">&laquo;</button>
-            <button id="prevPage">&lsaquo;</button>
-            <span id="pageNumbers"></span>
-            <button id="nextPage">&rsaquo;</button>
-            <button id="lastPage">&raquo;</button>
-          </div>
+            <button id="Exam-Question-firstPage">&laquo;</button>
+            <button id="Exam-Question-prevPage">&lsaquo;</button>
+            <span id="Exam-Question-pageNumbers"></span>
+            <button id="Exam-Question-nextPage">&rsaquo;</button>
+            <button id="Exam-Question-lastPage">&raquo;</button>
+        </div>
       </div>
   </section>
   <section id="Question" class="none" style="width: 100%;">
@@ -355,11 +346,10 @@
             <tr>
               <th>ID</th>
               <th>Question Text</th>
-              <th>Exam ID</th>
               <th>Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="questionTableBody">
             <tr>
               <td>1</td>
               <td>What is the purpose of useState in React?</td>
@@ -381,12 +371,12 @@
           </tbody>
         </table>
         <div class="pagination">
-            <button id="firstPage">&laquo;</button>
-            <button id="prevPage">&lsaquo;</button>
-            <span id="pageNumbers"></span>
-            <button id="nextPage">&rsaquo;</button>
-            <button id="lastPage">&raquo;</button>
-          </div>
+            <button id="Question-firstPage">&laquo;</button>
+            <button id="Question-prevPage">&lsaquo;</button>
+            <span id="Question-pageNumbers"></span>
+            <button id="Question-nextPage">&rsaquo;</button>
+            <button id="Question-lastPage">&raquo;</button>
+        </div>
       </div>
   </section>
   <section id="Article" class="none" style="width: 100%;">
@@ -403,7 +393,7 @@
               <th>Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="articleTableBody">
             <tr>
               <td>1</td>
               <td>Authentication & Authorization</td>
@@ -427,12 +417,12 @@
           </tbody>
         </table>
         <div class="pagination">
-            <button id="firstPage">&laquo;</button>
-            <button id="prevPage">&lsaquo;</button>
-            <span id="pageNumbers"></span>
-            <button id="nextPage">&rsaquo;</button>
-            <button id="lastPage">&raquo;</button>
-          </div>
+            <button id="Article-firstPage">&laquo;</button>
+            <button id="Article-prevPage">&lsaquo;</button>
+            <span id="Article-pageNumbers"></span>
+            <button id="Article-nextPage">&rsaquo;</button>
+            <button id="Article-lastPage">&raquo;</button>
+        </div>
     </div>
   </section>
 
@@ -455,26 +445,72 @@
     </div>
   </div>
   
-  <div class="modal hidden">
-    <div class="modal-overlay"></div>
-    <div class="modal-content">
-      <h3>Thêm câu hỏi mới</h3>
-      <form class="modal-form">
-        <label>Câu hỏi:</label>
-        <input type="text" placeholder="Nhập câu hỏi" required />
-        <label>Đáp án:</label>
-        <input type="answer" placeholder="Đáp án 1" required />
-        <input type="answer" placeholder="Đáp án 2" required />
-        <input type="answer" placeholder="Đáp án 3" required />
-        <label>Đáp án đúng:</label>
-        <input type="correctAnswer" placeholder="Nhập đáp án đúng" required />
-        <div class="modal-actions">
-          <button type="submit" class="btn-add-post">Lưu</button>
-          <button type="button" class="btn-close">Đóng</button>
-        </div>
-      </form>
+   <!-- Modal Thêm Câu Hỏi -->
+<div class="modal hidden" id="addQuestionModal">
+  <div class="modal-overlay"></div>
+  <div class="modal-content">
+    <h3>Thêm Câu Hỏi Mới</h3>
+    <form class="modal-form" id="addQuestionForm">
+      <label>ID:</label>
+      <input type="text" id="addQuestionId" placeholder="Nhập ID (e.g., q201)" required />
+      <label>Câu hỏi:</label>
+      <input type="text" id="addQuestionText" placeholder="Nhập câu hỏi" required />
+      <label>Đáp án:</label>
+      <input type="text" id="addAnswer1" placeholder="Đáp án 1" required />
+      <input type="text" id="addAnswer2" placeholder="Đáp án 2" required />
+      <input type="text" id="addAnswer3" placeholder="Đáp án 3" required />
+      <input type="text" id="addAnswer4" placeholder="Đáp án 4" required />
+      <label>Đáp án đúng:</label>
+      <input type="text" id="addCorrectAnswer" placeholder="Nhập đáp án đúng" required />
+      <div class="modal-actions">
+        <button type="submit" class="btn-add-post">Lưu</button>
+        <button type="button" class="btn-close">Đóng</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal Sửa Câu Hỏi -->
+<div class="modal hidden" id="editQuestionModal">
+  <div class="modal-overlay"></div>
+  <div class="modal-content">
+    <h3>Sửa Câu Hỏi</h3>
+    <form class="modal-form" id="editQuestionForm">
+      <label>ID:</label>
+      <input type="text" id="editQuestionId" placeholder="Nhập ID" readonly />
+      <label>Câu hỏi:</label>
+      <input type="text" id="editQuestionText" placeholder="Nhập câu hỏi" required />
+      <label>Đáp án 1:</label>
+      <input type="text" id="editAnswer1" placeholder="Đáp án 1" required />
+      <label>Đáp án 2:</label>
+      <input type="text" id="editAnswer2" placeholder="Đáp án 2" required />
+      <label>Đáp án 3:</label>
+      <input type="text" id="editAnswer3" placeholder="Đáp án 3" required />
+      <label>Đáp án 4:</label>
+      <input type="text" id="editAnswer4" placeholder="Đáp án 4" required />
+      <label>Đáp án đúng:</label>
+      <input type="text" id="editCorrectAnswer" placeholder="Nhập đáp án đúng" required />
+      <div class="modal-actions">
+        <button type="submit" class="btn-add-post">Lưu</button>
+        <button type="button" class="btn-close">Đóng</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal Xóa Câu Hỏi -->
+<div class="modal hidden" id="deleteQuestionModal">
+  <div class="modal-overlay"></div>
+  <div class="modal-content">
+    <h3>Xóa Câu Hỏi</h3>
+    <p>Bạn có chắc chắn muốn xóa câu hỏi với ID: <span id="deleteQuestionId"></span>?</p>
+    <div class="modal-actions">
+      <button type="button" class="btn-delete" id="confirmDelete">Xóa</button>
+      <button type="button" class="btn-close">Hủy</button>
     </div>
-  </div> 
+  </div>
+</div>
+  <script src="/js/data.js"></script>
   <script src="/js/changeLanguage.js"></script>
   <script src="../js/navMenu.js"></script>
   <script src="/js/admin.js"></script>
