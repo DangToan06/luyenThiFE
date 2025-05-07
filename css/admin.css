@@ -120,7 +120,7 @@ body {
     position: fixed;
     top: 0;
     right: 0;
-    z-index: 10;
+    z-index: 0;
 }
 
 /* Sidebar styles */
@@ -574,7 +574,69 @@ body {
     background-color: #ccc;
 }
 
+/* Container cho dãy số trang */
+#pageNumbers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  margin-top: 16px;
+}
 
+/* Nút số trang */
+.page-button,
+#firstPage,
+#prevPage,
+#nextPage,
+#lastPage {
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1px solid #ccc;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+}
+
+.page-button:hover,
+#firstPage:hover,
+#prevPage:hover,
+#nextPage:hover,
+#lastPage:hover {
+  background-color: #ddd;
+}
+
+/* Nút đang được chọn */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.pagination button, .pagination .page-button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    background: #fff;
+    cursor: pointer;
+}
+
+.pagination .page-button.active {
+    background: #D12B30;
+    color: #fff;
+    border-color: #D12B30;
+}
+
+.pagination button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.pagination span {
+    margin: 0 5px;
+}
 /* Responsive styles */
 @media (max-width: 480px) {
     body {
@@ -656,4 +718,19 @@ body {
         display: block;
         margin-bottom: 4px;
     }
+}
+
+#deleteQuestionModal .btn-delete {
+    background-color: #f5f5f5;
+    color: #676767;
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+#deleteQuestionModal .btn-delete:hover {
+    background-color: #d12b30;
+    color: #fff;
 }

@@ -112,3 +112,12 @@ const btnAvatar = document.getElementById("avatar");
 btnAvatar.addEventListener("click", () => {
     location.href = "http://127.0.0.1:5501/page/editInformation.html";
 });
+
+function searchExamQuestions() {
+    let searchInput = document.getElementById("searchExam").value.toLowerCase();
+    console.log(searchInput);
+    let filteredList = listExam.filter(exam => {
+        return exam.title.toLowerCase().includes(searchInput) ;
+    }   );
+    renderExam(filteredList);   
+}

@@ -1,10 +1,12 @@
-let listAccount = JSON.parse(localStorage.getItem("listAccount")) || [
+const listAccount = JSON.parse(localStorage.getItem("listAccount")) || [
     {
         id: 1,
         nameUser: "toàn",
         date: "2025-05-15",
         email: "toan@gmail.com",
         password: "11111111",
+        status: true,
+        avta: "https://i.pinimg.com/474x/95/2f/a5/952fa53028d4770ddea0333d27550f8f.jpg"
     },
     {   
         id: 2,
@@ -12,6 +14,8 @@ let listAccount = JSON.parse(localStorage.getItem("listAccount")) || [
         date: "2025-05-15",
         email: "quangngu@gmail.com",
         password: "22222222",
+        status: true,
+        avta: "https://i.pinimg.com/474x/95/2f/a5/952fa53028d4770ddea0333d27550f8f.jpg"
     },
     {   
         id: 3,
@@ -19,12 +23,14 @@ let listAccount = JSON.parse(localStorage.getItem("listAccount")) || [
         date: "2025-05-15",
         email: "quangbeo@gmail.com",
         password: "33333333",
+        status: true,
+        avta: "https://i.pinimg.com/474x/95/2f/a5/952fa53028d4770ddea0333d27550f8f.jpg"
     }
 ];
 
 
 
-let listQuestion = JSON.parse(localStorage.getItem("listQuestion")) || [
+const listQuestion = JSON.parse(localStorage.getItem("listQuestion")) || [
     {
         id: "q101",
         content: "HTML là viết tắt của cụm từ nào?",
@@ -267,7 +273,7 @@ let listQuestion = JSON.parse(localStorage.getItem("listQuestion")) || [
     }
 ];
 
-let listExam = JSON.parse(localStorage.getItem("listExam")) || [
+const listExam = JSON.parse(localStorage.getItem("listExam")) || [
     {
         id: "exam001",
         title: "Đề thi số 1",
@@ -336,10 +342,11 @@ const listArticle = JSON.parse(localStorage.getItem("listArticle")) || [
     {
         id: "art001",
         title: "Bài viết số 1",
-        content: "Nội dung bài viết số 1", 
+        date: "2025-05-15",
+        content: "Nội dung bài viết số 1",
     }
 ];
-// Kiểm tra localStorage xem có listExam chưa, chưa thì thêm VÀO
+
 if (!localStorage.getItem("listExam")) {
     localStorage.setItem("listExam", JSON.stringify(listExam));
 } else {
