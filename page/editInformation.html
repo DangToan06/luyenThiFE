@@ -40,6 +40,7 @@
       <div class="divider"></div>
       <img src="" alt="avatar" class="avatar" />
     </div>
+    <!-- ???????????????????????????????????????????????????????????????????/ -->
     <span class="fa-bars"><i class="fa-solid fa-bars" id="menu-nav"></i></span>
     <i class="fa-solid fa-xmark" style="display: none;" id="close-menu-nav"></i>
   </nav>
@@ -68,8 +69,16 @@
   <div class="container">
     <div class="left-column">
       <h1>Chỉnh sửa thông tin</h1>
-      <div class="profile-image-container" onclick="openModal('avatarModal')">
+      <div class="profile-image-container">
         <img class="profile-image" src="/assets/img/city.jpg" alt="Ảnh đại diện" />
+        <!-- <div class="camera-icon">
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+            <circle cx="12" cy="13" r="4"></circle>
+          </svg>
+        </div> -->
+        <button onclick="openModal('avatarModal')"><i class="fa-solid fa-camera"></i></button>
       </div>
     </div>
     <div class="right-column">
@@ -111,7 +120,7 @@
     </div>
   </div>
   <!-- Modal Đổi Mật Khẩu -->
-  <form class="modal" id="passwordModal">
+  <div class="modal" id="passwordModal">
     <!-- tránh bị cảnh báo trong dom -->
     <input type="text" name="username" autocomplete="username" style="display: none;">
     <!-- //////////////////////////////////////  -->
@@ -141,7 +150,7 @@
         <button class="btn btn-save" id="btnChangePass">Lưu</button>
       </div>
     </div>
-  </form>
+  </div>
   <!-- Modal Đổi Thông Tin -->
   <div class="modal" id="editInfoModal">
     <div class="modal-content">
@@ -252,6 +261,7 @@
       <p class="copy">&copy; 2024 By Rikkei Academy - All rights reserved.</p>
     </div>
   </footer>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="../js/data.js"></script>
   <script src="https://kit.fontawesome.com/aee2c1f27c.js" crossorigin="anonymous"></script>
   <script src="/js/editInformation.js"></script>

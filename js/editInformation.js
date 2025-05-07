@@ -2,12 +2,12 @@ let accNow = JSON.parse(localStorage.getItem("AccountNow"));
 let listAcc = JSON.parse(localStorage.getItem("listAccount"));
 
 function openModal(modalId) {
-    const modal = document.getElementById(modalId);
-    modal.style.display = 'flex';
+  const modal = document.getElementById(modalId);
+  modal.style.display = 'flex';
 }
 function closeModal(modalId) {
-    const modal = document.getElementById(modalId);
-    modal.style.display = 'none';
+  const modal = document.getElementById(modalId);
+  modal.style.display = 'none';
 }
 
 //Hiển thị tên tài khoản hiện tại
@@ -54,44 +54,153 @@ editInfoModal.innerHTML = `
 const btnEdit = document.getElementById("btnEdit");
 
 btnEdit.addEventListener("click", () => {
-    let editLastNameValue = document.getElementById("editName").value;
-    let editEmailValue = document.getElementById("editEmail").value;
-    let editBirthdayValue = document.getElementById("editBirthday").value;
-    accNow.nameUser = editLastNameValue;
-    accNow.email = editEmailValue;
-    accNow.date = editBirthdayValue;
+  let editLastNameValue = document.getElementById("editName").value;
+  let editEmailValue = document.getElementById("editEmail").value;
+  let editBirthdayValue = document.getElementById("editBirthday").value;
 
-    listAcc.forEach(element => {
-        if(element.id === accNow.id){
+  if (!validBlank(editLastNameValue, editEmailValue, editBirthdayValue)) {
+    Swal.fire({
+      title: "Box input is not blank",
+      text: "email or usrname or birthday is blank",
+      icon: "error"
+    });
+  } else if (!isValidEmail(editEmailValue)) {
+    Swal.fire({
+      title: "Email format is incorrect",
+      text: "you email format is incorrect",
+      icon: "error"
+    });
+  } else {
+
+    Swal.fire({
+      title: "Do you want to save the changes?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Save",
+      denyButtonText: `Don't save`
+    }).then((result) => {
+      if (result.isConfirmed) {
+        accNow.nameUser = editLastNameValue;
+        accNow.email = editEmailValue;
+        accNow.date = editBirthdayValue;
+        listAcc.forEach(element => {
+          if (element.id === accNow.id) {
             element.nameUser = editLastNameValue;
             element.email = editEmailValue;
-            element.date =  editBirthdayValue;
-        }
+            element.date = editBirthdayValue;
+          }
+        });
+        localStorage.setItem("listAccount", JSON.stringify(listAcc));
+        localStorage.setItem("AccountNow", JSON.stringify(accNow));
+        Swal.fire({
+          title: "Saved!",
+          icon: "success",
+          timer: 1500,
+          showConfirmButton: false,
+          timerProgressBar: true
+        }).then(() => {
+          // closeModal("editInfoModal");
+          location.reload();
+        });
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+      }
     });
-    localStorage.setItem("listAccount", JSON.stringify(listAcc));
-    localStorage.setItem("AccountNow", JSON.stringify(accNow));
-    closeModal("editInfoModal");
-    location.reload();
+
+  }
 });
+
+//valid đổi thông tin
+
+function validBlank(name, email, date) {
+  if (name.length === 0 ||
+    email.length === 0 ||
+    date.length === 0) {
+    return false;
+  }
+  return true;
+}
+
+function isValidEmail(email) {
+  const regex = /^[a-zA-z0-9._%+-]+@[a-zA-Z0-9.]+\.(com)$/;
+  return regex.test(email);
+}
 
 // Đổi passwd
 const btnChangePass = document.getElementById("btnChangePass");
 
 
 btnChangePass.addEventListener("click", () => {
-    let currentPasswordValue = document.getElementById("currentPassword").value;
-    let newPasswordValue = document.getElementById("newPassword").value;
-    let confirmPasswordVlaue = document.getElementById("confirmPassword").value;
+  let currentPasswordValue = document.getElementById("currentPassword").value;
+  let newPasswordValue = document.getElementById("newPassword").value;
+  let confirmPasswordVlaue = document.getElementById("confirmPassword").value;
 
-    accNow.password = newPasswordValue;
-
-    listAcc.forEach(element => {
-        if(element.id === accNow.id){
-            element.password = newPasswordValue;
-        }
+  if (!validBlank(currentPasswordValue, newPasswordValue, confirmPasswordVlaue)) {
+    Swal.fire({
+      title: "Box input is not blank",
+      text: "email or usrname or birthday is blank",
+      icon: "error"
     });
-    localStorage.setItem("listAccount", JSON.stringify(listAcc));
-    localStorage.setItem("AccountNow", JSON.stringify(accNow));
-    closeModal("passwordModal");
-    location.reload();
+  } else if (!isValidPasswd(currentPasswordValue)) {
+    Swal.fire({
+      title: "Password format is incorrect",
+      text: "password must be 8 characters",
+      icon: "error"
+    });
+  } else if (!isRePasswd(newPasswordValue, confirmPasswordVlaue)) {
+    Swal.fire({
+      title: "rePassword is incorrect",
+      text: "Password does not match",
+      icon: "error"
+    });
+  } else {
+    Swal.fire({
+      title: "Do you want to save the changes?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Save",
+      denyButtonText: `Don't save`
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Saved!",
+          icon: "success",
+          timer: 1500,
+          showConfirmButton: false,
+          timerProgressBar: true
+        }).then(() => {
+          accNow.password = newPasswordValue;
+          listAcc.forEach(element => {
+            if (element.id === accNow.id) {
+              element.password = newPasswordValue;
+            }
+          });
+          localStorage.setItem("listAccount", JSON.stringify(listAcc));
+          localStorage.setItem("AccountNow", JSON.stringify(accNow));
+          closeModal("passwordModal");
+          location.reload();
+        });
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+      }
+    });
+  }
+  
 });
+
+//Valid đổi pass
+
+function isValidPasswd(passwd) {
+  if (passwd.length < 8) {
+    return false;
+  }
+  return true;
+}
+
+function isRePasswd(newpasswd, repasswd) {
+  if (newpasswd === repasswd) {
+    return true;
+  }
+  return false;
+}
+
