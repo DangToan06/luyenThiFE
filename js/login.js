@@ -1,11 +1,3 @@
-//KIỂM TRA TRÊN LOCAL CÓ MẢNG LƯU DANH SÁCH TÀI KHOẢN CHƯA NẾU CHƯA CÓ THÌ THÊM VÀO
-let Account ={};
-if (!localStorage.getItem("listAccount")) {
-    localStorage.setItem("listAccount", JSON.stringify(listAccount));
-} else {
-    listAccount = JSON.parse(localStorage.getItem("listAccount"));
-}
-
 // Animation chuyển trang giữa đăng nhập và đăng ký
 const loginSection = document.getElementById("login");
 const signUpSection = document.getElementById("sign-up");
