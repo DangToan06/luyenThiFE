@@ -1,4 +1,4 @@
-const listAccount = JSON.parse(localStorage.getItem("listAccount")) || [
+let listAccount = JSON.parse(localStorage.getItem("listAccount")) || [
     {
         id: 1,
         nameUser: "toàn",
@@ -30,7 +30,7 @@ const listAccount = JSON.parse(localStorage.getItem("listAccount")) || [
 
 
 
-const listQuestion = JSON.parse(localStorage.getItem("listQuestion")) || [
+let listQuestion = JSON.parse(localStorage.getItem("listQuestion")) || [
     {
         id: "q101",
         content: "HTML là viết tắt của cụm từ nào?",
@@ -273,7 +273,7 @@ const listQuestion = JSON.parse(localStorage.getItem("listQuestion")) || [
     }
 ];
 
-const listExam = JSON.parse(localStorage.getItem("listExam")) || [
+let listExam = JSON.parse(localStorage.getItem("listExam")) || [
     {
         id: "exam001",
         title: "Đề thi số 1",
