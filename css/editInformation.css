@@ -45,8 +45,6 @@
     border-radius: 50%;
     overflow: hidden;
     margin-bottom: 20px;
-    cursor: pointer;
-
   }
   .profile-image {
     width: 100%;
@@ -55,15 +53,24 @@
     pointer-events: none;
   }
 
-  .profile-image-container i{
-    background-color: black;
-    color: black;
-    
+  .profile-image-container button{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    background-color: #c6c6c6;
     position: absolute;
+    top: 480px;
+    left: 300px;
+    cursor: pointer;
   }
 
-  .camera-icon {
-    /* position: absolute; */
+  .profile-image-container i{
+    font-size: 1.5rem;
+  }
+
+  /* .camera-icon {
+    position: absolute;
     bottom: 15px;
     right: 15px;
     width: 40px;
@@ -75,7 +82,7 @@
     justify-content: center;
     cursor: pointer;
     pointer-events: none;
-  }
+  } */
   .form-group {
     margin-bottom: 15px;
   }
@@ -216,5 +223,16 @@
   }
   .modal-content {
     margin: 0 20px;
+  }
+  .profile-image-container button{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    background-color: #c6c6c6;
+    position: absolute;
+    top: 380px;
+    left: 260px;
+    cursor: pointer;
   }
 }
