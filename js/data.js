@@ -1,4 +1,4 @@
-let listAccount = JSON.parse(localStorage.getItem("listAccount")) || [
+const listAccount = JSON.parse(localStorage.getItem("listAccount")) || [
     {
         id: 1,
         nameUser: "toàn",
@@ -30,7 +30,7 @@ let listAccount = JSON.parse(localStorage.getItem("listAccount")) || [
 
 
 
-let listQuestion = JSON.parse(localStorage.getItem("listQuestion")) || [
+const listQuestion = JSON.parse(localStorage.getItem("listQuestion")) || [
     {
         id: "q101",
         content: "HTML là viết tắt của cụm từ nào?",
@@ -273,7 +273,7 @@ let listQuestion = JSON.parse(localStorage.getItem("listQuestion")) || [
     }
 ];
 
-let listExam = JSON.parse(localStorage.getItem("listExam")) || [
+const listExam = JSON.parse(localStorage.getItem("listExam")) || [
     {
         id: "exam001",
         title: "Đề thi số 1",
@@ -347,20 +347,3 @@ const listArticle = JSON.parse(localStorage.getItem("listArticle")) || [
     }
 ];
 
-if (!localStorage.getItem("listExam")) {
-    localStorage.setItem("listExam", JSON.stringify(listExam));
-} else {
-    listExam = JSON.parse(localStorage.getItem("listExam"));
-}
-
-if (!localStorage.getItem("listQuestion")) {
-    localStorage.setItem("listQuestion", JSON.stringify(listQuestion));
-} else {
-    listQuestion = JSON.parse(localStorage.getItem("listQuestion"));
-}
-
-if (!localStorage.getItem("listAccount")) {
-    localStorage.setItem("listAccount", JSON.stringify(listAccount));
-} else {
-    listAccount = JSON.parse(localStorage.getItem("listAccount"));
-}
