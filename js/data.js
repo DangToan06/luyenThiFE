@@ -5,7 +5,7 @@ const listAccount = JSON.parse(localStorage.getItem("listAccount")) || [
         date: "2025-05-15",
         email: "toan@gmail.com",
         password: "11111111",
-        status: true,
+        status: false,
         avta: "https://i.pinimg.com/474x/95/2f/a5/952fa53028d4770ddea0333d27550f8f.jpg"
     },
     {   

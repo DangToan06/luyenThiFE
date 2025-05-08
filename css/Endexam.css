@@ -200,8 +200,24 @@ body {
   margin-left: 8px;
 }
 
+/* Nút chuyển sang trang xem kết quả */
+
+.btn-show-result{
+  background-color: #BC2228;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  padding: 10px 20px;
+}
+
+.btn-show-result:hover{
+  background-color: #d73939;
+  cursor: pointer;
+}
+
+
 /* Footer */
-.footer {
+/* .footer {
   background-image: url("../assets/img/Screenshot\ 2025-04-22\ 102815.png");
   background-size: cover;
   color: white;
@@ -272,7 +288,7 @@ a {
 .copy {
   font-size: 12px;
   margin-top: 10px;
-}
+} */
 
 /* Mobile styles */
 @media screen and (max-width: 768px) {
@@ -322,7 +338,7 @@ a {
     font-size: 20px;
   }
 
-  .footer {
+  /* .footer {
     padding: 24px 16px;
     background-color: #1c1240;
     color: #fff;
@@ -347,5 +363,5 @@ a {
     display: block;
     object-fit: cover;
     border-radius: 0 !important;
-  }
+  } */
 }

@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const modal = document.getElementById(modalId);
         if (modal) modal.classList.remove('hidden');
     }
-
+    
     function closeModal(modalId) {
         const modal = document.getElementById(modalId);
         if (modal) modal.classList.add('hidden');
@@ -40,15 +40,17 @@ document.addEventListener('DOMContentLoaded', () => {
             switch (nameList) {
                 case "Students":
                     return `
-              <tr>
-                <td>${item.id}</td>
-                <td>${item.nameUser}</td>
-                <td>${item.email}</td>
-                <td>Student</td>
-                <td class="action-buttons">
-                  <button class="btn-delete">Lock</button>
-                </td>
-              </tr>`;
+                <tr>
+                     <td>${item.id}</td>
+                     <td>${item.nameUser}</td>
+                     <td>${item.email}</td>
+                     <td>Student</td>
+                     <td class="action-buttons">
+                 <button class="btn-delete" onclick="lockuser(${item.id})">
+                         ${item.status === true ? 'Lock' : 'Unlock'}
+                       </button>
+                     </td>
+                   </tr>`;
                 case "Exam-Question":
                     return `
               <tr>
@@ -412,20 +414,45 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         console.error('Không tìm thấy nút đóng modal (Students)');
     }
-
+  
     // Xử lý thêm tài khoản
     if (btnConfirmAdd && addAccountForm) {
         btnConfirmAdd.addEventListener('click', (e) => {
             e.preventDefault(); // Ngăn hành vi mặc định của nút
             if (addAccountForm.checkValidity()) {
                 const formData = new FormData(addAccountForm);
-                const username = formData.get('username');
+                const nameUser = formData.get('username');
                 const email = formData.get('email');
                 const password = formData.get('password');
 
-                // Logic xử lý thêm tài khoản (ví dụ: gửi dữ liệu đến server)
-                console.log('Dữ liệu tài khoản:', { username, email, password });
+               
+                const isDuplicate = listAccount.some(acc =>
+                    acc.username === nameUser || acc.email === email
+                );
 
+                if (isDuplicate) {
+                    alert('Tên tài khoản hoặc email đã tồn tại!');
+                    return;
+                }
+
+                // Tạo ID ngẫu nhiên
+                function generateRandomId() {
+                    const random3Digit = Math.floor(Math.random() * 900) + 100;
+                    let checkId = listAccount.some(acc => acc.id === random3Digit);
+                    return checkId ? generateRandomId() : random3Digit;
+                }
+
+                const newAccount = {
+                    id: generateRandomId(),
+                    nameUser: nameUser,
+                    email: email,
+                    password: password
+                };
+
+                listAccount.push(newAccount);
+                listAccount.reverse(); 
+                localStorage.setItem('listAccount', JSON.stringify(listAccount));
+                init(listAccount, 'Students', 'userTableBody'); 
                 // Đóng modal sau khi thêm
                 modalStudents.classList.add('hidden');
                 addAccountForm.reset(); // Reset form sau khi thêm
@@ -433,8 +460,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 addAccountForm.reportValidity(); // Hiển thị thông báo lỗi nếu form không hợp lệ
             }
         });
-    } else {
-        console.error('Không tìm thấy nút xác nhận hoặc form (Students)');
+        
     }
-
+    function lockuser(id) {
+        const user = listAccount.find(acc => acc.id === id);
+        console.log(id);
+        console.log(user);
+        if (user) {
+            user.status = !user.status; // Đảo ngược trạng thái
+            localStorage.setItem('listAccount', JSON.stringify(listAccount));
+            init(listAccount, 'Students', 'userTableBody'); 
+        }
+    }
+    window.lockuser = lockuser;
 });
