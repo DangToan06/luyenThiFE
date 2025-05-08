@@ -61,7 +61,7 @@ document.getElementById("prev-question").addEventListener("click", () => {
 
 //Đếm thời gian
 
-let totalTime = 25 * 60;
+let totalTime = 3;
 
 function updateTimer() {
     const minutes = Math.floor(totalTime / 60);
