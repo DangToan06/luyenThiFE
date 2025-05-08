@@ -1,6 +1,5 @@
 let listQuesDo = JSON.parse(localStorage.getItem("listSelectedQuestion"));
 let listSelectedAws = JSON.parse(localStorage.getItem("listSelectedAws"));
-
 // Hiển thị tất cả câu hỏi và hết quả 
 
 //render câu hỏi
@@ -76,3 +75,6 @@ function escapeHTML(str) {
     .replace(/'/g, "&#039;");
 }
 
+document.getElementById("internal-article").addEventListener('click', () => {
+  location.href = "Endexam.html";
+});
