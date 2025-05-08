@@ -8,26 +8,28 @@ function renderExam(list) {
 
     list.forEach(element => {
         renderListExam.innerHTML += `
-   <div class="exam-card">
-        <h3>${element.title}</h3>
-        <div class="info">
-            <div><i class="fa-solid fa-clock"></i>${element.durationMinutes} phút</div>
-            <div><i class="fa-solid fa-book-open"></i> 1 bài thi</div>
-        </div>
-        <div class="info">
-            <div><i class="fa-solid fa-comment-dots"></i>${element.totalQuest} câu hỏi</div>
-            <div><i class="fa-solid fa-users"></i>${element.member} học viên</div>
-        </div>
-        <button class="btn-do-exam">Làm bài</button>
-    </div> 
-`;
+           <div class="exam-card">
+                <h3>${element.title}</h3>
+                <div class="info">
+                    <div><i class="fa-solid fa-clock"></i>${element.durationMinutes} phút</div>
+                    <div><i class="fa-solid fa-book-open"></i> 1 bài thi</div>
+                </div>
+                <div class="info">
+                    <div><i class="fa-solid fa-comment-dots"></i>${element.totalQuest} câu hỏi</div>
+                    <div><i class="fa-solid fa-users"></i>${element.member} học viên</div>
+                </div>
+                <button class="btn-do-exam">Làm bài</button>
+            </div> 
+        `;
     });
 
     const btnDoExam = document.querySelectorAll(".btn-do-exam");
 
-    btnDoExam.forEach(enterBtn => {
+    btnDoExam.forEach((enterBtn,i) => {
         enterBtn.addEventListener("click", () => {
-            location.href = "http://127.0.0.1:5501/page/exam.html";
+            console.log(list[i]);
+            localStorage.setItem("examInProgress", JSON.stringify(list[i]));
+            location.href = "exam.html";
         });
     });
 }
@@ -110,7 +112,7 @@ renderPageNumber();
 const btnAvatar = document.getElementById("avatar");
 
 btnAvatar.addEventListener("click", () => {
-    location.href = "http://127.0.0.1:5501/page/editInformation.html";
+    location.href = "editInformation.html";
 });
 
 function searchExamQuestions() {

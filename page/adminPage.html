@@ -4,7 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css"
+    />
     <link rel="stylesheet" href="../css/admin.css" />
     <link rel="stylesheet" href="../css/nav.css" />
     <link rel="stylesheet" href="../css/footer.css" />
@@ -60,7 +63,11 @@
       <div class="acc-lang">
         <div class="language-wrapper">
           <button class="language-toggle">
-            <img src="../assets/img/global.png" alt="icon-global" class="icon-global" />
+            <img
+              src="../assets/img/global.png"
+              alt="icon-global"
+              class="icon-global"
+            />
             <span>VN</span>
             <i class="fa-solid fa-chevron-down"></i>
           </button>
@@ -83,7 +90,11 @@
         <!-- <img src="../assets/Dropdown.png" alt="avatar" class="avatar" /> -->
       </div>
       <i class="fa-solid fa-bars" id="menu-nav"></i>
-      <i class="fa-solid fa-xmark" style="display: none" id="close-menu-nav"></i>
+      <i
+        class="fa-solid fa-xmark"
+        style="display: none"
+        id="close-menu-nav"
+      ></i>
     </nav>
 
     <!-- Main Content -->
@@ -131,7 +142,9 @@
                 <img src="../assets/Dropdown.png" alt="Sarah Johnson" />
               </div>
               <div class="activity-content">
-                <p class="activity-text"><strong>Sarah Johnson</strong> submitted assignment</p>
+                <p class="activity-text">
+                  <strong>Sarah Johnson</strong> submitted assignment
+                </p>
                 <p class="activity-time">2 hours ago</p>
               </div>
             </div>
@@ -140,7 +153,9 @@
                 <img src="../assets/Dropdown.png" alt="Mike Peters" />
               </div>
               <div class="activity-content">
-                <p class="activity-text"><strong>Mike Peters</strong> joined Class 10-A</p>
+                <p class="activity-text">
+                  <strong>Mike Peters</strong> joined Class 10-A
+                </p>
                 <p class="activity-time">4 hours ago</p>
               </div>
             </div>
@@ -149,7 +164,9 @@
                 <img src="../assets/Dropdown.png" alt="Emma Wilson" />
               </div>
               <div class="activity-content">
-                <p class="activity-text"><strong>Emma Wilson</strong> updated profile</p>
+                <p class="activity-text">
+                  <strong>Emma Wilson</strong> updated profile
+                </p>
                 <p class="activity-time">6 hours ago</p>
               </div>
             </div>
@@ -295,6 +312,10 @@
     <section id="Exam-Question" class="none" style="width: 100%">
       <div class="admin-section main-container">
         <h2><i class="fa-solid fa-book-open"></i> Manage Exams</h2>
+        <div class="search-box">
+          <input type="text" id="searchExam" placeholder="Tìm kiếm bài thi...">
+          <i class="fas fa-search"></i>
+        </div>
         <button class="btn-add">Add New Exam</button>
         <table class="admin-table">
           <thead>
@@ -504,16 +525,31 @@
         <h3>Thêm Câu Hỏi Mới</h3>
         <form class="modal-form" id="addQuestionForm">
           <label>ID:</label>
-          <input type="text" id="addQuestionId" placeholder="Nhập ID (e.g., q201)" required />
+          <input
+            type="text"
+            id="addQuestionId"
+            placeholder="Nhập ID (e.g., q201)"
+            required
+          />
           <label>Câu hỏi:</label>
-          <input type="text" id="addQuestionText" placeholder="Nhập câu hỏi" required />
+          <input
+            type="text"
+            id="addQuestionText"
+            placeholder="Nhập câu hỏi"
+            required
+          />
           <label>Đáp án:</label>
           <input type="text" id="addAnswer1" placeholder="Đáp án 1" required />
           <input type="text" id="addAnswer2" placeholder="Đáp án 2" required />
           <input type="text" id="addAnswer3" placeholder="Đáp án 3" required />
           <input type="text" id="addAnswer4" placeholder="Đáp án 4" required />
           <label>Đáp án đúng:</label>
-          <input type="text" id="addCorrectAnswer" placeholder="Nhập đáp án đúng" required />
+          <input
+            type="text"
+            id="addCorrectAnswer"
+            placeholder="Nhập đáp án đúng"
+            required
+          />
           <div class="modal-actions">
             <button type="submit" class="btn-add-post">Lưu</button>
             <button type="button" class="btn-close">Đóng</button>
@@ -529,9 +565,19 @@
         <h3>Sửa Câu Hỏi</h3>
         <form class="modal-form" id="editQuestionForm">
           <label>ID:</label>
-          <input type="text" id="editQuestionId" placeholder="Nhập ID" readonly />
+          <input
+            type="text"
+            id="editQuestionId"
+            placeholder="Nhập ID"
+            readonly
+          />
           <label>Câu hỏi:</label>
-          <input type="text" id="editQuestionText" placeholder="Nhập câu hỏi" required />
+          <input
+            type="text"
+            id="editQuestionText"
+            placeholder="Nhập câu hỏi"
+            required
+          />
           <label>Đáp án 1:</label>
           <input type="text" id="editAnswer1" placeholder="Đáp án 1" required />
           <label>Đáp án 2:</label>
@@ -541,7 +587,12 @@
           <label>Đáp án 4:</label>
           <input type="text" id="editAnswer4" placeholder="Đáp án 4" required />
           <label>Đáp án đúng:</label>
-          <input type="text" id="editCorrectAnswer" placeholder="Nhập đáp án đúng" required />
+          <input
+            type="text"
+            id="editCorrectAnswer"
+            placeholder="Nhập đáp án đúng"
+            required
+          />
           <div class="modal-actions">
             <button type="submit" class="btn-add-post">Lưu</button>
             <button type="button" class="btn-close">Đóng</button>
@@ -555,9 +606,14 @@
       <div class="modal-overlay"></div>
       <div class="modal-content">
         <h3>Xóa Câu Hỏi</h3>
-        <p>Bạn có chắc chắn muốn xóa câu hỏi với ID: <span id="deleteQuestionId"></span>?</p>
+        <p>
+          Bạn có chắc chắn muốn xóa câu hỏi với ID:
+          <span id="deleteQuestionId"></span>?
+        </p>
         <div class="modal-actions">
-          <button type="button" class="btn-delete" id="confirmDelete">Xóa</button>
+          <button type="button" class="btn-delete" id="confirmDelete">
+            Xóa
+          </button>
           <button type="button" class="btn-close">Hủy</button>
         </div>
       </div>
@@ -568,9 +624,27 @@
       <div class="modal-content">
         <h3>Thêm Tài Khoản</h3>
         <form class="modal-form" id="addAccountForm">
-          <input type="text" name="username" placeholder="Nhập tên tài khoản" autocomplete="username" required />
-          <input type="email" name="email" placeholder="Nhập email" autocomplete="email" required />
-          <input type="password" name="password" placeholder="Nhập mật khẩu" autocomplete="new-password" required />
+          <input
+            type="text"
+            name="username"
+            placeholder="Nhập tên tài khoản"
+            autocomplete="username"
+            required
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Nhập email"
+            autocomplete="email"
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Nhập mật khẩu"
+            autocomplete="new-password"
+            required
+          />
         </form>
         <div class="modal-actions">
           <button type="button" class="btn-add-post" id="confirmAdd">Add</button>

@@ -1,4 +1,5 @@
-let listQues = JSON.parse(localStorage.getItem("listQuestion"));
+let listQues = JSON.parse(localStorage.getItem("questionInProgress"));
+renderBtnQues();
 
 let currentIndex = 0;
 let listSelectedQuestion = [];
@@ -7,26 +8,26 @@ let listSelectedAws = [];
 let questionButtons = document.querySelectorAll("#number-question button");
 
 // Chức năng hiện thị câu hỏi user chọn
-// function awsChoice() {
-//     document.querySelectorAll("#class-answer input[type='radio']").forEach(radio => {
+function awsChoice() {
+    document.querySelectorAll("#class-answer input[type='radio']").forEach(radio => {
 
-//         radio.addEventListener("change", function () {
-//             let allLabels = this.closest("#class-answer").querySelectorAll("label");
+        radio.addEventListener("change", function () {
+            let allLabels = this.closest("#class-answer").querySelectorAll("label");
 
-//             allLabels.forEach(label => {
-//                 label.style.backgroundColor = "";
-//                 label.style.fontWeight = "normal";
-//                 label.style.color = "";
-//             });
+            allLabels.forEach(label => {
+                label.style.backgroundColor = "";
+                label.style.fontWeight = "normal";
+                label.style.color = "";
+            });
 
-//             let selectedLabel = this.closest("label");
-//             selectedLabel.style.backgroundColor = " #BC2228";
-//             selectedLabel.style.color = " #fff";
-//             selectedLabel.style.fontWeight = "500";
+            let selectedLabel = this.closest("label");
+            selectedLabel.style.backgroundColor = " #BC2228";
+            selectedLabel.style.color = " #fff";
+            selectedLabel.style.fontWeight = "500";
 
-//         });
-//     });
-// }
+        });
+    });
+}
 
 document.getElementById("next-question").addEventListener("click", () => {
     // questionButtons[currentIndex].setAttribute("id", "question-did");
@@ -60,7 +61,7 @@ document.getElementById("prev-question").addEventListener("click", () => {
 
 //Đếm thời gian
 
-let totalTime = 25 * 60;
+let totalTime = 3;
 
 function updateTimer() {
     const minutes = Math.floor(totalTime / 60);
@@ -75,7 +76,7 @@ function updateTimer() {
         alert("Hết giờ! Bài thi sẽ được nộp tự động.");
         setTimeout(() => {
             addAwsAtLocal()
-            location.href = "http://127.0.0.1:5501/page/Endexam.html"
+            location.href = "Endexam.html"
         }, 1000);
     }
 }
@@ -99,7 +100,6 @@ function renderQuestion(index) {
     `;
     q.options.forEach((opt, i) => {
         const escaped = escapeHTML(opt);
-
         for (let i = 0; i < listSelectedAws.length; i++) {
             if (listSelectedAws[i].choice === opt) {
                 checked = "checked";
@@ -117,7 +117,6 @@ function renderQuestion(index) {
         // const checked = selectedAnswer === opt ? "checked" : "";
 
         html += `<label ${style}><input type="radio" name="question${index}" ${checked} value="${escaped}"><span>${escaped}</span></label>`;
-
 
     });
     html += `</ul>`;
@@ -142,7 +141,14 @@ function escapeHTML(str) {
         .replace(/'/g, "&#039;");
 }
 
+//Hiển thị số Nút câu hỏi
 
+function renderBtnQues() {
+    let btnQues = document.getElementById("number-question");
+    for (let i = 1; i < listQues.length; i++) {
+        btnQues.innerHTML += `<button>${i + 1}</button>`;
+    }
+}
 
 //Lưu kết quả người dùng
 // let answers = {};
@@ -167,32 +173,32 @@ let listAws = [];
 
 function bindAnswerEvents() {
     document.querySelectorAll('input[type="radio"]').forEach((radio) => {
-      radio.addEventListener('change', (e) => {
-        questionButtons[currentIndex].setAttribute("class", "question-selected");
+        radio.addEventListener('change', (e) => {
+            questionButtons[currentIndex].setAttribute("class", "question-selected");
 
-        //Lưu câu hỏi đxa làm
-        listAws.push(listQues[currentIndex]);
-        listSelectedQuestion = [...new Set(listAws)];
+            //Lưu câu hỏi 
+            listAws.push(listQues[currentIndex]);
+            listSelectedQuestion = [...new Set(listAws)];
 
-  
-        const selectedValue = e.target.value;
-        const questionId = listQues[currentIndex].id;
-  
-        // Kiểm tra xem câu hỏi đã tồn tại trong listSelectedAws chưa
-        const existingIndex = listSelectedAws.findIndex(item => item.id === questionId);
-  
-        if (existingIndex !== -1) {
-          // Nếu đã tồn tại thì cập nhật đáp án
-          listSelectedAws[existingIndex].choice = selectedValue;
-        } else {
-          // Nếu chưa có thì thêm mới
-          listSelectedAws.push({ id: questionId, choice: selectedValue });
-        }
-  
-        console.log(listSelectedAws);
-      });
+
+            const selectedValue = e.target.value;
+            const questionId = listQues[currentIndex].id;
+
+            // Kiểm tra xem câu hỏi đã tồn tại trong listSelectedAws chưa
+            const existingIndex = listSelectedAws.findIndex(item => item.id === questionId);
+
+            if (existingIndex !== -1) {
+                // Nếu đã tồn tại thì cập nhật đáp án
+                listSelectedAws[existingIndex].choice = selectedValue;
+            } else {
+                // Nếu chưa có thì thêm mới
+                listSelectedAws.push({ id: questionId, choice: selectedValue });
+            }
+
+            console.log(listSelectedAws);
+        });
     });
-  }
+}
 
 // Lưu các đáp án vừa làm trên localStorage
 
@@ -214,7 +220,7 @@ btnSubmit.addEventListener('click', () => {
     if (listSelectedQuestion.length === questionButtons.length) {
         setTimeout(() => {
             addAwsAtLocal();
-            location.href = "http://127.0.0.1:5501/page/Endexam.html"
+            location.href = "Endexam.html"
         }, 1000);
     } else {
         alert("So caau hoir banj lamf khoog du");
