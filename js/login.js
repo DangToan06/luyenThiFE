@@ -99,7 +99,7 @@ function validBlank(name, date, email, passwd, repasswd, checkboxSignUpValue) {
 }
 
 function isValidEmail(email) {
-    const regex = /^[a-zA-z0-9._%+-]+@[a-zA-Z0-9.]+\.(com)$/;
+    const regex = /^[a-zA-z0-9._%+-]+@gmail+\.(com)$/;
     return regex.test(email);
 }
 
@@ -181,16 +181,20 @@ btnLogin.addEventListener('click', () => {
     } else {
         //Lưu vị trí tài khoản hiện tại
 
-        listAccount.forEach( element => {
-            if(element.email === inputNameSignInValue){
+        listAccount.forEach(element => {
+            if (element.email === inputNameSignInValue) {
                 localStorage.setItem("AccountNow", JSON.stringify(element));
             }
         });
-
-        showSuccessful("Login successful");
-        setTimeout(() => {
-            window.location.href = "page/home.html";
-        }, 800)
+        let AccountNow = JSON.parse(localStorage.getItem("AccountNow"));
+        if (AccountNow.status === true) {
+            showSuccessful("Login successful");
+            setTimeout(() => {
+                window.location.href = "page/home.html";
+            }, 800)
+        }else {
+            showWarning("Account is locked");
+        }
     }
 
 });
