@@ -32,16 +32,18 @@ function awsChoice() {
 document.getElementById("next-question").addEventListener("click", () => {
     // questionButtons[currentIndex].setAttribute("id", "question-did");
     questionButtons[currentIndex].removeAttribute("id");
+    
+    
     currentIndex++;
-    renderQuestion(currentIndex);
+    console.log(currentIndex);
     if (currentIndex < questionButtons.length) {
         questionButtons[currentIndex].setAttribute("id", "working-question");
-    } else {
+    } else if(currentIndex >= questionButtons.length){
         currentIndex = 0;
         renderQuestion(currentIndex);
         questionButtons[currentIndex].setAttribute("id", "working-question");
-
     }
+    renderQuestion(currentIndex);
 });
 
 document.getElementById("prev-question").addEventListener("click", () => {
@@ -56,7 +58,6 @@ document.getElementById("prev-question").addEventListener("click", () => {
         questionButtons[currentIndex].setAttribute("id", "working-question");
     }
     renderQuestion(currentIndex);
-
 });
 
 //Đếm thời gian
