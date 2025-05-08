@@ -8,7 +8,7 @@ const listAccount = JSON.parse(localStorage.getItem("listAccount")) || [
         status: false,
         avta: "https://i.pinimg.com/474x/95/2f/a5/952fa53028d4770ddea0333d27550f8f.jpg"
     },
-    {   
+    {
         id: 2,
         nameUser: "quang",
         date: "2025-05-15",
@@ -17,7 +17,7 @@ const listAccount = JSON.parse(localStorage.getItem("listAccount")) || [
         status: true,
         avta: "https://i.pinimg.com/474x/95/2f/a5/952fa53028d4770ddea0333d27550f8f.jpg"
     },
-    {   
+    {
         id: 3,
         nameUser: "quangbeo",
         date: "2025-05-15",
@@ -277,7 +277,18 @@ const listExam = JSON.parse(localStorage.getItem("listExam")) || [
     {
         id: "exam001",
         title: "Đề thi số 1",
-        questionIds: [], // thêm id câu hỏi vào đây
+        questionIds: [
+            "q101",
+            "q102",
+            "q103",
+            "q104",
+            "q105",
+            "q106",
+            "q107",
+            "q108",
+            "q109",
+            "q101"
+        ], // thêm id câu hỏi vào đây
         durationMinutes: 30, // thời gian làm bài (phút)
         randomize: true, // có ngẫu nhiên câu hỏi hay không
         member: 1024, // tổng số học viên 
@@ -286,7 +297,18 @@ const listExam = JSON.parse(localStorage.getItem("listExam")) || [
     {
         id: "exam002",
         title: "Đề thi số 2",
-        questionIds: [],
+        questionIds: [
+            "q111",
+            "q112",
+            "q113",
+            "q114",
+            "q115",
+            "q116",
+            "q117",
+            "q118",
+            "q119",
+            "q120"
+        ],
         durationMinutes: 30,
         randomize: true,
         member: 1024,
@@ -295,7 +317,18 @@ const listExam = JSON.parse(localStorage.getItem("listExam")) || [
     {
         id: "exam003",
         title: "Đề thi số 3",
-        questionIds: [],
+        questionIds: [
+            "q201",
+            "q202",
+            "q203",
+            "q204",
+            "q205",
+            "q206",
+            "q207",
+            "q208",
+            "q209",
+            "q201"
+        ],
         durationMinutes: 30,
         randomize: true,
         member: 1024,
@@ -304,7 +337,18 @@ const listExam = JSON.parse(localStorage.getItem("listExam")) || [
     {
         id: "exam004",
         title: "Đề thi số 4",
-        questionIds: [],
+        questionIds: [
+            "q211",
+            "q212",
+            "q213",
+            "q214",
+            "q215",
+            "q216",
+            "q217",
+            "q218",
+            "q219",
+            "q220"
+        ],
         durationMinutes: 30,
         randomize: true,
         member: 1024,
@@ -347,3 +391,4 @@ const listArticle = JSON.parse(localStorage.getItem("listArticle")) || [
     }
 ];
 
+// localStorage.setItem("listExam", JSON.stringify(listExam))
