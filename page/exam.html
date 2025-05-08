@@ -14,34 +14,38 @@
 <body>
   <header>
     <nav class="header-page-admin">
-      <img src="../assets/img/logoRikkei.png" alt="logo" class="logo-head" onclick="homePage()"/>
-      <div class="acc-lang">
-        <div class="language-wrapper">
-          <button class="language-toggle">
-            <img src="../assets/img/global.png" alt="icon-global" class="icon-global" />
-            <span>VN</span>
-            <i class="fa-solid fa-chevron-down"></i>
-          </button>
-          <div class="language-dropdown">
-            <div class="language-option">
-              <img src="../assets/img/VN.png" alt="VN" />
-              Tiếng Việt
-            </div>
-            <div class="language-option">
-              <img src="../assets/img/JP.png" alt="JP" />
-              Tiếng Nhật
-            </div>
-            <div class="language-option">
-              <img src="../assets/img/GB.png" alt="EN" />
-              Tiếng Anh
+        <img src="../assets/img/logoRikkei.png" alt="logo" class="logo-head" onclick="homePage()" />
+        <div class="acc-lang">
+          <div class="language-wrapper">
+            <button class="language-toggle">
+              <img src="../assets/img/global.png" alt="icon-global" class="icon-global" />
+              <span>VN</span>
+              <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="language-dropdown">
+              <div class="language-option">
+                <img src="../assets/img/VN.png" alt="VN" />
+                Tiếng Việt
+              </div>
+              <div class="language-option">
+                <img src="../assets/img/JP.png" alt="JP" />
+                Tiếng Nhật
+              </div>
+              <div class="language-option">
+                <img src="../assets/img/GB.png" alt="EN" />
+                Tiếng Anh
+              </div>
             </div>
           </div>
+          <div class="divider"></div>
+          <img src="" alt="avatar" class="avatar" id="avatar" style="object-fit: cover;"/>
+          <div class="avatar-dropdown" id="avatar-dropdown" style="display: none;">
+            <div class="dropdown-option" onclick="viewProfile()">Thông Tin</div>
+            <div class="dropdown-option" onclick="signOut()"><button style="border: none; background-color: white; cursor: pointer; font-size: 20px;" onclick="signOutAdmin()" ><i class="fa-solid fa-right-from-bracket"></i></button>Đăng xuất</div>
+          </div> 
         </div>
-        <div class="divider"></div>
-        <img src="" alt="avatar" class="avatar" />
-      </div>
-      <i class="fa-solid fa-bars icon-menu" id="menu-nav"></i>
-      <i class="fa-solid fa-xmark" style="display: none;" id="close-menu-nav"></i>
+        <i class="fa-solid fa-bars" id="menu-nav"></i>
+        <i class="fa-solid fa-xmark" style="display: none;" id="close-menu-nav"></i>
     </nav>
 
     <div class="menu" id="menu" style="display: none;">

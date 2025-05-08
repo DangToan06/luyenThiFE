@@ -10,9 +10,9 @@ startBtn.addEventListener('click', () => {
     }, 500);
 });
 
-document.getElementById("logo-head").addEventListener('click', () => {
-    homePage();
-});
+// document.getElementById("logo-head").addEventListener('click', () => {
+//     homePage();
+// });
 
 document.getElementById("app-title").textContent = `${examInPro.title}`;
 

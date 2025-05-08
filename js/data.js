@@ -6,7 +6,7 @@ const listAccount = JSON.parse(localStorage.getItem("listAccount")) || [
         email: "toan@gmail.com",
         password: "11111111",
         status: false,
-        avta: "https://i.pinimg.com/474x/95/2f/a5/952fa53028d4770ddea0333d27550f8f.jpg"
+        avata: "https://i.pinimg.com/474x/95/2f/a5/952fa53028d4770ddea0333d27550f8f.jpg"
     },
     {
         id: 2,
@@ -15,7 +15,7 @@ const listAccount = JSON.parse(localStorage.getItem("listAccount")) || [
         email: "quangngu@gmail.com",
         password: "22222222",
         status: true,
-        avta: "https://i.pinimg.com/474x/95/2f/a5/952fa53028d4770ddea0333d27550f8f.jpg"
+        avata: "https://i.pinimg.com/474x/95/2f/a5/952fa53028d4770ddea0333d27550f8f.jpg"
     },
     {
         id: 3,
@@ -24,7 +24,7 @@ const listAccount = JSON.parse(localStorage.getItem("listAccount")) || [
         email: "quangbeo@gmail.com",
         password: "33333333",
         status: true,
-        avta: "https://i.pinimg.com/474x/95/2f/a5/952fa53028d4770ddea0333d27550f8f.jpg"
+        avata: "https://i.pinimg.com/474x/95/2f/a5/952fa53028d4770ddea0333d27550f8f.jpg"
     }
 ];
 
