@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="../css/doExam.css">
+    <link rel="stylesheet" href="../css/checkResult.css">
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/nav.css">
 </head>
@@ -78,25 +78,25 @@
                     <p id="topic">Lập trình</p>
                     <p id="name-question">Có thể không sử dụng CSS vẫn layout được hay không?</p>
                     <ul id="class-answer">
-                        <li><label style="background-color: #BC2228; color: #fff; font-weight: 500;"><input type="radio" name="question1" value="Đúng" checked><span>Đúng</span></label></li>
-                        <li><label><input type="radio" name="question1" value="Sai"><span>Sai</span></label></li>
-                        <li><label><input type="radio" name="question1" value="Vừa vừa"><span>Vừa vừa</span></label></li>
-                        <li><label><input type="radio" name="question1" value="Cả 3 đáp án trên đều đúng"><span>Cả 3 đáp án trên đều đúng</span></label></li>
+                        <li><label style="background-color: #BC2228; color: #fff; font-weight: 500;"><input type="radio" name="question1" value="Đúng" disabled><span>Đúng</span></label></li>
+                        <li><label><input type="radio" name="question1" value="Sai" disabled><span>Sai</span></label></li>
+                        <li><label><input type="radio" name="question1" value="Vừa vừa" disabled><span>Vừa vừa</span></label></li>
+                        <li><label><input type="radio" name="question1" value="Cả 3 đáp án trên đều đúng" disabled><span>Cả 3 đáp án trên đều đúng</span></label></li>
                     </ul>
                 </div>
-                <div style="display: flex; gap: 5%; justify-content: end; margin-top: 2%;">
+                <!-- <div style="display: flex; gap: 5%; justify-content: end; margin-top: 2%;">
                     <button id="prev-question">
                         <i class="fa-solid fa-arrow-right" style="rotate: 180deg;"></i>Câu trước </i>
                     </button>
                     <button id="next-question">
                         Câu tiếp theo <i class="fa-solid fa-arrow-right"></i>
                     </button>
-                </div>
+                </div> -->
             </div>
             <div id="question-navigation-section">
                 <div id="n">
                     <span id="time">
-                        <!-- <p><i class="fa-regular fa-clock" style="color: #ab1f24;"></i> 02:30:00</p> -->
+                        <p><i class="fa-regular fa-clock" style="color: #ab1f24;"></i> 00:00</p>
                     </span>
                     <p id="name-test">Đề thi số 1</p>
                     <p id="exam-time">Thời gian thi: 25 phút</p>
@@ -104,109 +104,9 @@
                 <div id="navigation">
                     <p id="list-questions">Danh sách câu hỏi</p>
                     <div id="number-question">
-                        <button id="working-question">1</button>
-                        <button>2</button>
-                        <button>3</button>
-                        <button>4</button>
-                        <button>5</button>
-                        <button>6</button>
-                        <button>7</button>
-                        <button>8</button>
-                        <button>9</button>
-                        <button>10</button>
-                        <button>11</button>
-                        <button>12</button>
-                        <button>13</button>
-                        <button>14</button>
-                        <button>15</button>
-                        <button>16</button>
-                        <button>17</button>
-                        <button>18</button>
-                        <button>19</button>
-                        <button>20</button>
-                        <button>21</button>
-                        <button>22</button>
-                        <button>23</button>
-                        <button>24</button>
-                        <button>25</button>
-                        <button>26</button>
-                        <button>27</button>
-                        <button>28</button>
-                        <button>29</button>
-                        <button>30</button>
-                        <!-- <button>31</button>
-                        <button>32</button>
-                        <button>33</button>
-                        <button>34</button>
-                        <button>35</button>
-                        <button>36</button>
-                        <button>37</button>
-                        <button>38</button>
-                        <button>39</button>
-                        <button>40</button>
-                        <button>41</button>
-                        <button>42</button>
-                        <button>43</button>
-                        <button>44</button>
-                        <button>45</button>
-                        <button>46</button>
-                        <button>47</button>
-                        <button>48</button>
-                        <button>49</button>
-                        <button>50</button>
-                        <button>51</button>
-                        <button>52</button>
-                        <button>53</button>
-                        <button>54</button>
-                        <button>55</button>
-                        <button>56</button>
-                        <button>57</button>
-                        <button>58</button>
-                        <button>59</button>
-                        <button>60</button>
-                        <button>61</button>
-                        <button>62</button>
-                        <button>63</button>
-                        <button>64</button>
-                        <button>65</button>
-                        <button>66</button>
-                        <button>67</button>
-                        <button>68</button>
-                        <button>69</button>
-                        <button>70</button>
-                        <button>71</button>
-                        <button>72</button>
-                        <button>73</button>
-                        <button>74</button>
-                        <button>75</button>
-                        <button>76</button>
-                        <button>77</button>
-                        <button>78</button>
-                        <button>79</button>
-                        <button>80</button>
-                        <button>81</button>
-                        <button>82</button>
-                        <button>83</button>
-                        <button>84</button>
-                        <button>85</button>
-                        <button>86</button>
-                        <button>87</button>
-                        <button>88</button>
-                        <button>89</button>
-                        <button>90</button>
-                        <button>91</button>
-                        <button>92</button>
-                        <button>93</button>
-                        <button>94</button>
-                        <button>95</button>
-                        <button>96</button>
-                        <button>97</button>
-                        <button>98</button>
-                        <button>99</button>
-                        <button>100</button> -->
+                        <!-- <button class = "wrongAws">1</button> -->
                     </div>
-                    <button id="internal-article"><i class="fa-regular fa-circle-up"></i> Nộp
-                        bài</button>
+                    <button id="internal-article"><i class="fa-regular fa-circle-up"></i> Kết quả</button>
                 </div>
 
             </div>
@@ -283,7 +183,7 @@
     <script src="../js/data.js"></script>
     <script src="../js/navMenu.js"></script>
     <script src="../js/changeLanguage.js"></script>
-    <script src="../js/doExam.js"></script>
+    <script src="../js/checkResult.js"></script>
     <script src="/js/turnPage.js"></script>
 </body>
 

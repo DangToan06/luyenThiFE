@@ -1,0 +1,76 @@
+let listQuesDo = JSON.parse(localStorage.getItem("listSelectedQuestion"));
+let listSelectedAws = JSON.parse(localStorage.getItem("listSelectedAws"));
+
+// Hiển thị tất cả câu hỏi và hết quả 
+
+//render câu hỏi
+
+renderQuestion();
+
+function renderQuestion() {
+  let questionDo = document.getElementById("homework-section");
+  questionDo.innerHTML = "";
+
+  listQuesDo.forEach((element, i) => {
+    let optionsHTML = "";
+
+    // Tìm đối tượng đã chọn theo ID
+    const answerObj = listSelectedAws.find(ans => ans.id === element.id);
+
+    element.options.forEach(opt => {
+      const escaped = escapeHTML(opt);
+      let checked = "";
+      let style = "";
+
+      // Nếu người dùng đã chọn câu này và đáp án là option hiện tại
+      if (answerObj && answerObj.choice === opt) {
+        checked = "checked";
+
+        // Tô màu theo đúng/sai
+        if (opt === element.correctAnswer) {
+          style = 'style="background: #039855; color: #fff; font-weight: 500;"'; // xanh: đúng
+        } else {
+          style = 'style="background: #BC2228; color: #fff; font-weight: 500;"'; // đỏ: sai
+        }
+      }
+
+      optionsHTML += `
+        <li>
+          <label ${style}>
+            <input type="radio" name="question${i}" value="${escaped}" ${checked} disabled>
+            <span>${escaped}</span>
+          </label>
+        </li>
+      `;
+    });
+
+    questionDo.innerHTML += `
+      <div id="containerQuestion" class="question">
+        <p id="question">Câu số ${i + 1}</p>
+        <p id="topic">Front-end</p>
+        <p id="topic">Lập trình</p>
+        <p id="name-question">${element.content}</p>
+        <ul id="class-answer">
+          ${optionsHTML}
+        </ul>
+      </div>
+    `;
+    renderBtnQues(i+1);
+  });
+}
+
+function renderBtnQues(i) {
+  let btnQues = document.getElementById("number-question");
+  btnQues.innerHTML += `<button>${i}</button>`;
+}
+
+
+function escapeHTML(str) {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
