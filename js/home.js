@@ -27,7 +27,7 @@ function renderExam(list) {
 
     btnDoExam.forEach(enterBtn => {
         enterBtn.addEventListener("click", () => {
-            location.href = "http://127.0.0.1:5501/page/exam.html";
+            location.href = "exam.html";
         });
     });
 }
@@ -110,7 +110,7 @@ renderPageNumber();
 const btnAvatar = document.getElementById("avatar");
 
 btnAvatar.addEventListener("click", () => {
-    location.href = "http://127.0.0.1:5501/page/editInformation.html";
+    location.href = "editInformation.html";
 });
 
 function searchExamQuestions() {

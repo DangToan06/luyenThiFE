@@ -60,7 +60,7 @@ document.getElementById("prev-question").addEventListener("click", () => {
 
 //Đếm thời gian
 
-let totalTime = 25 * 60;
+let totalTime = 3;
 
 function updateTimer() {
     const minutes = Math.floor(totalTime / 60);
@@ -75,7 +75,7 @@ function updateTimer() {
         alert("Hết giờ! Bài thi sẽ được nộp tự động.");
         setTimeout(() => {
             addAwsAtLocal()
-            location.href = "http://127.0.0.1:5501/page/Endexam.html"
+            location.href = "Endexam.html"
         }, 1000);
     }
 }
