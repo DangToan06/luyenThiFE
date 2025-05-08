@@ -109,11 +109,11 @@ renderPageNumber();
 
 // Chỉnh sửa thông tin người dùng 
 
-const btnAvatar = document.getElementById("avatar");
+// const btnAvatar = document.getElementById("avatar");
 
-btnAvatar.addEventListener("click", () => {
-    location.href = "editInformation.html";
-});
+// btnAvatar.addEventListener("click", () => {
+//     location.href = "editInformation.html";
+// });
 
 function searchExamQuestions() {
     let searchInput = document.getElementById("searchExam").value.toLowerCase();

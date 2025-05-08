@@ -1,5 +1,9 @@
 //Hiệu ứng nút menu ở head
-
+function avatar1() {
+    let acc = JSON.parse(localStorage.getItem("AccountNow"));
+    document.getElementById("avatar").src = acc.avata;
+}
+avatar1()
 const menuHeader = document.getElementById("menu-header");
 
 menuHeader.addEventListener('click', () => {
@@ -32,3 +36,18 @@ closeMenuNav.addEventListener('click', () => {
     menu.style.display = menuNavCheck ? "none" : "block";
     closeMenuNav.style.display = menuNavCheck ? "none" : "block";
 });
+const dropdown = document.getElementById("avatar-dropdown");
+
+avatar.addEventListener("click", () => {
+    dropdown.style.display = dropdown.style.display === "none" ? "block" : "none";
+});
+
+// Đóng dropdown nếu click ra ngoài
+document.addEventListener("click", (e) => {
+    if (!avatar.contains(e.target) && !dropdown.contains(e.target)) {
+        dropdown.style.display = "none";
+    }
+});
+
+
+

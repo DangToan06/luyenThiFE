@@ -165,8 +165,7 @@ toggleRePassword.addEventListener('click', () => {
 const btnLogin = document.getElementById("btn-login");
 
 btnLogin.addEventListener('click', () => {
-    let adminEmail = "quangvippro@gmail.com";
-    let adminPasswd = "quangvippro123";
+    
     let inputPasswdSignInValue = document.getElementById("input-passwd-sign-in").value;
     let inputNameSignInValue = document.getElementById("input-name-sign-in").value;
     if (inputNameSignInValue === adminEmail && inputPasswdSignInValue === adminPasswd) {
