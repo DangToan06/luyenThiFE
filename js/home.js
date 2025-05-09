@@ -123,3 +123,41 @@ function searchExamQuestions() {
     }   );
     renderExam(filteredList);   
 }
+
+function getTimeAgo(dateStr) {
+    const now = new Date();
+    const postDate = new Date(dateStr);
+    const diffTime = now - postDate;
+    const diffMonths = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 30));
+
+    if (diffMonths < 0) {
+        return `Còn ${Math.abs(diffMonths)} tháng nữa`;
+    }
+
+    return `${diffMonths} tháng trước`;
+}
+
+function renderArticles() {
+    const listPostElement = document.querySelector(".list-post");
+    listPostElement.innerHTML = "";
+
+    listArticle.forEach(article => {
+        const li = document.createElement("li");
+        li.classList.add("item-post");
+
+        li.innerHTML = `
+            <h4>${article.title}</h4>
+            <p>${article.content}</p>
+            <div class="time-minutes">
+                <i class="fa-solid fa-clock"></i>
+                <span>${getTimeAgo(article.date)}</span>
+                <i class="fas fa-book-open"></i>
+                <span>${article.time} phút đọc </span>
+            </div>
+        `;
+
+        listPostElement.appendChild(li);
+    });
+}
+
+document.addEventListener("DOMContentLoaded", renderArticles);

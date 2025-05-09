@@ -382,12 +382,22 @@ const listExam = JSON.parse(localStorage.getItem("listExam")) || [
         totalQuest: 10,
     }
 ];
-const listArticle = JSON.parse(localStorage.getItem("listArticle")) || [
+const listArticle = [
     {
-        id: "art001",
-        title: "Bài viết số 1",
+        id: 1,
+        title: "Authentication & Authorization",
         date: "2025-05-15",
-        content: "Nội dung bài viết số 1",
+        content: "Chào bạn! Nếu bạn đã là học viên khóa Pro của Rikkei Academy...",
+        author: "Admin",
+        time: "10"
+    },
+    {
+        id: 2,
+        title: "ReactJS Best Practices",
+        date: "2025-05-10",
+        content: "Các best practices trong ReactJS giúp bạn viết code tốt hơn...",
+        author: "Admin",
+        time: "15"
     }
 ];
 

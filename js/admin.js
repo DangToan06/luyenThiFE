@@ -1,3 +1,10 @@
+function formatRelativeDate(dateStr) {
+    const now = new Date();
+    const date = new Date(dateStr);
+    const months = (now.getFullYear() - date.getFullYear()) * 12 + (now.getMonth() - date.getMonth());
+    return `${Math.max(0, months)} months ago`;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     // Hàm mở modal
     function openModal(modalId) {
@@ -299,7 +306,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         init(listQuestion, 'Question', 'questionTableBody');
                         break;
                     case 'Article':
-                        init(listArticle, 'Article', 'articleTableBody');
+                        const articles = getArticleList();
+                        init(articles, 'Article', 'articleTableBody');
+
                         break;
                 }
             }
@@ -529,4 +538,148 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     window.lockuser = lockuser;
+
+    // Mở/đóng modal
+    function openModal(modal) { modal.classList.remove('hidden'); }
+    function closeModal(modal) { modal.classList.add('hidden'); }
+
+    // Modal
+    const modalAdd = document.querySelector('.modal-add');
+    const modalEdit = document.querySelector('.modal-edit');
+    const modalDelete = document.querySelector('.modal-delete');
+
+    // Form
+    const formAdd = document.querySelector('.modal-form-add');
+    const formEdit = document.querySelector('.modal-form-edit');
+
+    // Button
+    const btnAddPost = document.querySelector('#Article .btn-add');
+    const btnCloseAdd = modalAdd.querySelector('.btn-close');
+    const btnCloseEdit = modalEdit.querySelector('.btn-close');
+    const btnCloseDelete = modalDelete.querySelector('.btn-close-delete');
+    const btnConfirmDelete = modalDelete.querySelector('.btn-confirm-delete');
+
+    // ID tạm để chỉnh sửa/xóa
+    let currentEditId = null;
+    let currentDeleteId = null;
+
+    // Nút mở modal
+    btnAddPost.addEventListener('click', () => openModal(modalAdd));
+    btnCloseAdd.addEventListener('click', () => closeModal(modalAdd));
+    btnCloseEdit.addEventListener('click', () => closeModal(modalEdit));
+    btnCloseDelete.addEventListener('click', () => closeModal(modalDelete));
+
+    // Thêm bài viết
+    formAdd.addEventListener('submit', e => {
+        e.preventDefault();
+        const [title, content, time, author] = [...formAdd.querySelectorAll('input')].map(i => i.value.trim());
+        const today = new Date().toISOString().split('T')[0];
+
+        if (!title || !content || !time || !author || isNaN(time) || time < 5 || time > 120 || /[a-zA-Z]/.test(time)) {
+            showErrorModal('Vui lòng nhập đầy đủ và hợp lệ');
+            return;
+        }
+
+
+        const articles = getArticleList();
+        const newId = articles.length > 0 ? Math.max(...articles.map(a => a.id)) + 1 : 1;
+        articles.unshift({ id: newId, title, content, date: today, time, author });
+        closeModal(modalAdd);
+        saveArticleList(articles);
+        init(articles, 'Article', 'articleTableBody');
+
+    });
+
+    // Sửa & Xóa bằng delegation
+    document.getElementById('articleTableBody').addEventListener('click', e => {
+        const target = e.target.closest('button');
+        if (!target) return;
+
+        const id = +target.dataset.id;
+        const list = JSON.parse(localStorage.getItem('listArticle')) || [];
+        const article = list.find(a => a.id === id);
+        if (!article) return;
+
+        if (target.classList.contains('btn-edit')) {
+            currentEditId = id;
+            formEdit.title.value = article.title;
+            formEdit.content.value = article.content;
+            formEdit.date.value = article.date;
+            formEdit.time.value = article.time;
+            formEdit.author.value = article.author;
+            openModal(modalEdit);
+        }
+
+        if (target.classList.contains('btn-delete')) {
+            currentDeleteId = id;
+            openModal(modalDelete);
+        }
+    });
+
+    // Cập nhật bài viết
+    formEdit.addEventListener('submit', e => {
+        e.preventDefault();
+        const [title, content, date, time, author] = [
+            formEdit.title.value.trim(),
+            formEdit.content.value.trim(),
+            formEdit.date.value,
+            formEdit.time.value.trim(),
+            formEdit.author.value.trim()
+        ];
+
+        if (!title || !content || !date || !time || !author || isNaN(time) || time < 5 || time > 120 || /[a-zA-Z]/.test(time)) {
+            showErrorModal('Thông tin không hợp lệ');
+            return;
+        }
+
+        const articles = getArticleList();
+        const index = articles.findIndex(a => a.id === currentEditId);
+        if (index !== -1) {
+            articles[index] = { id: currentEditId, title, content, date, time, author };
+            saveArticleList(articles);
+            closeModal(modalEdit);
+            init(articles, 'Article', 'articleTableBody');
+        }
+
+
+    });
+
+    // Xóa bài viết
+    btnConfirmDelete.addEventListener('click', () => {
+
+        let articles = getArticleList();
+        articles = articles.filter(a => a.id !== currentDeleteId);
+        saveArticleList(articles);
+        closeModal(modalDelete);
+        init(articles, 'Article', 'articleTableBody');
+
+    });
+
 });
+
+// document.addEventListener('DOMContentLoaded', () => {
+
+// });
+
+
+function showErrorModal(message) {
+    const errorModal = document.querySelector('.modal-error');
+    const notification = document.getElementById('notification');
+
+    if (errorModal && notification) {
+        notification.textContent = message || 'Có lỗi xảy ra';
+        errorModal.classList.add('show');
+        setTimeout(() => {
+            errorModal.classList.remove('show');
+        }, 1500);
+    }
+}
+
+
+function getArticleList() {
+    return JSON.parse(localStorage.getItem('listArticle')) || [];
+}
+
+function saveArticleList(list) {
+    localStorage.setItem('listArticle', JSON.stringify(list));
+}

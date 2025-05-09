@@ -398,7 +398,7 @@
           <span id="Question-pageNumbers"></span>
           <button id="Question-nextPage">&rsaquo;</button>
           <button id="Question-lastPage">&raquo;</button>
-        </div>
+        </div>      
       </div>
     </section>
     <!-- bài viết -->
@@ -421,12 +421,12 @@
           </tbody>
         </table>
         <div class="pagination">
-          <button id="firstPage">&laquo;</button>
-          <button id="prevPage">&lsaquo;</button>
-          <span id="pageNumbers"></span>
-          <button id="nextPage">&rsaquo;</button>
-          <button id="lastPage">&raquo;</button>
-        </div>
+          <button id="Article-firstPage">&laquo;</button>
+          <button id="Article-prevPage">&lsaquo;</button>
+          <span id="Article-pageNumbers"></span>
+          <button id="Article-nextPage">&rsaquo;</button>
+          <button id="Article-lastPage">&raquo;</button>
+        </div>  
       </div>
     </section>
 
@@ -440,10 +440,8 @@
           <input type="text" />
           <label>Nội dung:</label>
           <input type="text" />
-          <label>Ngày đăng:</label>
-          <input type="date" />
           <label>Thời gian đọc (phút):</label>
-          <input type="number" min="5" max="120" />
+          <input type="text" min="5" max="120" />
           <label>Tác giả:</label>
           <input type="text" />
           <div class="modal-actions">
@@ -467,7 +465,7 @@
           <label>Ngày đăng:</label>
           <input type="date" name="date" />
           <label>Thời gian đọc (phút):</label>
-          <input type="number" name="time" min="5" max="50" />
+          <input type="text" name="time" min="5" max="120" />
           <label>Tác giả:</label>
           <input type="text" name="author" />
           <div class="modal-actions">
