@@ -1,4 +1,4 @@
-let listQuesDo = JSON.parse(localStorage.getItem("listSelectedQuestion"));
+let listQuesDo = JSON.parse(localStorage.getItem("questionInProgress"));
 let listSelectedAws = JSON.parse(localStorage.getItem("listSelectedAws"));
 let questionTrue = 0;
 

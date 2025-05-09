@@ -215,6 +215,7 @@ function changeAvatar() {
             element.avata = avatar;
         }
     });
+    localStorage.setItem("listAccount", JSON.stringify(listAccount));
     avatar1();
     document.getElementById("profile-image").src = avatar;
     closeModal('avatarModal') 

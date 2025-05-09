@@ -168,13 +168,13 @@ btnLogin.addEventListener('click', () => {
     
     let inputPasswdSignInValue = document.getElementById("input-passwd-sign-in").value;
     let inputNameSignInValue = document.getElementById("input-name-sign-in").value;
-    if (inputNameSignInValue === adminEmail && inputPasswdSignInValue === adminPasswd) {
-        console.log("login as admin");
-        showSuccessful("Login ADMIN");
-        setTimeout(() => {
-            window.location.href = "page/adminPage.html";
-        }, 800);
-    }
+    // if (inputNameSignInValue === adminEmail && inputPasswdSignInValue === adminPasswd) {
+    //     console.log("login as admin");
+    //     showSuccessful("Login ADMIN");
+    //     setTimeout(() => {
+    //         window.location.href = "page/adminPage.html";
+    //     }, 800);
+    // }
     if (!searchAccInList(inputNameSignInValue, inputPasswdSignInValue)) {
         showWarning("Email or password incorrect");
     } else {

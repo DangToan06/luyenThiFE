@@ -1,4 +1,5 @@
 let listQues = JSON.parse(localStorage.getItem("questionInProgress"));
+let examInPro = JSON.parse(localStorage.getItem("examInProgress"));
 renderBtnQues();
 
 let currentIndex = 0;
@@ -62,7 +63,7 @@ document.getElementById("prev-question").addEventListener("click", () => {
 
 //Đếm thời gian
 
-let totalTime = 3;
+let totalTime = examInPro.durationMinutes * 60; // Thời gian thi (giây)
 
 function updateTimer() {
     const minutes = Math.floor(totalTime / 60);

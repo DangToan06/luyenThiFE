@@ -29,11 +29,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Hàm tạo ID tự động cho câu hỏi
-    function generateQuestionId(questions) {
-        if (questions.length === 0) return '1';
-        const maxId = Math.max(...questions.map(q => parseInt(q.id, 10)));
-        return (maxId + 1).toString();
-    }
+   function generateQuestionId(questions) {
+    let newId;
+    let existingIds = new Set(questions.map(q => q.id));
+    do {
+        const randomNum = Math.floor(Math.random() * 900) + 100; // Tạo số ngẫu nhiên từ 100 đến 999
+        newId = `q${randomNum}`;
+    } while (existingIds.has(newId)); // Lặp đến khi tạo ra ID chưa bị trùng
+    return newId;
+}
 
     // Hàm gắn sự kiện cho bảng Question
     function setupQuestionTableEvents() {
@@ -86,13 +90,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     editCorrectAnswer.value = question.correctAnswer || '';
                     editQuestionId.value = question.id; // Lưu ID vào input ẩn để sử dụng khi submit
 
-                    openModal('editQuestionModal');
+                    openModalQues('editQuestionModal');
                 } else {
                     console.error(`Question with ID ${id} not found in listQuestion`);
                 }
             } else if (button.classList.contains('btn-delete')) {
                 console.log('Delete button clicked');
-                openModal('deleteQuestionModal');
+                openModalQues('deleteQuestionModal');
 
                 // Xử lý xác nhận xóa
                 const confirmDelete = document.getElementById('confirmDelete');
@@ -108,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             init(listQuestion, 'Question', 'questionTableBody');
 
                             // Đóng modal
-                            closeModal('deleteQuestionModal');
+                            closeModalQues('deleteQuestionModal');
                         }
                     };
                 } else {
@@ -146,15 +150,12 @@ document.addEventListener('DOMContentLoaded', () => {
             itemsToShow.forEach((item) => {
                 contentList.innerHTML += generateRow(item, nameList);
             });
-
             renderPagination();
-
             // Gắn lại sự kiện cho bảng Question
             if (nameList === 'Question') {
                 setupQuestionTableEvents();
             }
         }
-
         function generateRow(item, nameList) {
             switch (nameList) {
                 case "Students":
@@ -166,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <td>Student</td>
                         <td class="action-buttons">
                             <button class="btn-delete" onclick="lockuser(${item.id})">
-                                ${item.status === true ? 'Lock' : 'Unlock'}
+                                 ${item.status === true ? '<i class="fa-solid fa-lock-open"></i>' : '<i class="fa-solid fa-lock"></i>'}
                             </button>
                         </td>
                     </tr>`;
@@ -178,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <td>${item.durationMinutes} minutes</td>
                         <td>${item.totalQuest}</td>
                         <td class="action-buttons">
-                            <button class="btn-edit">Edit</button>
+                            <i class="fa-solid fa-pen-to-square"></i>
                             <button class="btn-delete">Delete</button>
                         </td>
                     </tr>`;
@@ -195,15 +196,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 case "Article":
                     return `
                     <tr>
-                        <td>${item.id}</td>
-                        <td>${item.title}</td>
-                        <td>${item.date || 'N/A'}</td>
-                        <td>Admin</td>
-                        <td class="action-buttons">
-                            <button class="btn-edit">Edit</button>
-                            <button class="btn-delete">Delete</button>
-                        </td>
-                    </tr>`;
+                    <td>${item.id}</td>
+                    <td>${item.title}</td>
+                    <td>${item.date}</td>
+                    <td>${item.author}</td>
+                    <td class="action-buttons">
+                      <button class="btn-edit" data-id="${item.id}"><i class="fa-solid fa-pen-to-square" style="color: #3e1ce9;"></i></button>
+                      <button class="btn-delete" data-id="${item.id}"><i class="fa-solid fa-trash" style="color: #ff0000;"></i></button>
+                    </td>
+                  </tr>`;
                 default:
                     return '';
             }
@@ -380,7 +381,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Tải lại bảng với phân trang
             init(listQuestion, 'Question', 'questionTableBody');
-            closeModal('addQuestionModal');
+            closeModalQues('addQuestionModal');
             addQuestionForm.reset();
         });
     }
@@ -408,7 +409,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Tải lại bảng với phân trang
                 init(listQuestion, 'Question', 'questionTableBody');
-                closeModal('editQuestionModal');
+                closeModalQues('editQuestionModal');
             }
         });
     }
@@ -418,7 +419,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnCloseEditQuestion) {
         btnCloseEditQuestion.addEventListener('click', () => {
             console.log('Close button clicked in editQuestionModal'); // Debug
-            closeModal('editQuestionModal');
+            closeModalQues('editQuestionModal');
         });
     } else {
         console.error('Không tìm thấy nút đóng modal (Edit Question)');
@@ -429,7 +430,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnCancelDeleteQuestion) {
         btnCancelDeleteQuestion.addEventListener('click', () => {
             console.log('Close button clicked in deleteQuestionModal'); // Debug
-            closeModal('deleteQuestionModal');
+            closeModalQues('deleteQuestionModal');
         });
     } else {
         console.error('Không tìm thấy nút hủy modal (Delete Question)');
@@ -540,6 +541,9 @@ document.addEventListener('DOMContentLoaded', () => {
     window.lockuser = lockuser;
 
     // Mở/đóng modal
+function openModalQues(modal) { document.getElementById(modal).classList.remove('hidden'); }
+    function closeModalQues(modal) { document.getElementById(modal).classList.add('hidden'); }
+    
     function openModal(modal) { modal.classList.remove('hidden'); }
     function closeModal(modal) { modal.classList.add('hidden'); }
 
