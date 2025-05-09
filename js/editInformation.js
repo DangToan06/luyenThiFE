@@ -204,3 +204,19 @@ function isRePasswd(newpasswd, repasswd) {
   return false;
 }
 
+document.getElementById("profile-image").src = accNow.avata;
+function changeAvatar() {
+    event.preventDefault();
+    const avatar = document.getElementById("avatarUrl").value;
+    accNow.avata = avatar;
+    localStorage.setItem("AccountNow", JSON.stringify(accNow));
+    listAccount.forEach(element => {
+        if (element.id === accNow.id) {
+            element.avata = avatar;
+        }
+    });
+    avatar1();
+    document.getElementById("profile-image").src = avatar;
+    closeModal('avatarModal') 
+}
+

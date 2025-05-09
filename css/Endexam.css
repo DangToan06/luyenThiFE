@@ -140,6 +140,11 @@ body {
   cursor: pointer;
   font-weight: 500;
   color: #666;
+  transition: box-shadow 0.5s ease;
+}
+
+.app-tab:hover{
+  box-shadow: 1px 1px 15px #babbbd;
 }
 
 .app-tab.active {
@@ -208,13 +213,20 @@ body {
   border-radius: 5px;
   color: #fff;
   padding: 10px 20px;
+  font-weight: bolder;
+  transition: box-shadow 0.5s ease;
 }
 
 .btn-show-result:hover{
   background-color: #d73939;
   cursor: pointer;
+  box-shadow: 1px 1px 15px #babbbd;
 }
 
+.scoreText{
+  position: relative;
+  top: -90px;
+}
 
 /* Footer */
 /* .footer {
@@ -321,7 +333,6 @@ a {
   }
 
   .app-tab {
-    width: 100%;
     text-align: center;
   }
 

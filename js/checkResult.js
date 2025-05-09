@@ -1,6 +1,5 @@
 let listQuesDo = JSON.parse(localStorage.getItem("listSelectedQuestion"));
 let listSelectedAws = JSON.parse(localStorage.getItem("listSelectedAws"));
-
 // Hiển thị tất cả câu hỏi và hết quả 
 
 //render câu hỏi
@@ -13,7 +12,6 @@ function renderQuestion() {
 
   listQuesDo.forEach((element, i) => {
     let optionsHTML = "";
-
     // Tìm đối tượng đã chọn theo ID
     const answerObj = listSelectedAws.find(ans => ans.id === element.id);
 
@@ -21,15 +19,19 @@ function renderQuestion() {
       const escaped = escapeHTML(opt);
       let checked = "";
       let style = "";
-
+      let styleBtn = "";
       // Nếu người dùng đã chọn câu này và đáp án là option hiện tại
       if (answerObj && answerObj.choice === opt) {
         checked = "checked";
 
         // Tô màu theo đúng/sai
         if (opt === element.correctAnswer) {
+          styleBtn = `style="border: 1px solid #039855;background: #ECFDF3;color: #039855;"`
+          renderBtnQues(i + 1, styleBtn);
           style = 'style="background: #039855; color: #fff; font-weight: 500;"'; // xanh: đúng
         } else {
+          styleBtn = `style="border: 1px solid #BC2228;background: #FFF6F7;color: #BC2228;"`
+          renderBtnQues(i + 1, styleBtn);
           style = 'style="background: #BC2228; color: #fff; font-weight: 500;"'; // đỏ: sai
         }
       }
@@ -55,13 +57,12 @@ function renderQuestion() {
         </ul>
       </div>
     `;
-    renderBtnQues(i+1);
   });
 }
 
-function renderBtnQues(i) {
+function renderBtnQues(i, style) {
   let btnQues = document.getElementById("number-question");
-  btnQues.innerHTML += `<button>${i}</button>`;
+  btnQues.innerHTML += `<button ${style}>${i}</button>`;
 }
 
 
@@ -74,3 +75,6 @@ function escapeHTML(str) {
     .replace(/'/g, "&#039;");
 }
 
+document.getElementById("internal-article").addEventListener('click', () => {
+  location.href = "Endexam.html";
+});
