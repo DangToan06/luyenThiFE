@@ -1,12 +1,114 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Hàm mở modal
     function openModal(modalId) {
         const modal = document.getElementById(modalId);
-        if (modal) modal.classList.remove('hidden');
+        if (modal) {
+            modal.classList.remove('hidden');
+            console.log(`Modal ${modalId} opened`); // Debug
+        } else {
+            console.error(`Modal with ID ${modalId} not found`);
+        }
     }
-    
+
+    // Hàm đóng modal
     function closeModal(modalId) {
         const modal = document.getElementById(modalId);
-        if (modal) modal.classList.add('hidden');
+        if (modal) {
+            modal.classList.add('hidden');
+            console.log(`Modal ${modalId} closed`); // Debug
+        } else {
+            console.error(`Modal with ID ${modalId} not found`);
+        }
+    }
+
+    // Hàm tạo ID tự động cho câu hỏi
+    function generateQuestionId(questions) {
+        if (questions.length === 0) return '1';
+        const maxId = Math.max(...questions.map(q => parseInt(q.id, 10)));
+        return (maxId + 1).toString();
+    }
+
+    // Hàm gắn sự kiện cho bảng Question
+    function setupQuestionTableEvents() {
+        const table = document.querySelector('#Question .admin-table');
+        if (!table) {
+            console.error('Table #Question .admin-table not found');
+            return;
+        }
+
+        table.addEventListener('click', (e) => {
+            console.log('Click detected:', e.target); // Debug
+            const button = e.target.closest('button');
+            if (!button) return;
+
+            const row = button.closest('tr');
+            if (!row) {
+                console.error('Row not found for button');
+                return;
+            }
+            const id = row.cells[0].textContent;
+
+            if (button.classList.contains('btn-edit')) {
+                console.log('Edit button clicked'); // Debug
+                console.log('Editing question ID:', id); // Debug
+
+                // Lấy câu hỏi từ listQuestion
+                const question = listQuestion.find(q => q.id === id);
+
+                if (question) {
+                    console.log('Question found:', question); // Debug
+                    // Điền dữ liệu vào modal sửa
+                    const editQuestionText = document.getElementById('editQuestionText');
+                    const editAnswer1 = document.getElementById('editAnswer1');
+                    const editAnswer2 = document.getElementById('editAnswer2');
+                    const editAnswer3 = document.getElementById('editAnswer3');
+                    const editAnswer4 = document.getElementById('editAnswer4');
+                    const editCorrectAnswer = document.getElementById('editCorrectAnswer');
+                    const editQuestionId = document.getElementById('editQuestionId');
+
+                    if (!editQuestionText || !editAnswer1 || !editAnswer2 || !editAnswer3 || !editAnswer4 || !editCorrectAnswer || !editQuestionId) {
+                        console.error('One or more form elements not found in editQuestionModal');
+                        return;
+                    }
+
+                    editQuestionText.value = question.content || '';
+                    editAnswer1.value = question.options && question.options[0] ? question.options[0] : '';
+                    editAnswer2.value = question.options && question.options[1] ? question.options[1] : '';
+                    editAnswer3.value = question.options && question.options[2] ? question.options[2] : '';
+                    editAnswer4.value = question.options && question.options[3] ? question.options[3] : '';
+                    editCorrectAnswer.value = question.correctAnswer || '';
+                    editQuestionId.value = question.id; // Lưu ID vào input ẩn để sử dụng khi submit
+
+                    openModal('editQuestionModal');
+                } else {
+                    console.error(`Question with ID ${id} not found in listQuestion`);
+                }
+            } else if (button.classList.contains('btn-delete')) {
+                console.log('Delete button clicked');
+                openModal('deleteQuestionModal');
+
+                // Xử lý xác nhận xóa
+                const confirmDelete = document.getElementById('confirmDelete');
+                if (confirmDelete) {
+                    confirmDelete.onclick = () => {
+                        // Xóa câu hỏi khỏi listQuestion
+                        const index = listQuestion.findIndex(q => q.id === id);
+                        if (index !== -1) {
+                            listQuestion.splice(index, 1);
+                            localStorage.setItem('listQuestion', JSON.stringify(listQuestion));
+
+                            // Tải lại bảng với phân trang
+                            init(listQuestion, 'Question', 'questionTableBody');
+
+                            // Đóng modal
+                            closeModal('deleteQuestionModal');
+                        }
+                    };
+                } else {
+                    console.error('Element #confirmDelete not found');
+                }
+            }
+        });
     }
 
     // Hàm init cho phân trang
@@ -17,6 +119,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const totalPages = Math.ceil(totalItems / itemsPerPage);
 
         const contentList = document.getElementById(nameId);
+        if (!contentList) {
+            console.error(`Content list with ID ${nameId} not found`);
+            return;
+        }
+
         const firstPageBtn = document.getElementById(`${nameList}-firstPage`);
         const prevPageBtn = document.getElementById(`${nameList}-prevPage`);
         const nextPageBtn = document.getElementById(`${nameList}-nextPage`);
@@ -34,57 +141,62 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             renderPagination();
+
+            // Gắn lại sự kiện cho bảng Question
+            if (nameList === 'Question') {
+                setupQuestionTableEvents();
+            }
         }
 
         function generateRow(item, nameList) {
             switch (nameList) {
                 case "Students":
                     return `
-                <tr>
-                     <td>${item.id}</td>
-                     <td>${item.nameUser}</td>
-                     <td>${item.email}</td>
-                     <td>Student</td>
-                     <td class="action-buttons">
-                 <button class="btn-delete" onclick="lockuser(${item.id})">
-                         ${item.status === true ? 'Lock' : 'Unlock'}
-                       </button>
-                     </td>
-                   </tr>`;
+                    <tr>
+                        <td>${item.id}</td>
+                        <td>${item.nameUser}</td>
+                        <td>${item.email}</td>
+                        <td>Student</td>
+                        <td class="action-buttons">
+                            <button class="btn-delete" onclick="lockuser(${item.id})">
+                                ${item.status === true ? 'Lock' : 'Unlock'}
+                            </button>
+                        </td>
+                    </tr>`;
                 case "Exam-Question":
                     return `
-              <tr>
-                <td>${item.id}</td>
-                <td>${item.title}</td>
-                <td>${item.durationMinutes} minutes</td>
-                <td>${item.totalQuest}</td>
-                <td class="action-buttons">
-                  <button class="btn-edit">Edit</button>
-                  <button class="btn-delete">Delete</button>
-                </td>
-              </tr>`;
+                    <tr>
+                        <td>${item.id}</td>
+                        <td>${item.title}</td>
+                        <td>${item.durationMinutes} minutes</td>
+                        <td>${item.totalQuest}</td>
+                        <td class="action-buttons">
+                            <button class="btn-edit">Edit</button>
+                            <button class="btn-delete">Delete</button>
+                        </td>
+                    </tr>`;
                 case "Question":
                     return `
-              <tr>
-                <td>${item.id}</td>
-                <td>${item.content}</td>
-                <td class="action-buttons">
-                  <button class="btn-edit">Edit</button>
-                  <button class="btn-delete">Delete</button>
-                </td>
-              </tr>`;
+                    <tr>
+                        <td>${item.id}</td>
+                        <td>${item.content}</td>
+                        <td class="action-buttons">
+                            <button class="btn-edit" data-id="${item.id}"><i class="fa-solid fa-pen-to-square" style="color: #3e1ce9;"></i></button>
+                            <button class="btn-delete" data-id="${item.id}"><i class="fa-solid fa-trash" style="color: #ff0000;"></i></button>
+                        </td>
+                    </tr>`;
                 case "Article":
                     return `
-              <tr>
-                <td>${item.id}</td>
-                <td>${item.title}</td>
-                <td>${item.date || 'N/A'}</td>
-                <td>Admin</td>
-                <td class="action-buttons">
-                  <button class="btn-edit">Edit</button>
-                  <button class="btn-delete">Delete</button>
-                </td>
-              </tr>`;
+                    <tr>
+                        <td>${item.id}</td>
+                        <td>${item.title}</td>
+                        <td>${item.date || 'N/A'}</td>
+                        <td>Admin</td>
+                        <td class="action-buttons">
+                            <button class="btn-edit">Edit</button>
+                            <button class="btn-delete">Delete</button>
+                        </td>
+                    </tr>`;
                 default:
                     return '';
             }
@@ -102,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             for (let i = startPage; i <= endPage; i++) {
                 pageNumbersContainer.innerHTML += `
-            <button class="page-button ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`;
+                    <button class="page-button ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`;
             }
 
             if (endPage < totalPages) {
@@ -123,17 +235,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             });
 
-            firstPageBtn.onclick = () => { currentPage = 1; renderContent(); };
-            prevPageBtn.onclick = () => { if (currentPage > 1) currentPage--; renderContent(); };
-            nextPageBtn.onclick = () => { if (currentPage < totalPages) currentPage++; renderContent(); };
-            lastPageBtn.onclick = () => { currentPage = totalPages; renderContent(); };
+            if (firstPageBtn) firstPageBtn.onclick = () => { currentPage = 1; renderContent(); };
+            if (prevPageBtn) prevPageBtn.onclick = () => { if (currentPage > 1) currentPage--; renderContent(); };
+            if (nextPageBtn) nextPageBtn.onclick = () => { if (currentPage < totalPages) currentPage++; renderContent(); };
+            if (lastPageBtn) lastPageBtn.onclick = () => { currentPage = totalPages; renderContent(); };
         }
 
         function updateButtons() {
-            firstPageBtn.disabled = currentPage === 1;
-            prevPageBtn.disabled = currentPage === 1;
-            nextPageBtn.disabled = currentPage === totalPages;
-            lastPageBtn.disabled = currentPage === totalPages;
+            if (firstPageBtn) firstPageBtn.disabled = currentPage === 1;
+            if (prevPageBtn) prevPageBtn.disabled = currentPage === 1;
+            if (nextPageBtn) nextPageBtn.disabled = currentPage === totalPages;
+            if (lastPageBtn) lastPageBtn.disabled = currentPage === totalPages;
         }
 
         renderContent();
@@ -193,14 +305,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-    // localStorage.setItem('listAccount', JSON.stringify(listArticle));
+
     // Xử lý modal cho Article
-    const btnOpenModal = document.querySelector('#Article .btn-add');
-    const modalArticle = document.querySelector('#Article .modal');
+    const btnOpenModalArticle = document.querySelector('#Article .btn-add');
+    const modalArticle = document.querySelector('#Article .modal-add');
     const btnCloseArticle = modalArticle ? modalArticle.querySelector('.btn-close') : null;
 
-    if (btnOpenModal) {
-        btnOpenModal.addEventListener('click', () => {
+    if (btnOpenModalArticle) {
+        btnOpenModalArticle.addEventListener('click', () => {
             if (modalArticle) modalArticle.classList.remove('hidden');
         });
     } else {
@@ -241,7 +353,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (addQuestionForm) {
         addQuestionForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            const id = document.getElementById('addQuestionId').value;
             const content = document.getElementById('addQuestionText').value;
             const options = [
                 document.getElementById('addAnswer1').value,
@@ -251,59 +362,18 @@ document.addEventListener('DOMContentLoaded', () => {
             ];
             const correctAnswer = document.getElementById('addCorrectAnswer').value;
 
-            // Lấy danh sách câu hỏi từ localStorage
-            let questions = JSON.parse(localStorage.getItem('listQuestion')) || [];
+            // Tạo ID tự động
+            const id = generateQuestionId(listQuestion);
 
-            // Kiểm tra ID trùng lặp
-            if (questions.some(q => q.id === id)) {
-                alert('ID câu hỏi đã tồn tại. Vui lòng chọn ID khác.');
-                return;
-            }
-
-            // Thêm câu hỏi mới
-            questions.push({ id, content, options, correctAnswer });
-            localStorage.setItem('listQuestion', JSON.stringify(questions));
+            // Thêm câu hỏi mới vào listQuestion
+            listQuestion.push({ id, content, options, correctAnswer });
+            localStorage.setItem('listQuestion', JSON.stringify(listQuestion));
 
             // Tải lại bảng với phân trang
-            init(questions, 'Question', 'questionTableBody');
+            init(listQuestion, 'Question', 'questionTableBody');
             closeModal('addQuestionModal');
             addQuestionForm.reset();
         });
-    }
-
-    // Xử lý modal sửa câu hỏi
-    document.querySelector('#Question .admin-table').addEventListener('click', (e) => {
-        if (e.target.classList.contains('btn-edit')) {
-            const row = e.target.closest('tr');
-            const id = row.cells[0].textContent;
-
-            // Lấy câu hỏi từ localStorage
-            const questions = JSON.parse(localStorage.getItem('listQuestion')) || [];
-            const question = questions.find(q => q.id === id);
-
-            if (question) {
-                // Điền dữ liệu vào modal sửa
-                document.getElementById('editQuestionId').value = question.id;
-                document.getElementById('editQuestionText').value = question.content;
-                document.getElementById('editAnswer1').value = question.options[0];
-                document.getElementById('editAnswer2').value = question.options[1];
-                document.getElementById('editAnswer3').value = question.options[2];
-                document.getElementById('editAnswer4').value = question.options[3];
-                document.getElementById('editCorrectAnswer').value = question.correctAnswer;
-
-                openModal('editQuestionModal');
-            }
-        }
-    });
-
-    // Xử lý nút đóng modal sửa câu hỏi
-    const btnCloseEditQuestion = document.querySelector('#editQuestionModal .btn-close');
-    if (btnCloseEditQuestion) {
-        btnCloseEditQuestion.addEventListener('click', () => {
-            closeModal('editQuestionModal');
-        });
-    } else {
-        console.error('Không tìm thấy nút đóng modal (Edit Question)');
     }
 
     // Xử lý form sửa câu hỏi
@@ -311,7 +381,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (editQuestionForm) {
         editQuestionForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            const id = document.getElementById('editQuestionId').value;
+            const id = document.getElementById('editQuestionId').value; // Lấy ID từ input ẩn
             const content = document.getElementById('editQuestionText').value;
             const options = [
                 document.getElementById('editAnswer1').value,
@@ -321,47 +391,35 @@ document.addEventListener('DOMContentLoaded', () => {
             ];
             const correctAnswer = document.getElementById('editCorrectAnswer').value;
 
-            // Cập nhật câu hỏi trong localStorage
-            let questions = JSON.parse(localStorage.getItem('listQuestion')) || [];
-            questions = questions.map(q => q.id === id ? { id, content, options, correctAnswer } : q);
-            localStorage.setItem('listQuestion', JSON.stringify(questions));
+            // Cập nhật câu hỏi trong listQuestion
+            const index = listQuestion.findIndex(q => q.id === id);
+            if (index !== -1) {
+                listQuestion[index] = { id, content, options, correctAnswer };
+                localStorage.setItem('listQuestion', JSON.stringify(listQuestion));
 
-            // Tải lại bảng với phân trang
-            init(questions, 'Question', 'questionTableBody');
-            closeModal('editQuestionModal');
+                // Tải lại bảng với phân trang
+                init(listQuestion, 'Question', 'questionTableBody');
+                closeModal('editQuestionModal');
+            }
         });
     }
 
-    // Xử lý modal xóa câu hỏi
-    document.querySelector('#Question .admin-table').addEventListener('click', (e) => {
-        if (e.target.classList.contains('btn-delete')) {
-            const row = e.target.closest('tr');
-            const id = row.cells[0].textContent;
-
-            // Hiển thị ID trong modal xóa
-            document.getElementById('deleteQuestionId').textContent = id;
-            openModal('deleteQuestionModal');
-
-            // Xử lý xác nhận xóa
-            document.getElementById('confirmDelete').onclick = () => {
-                // Xóa câu hỏi khỏi localStorage
-                let questions = JSON.parse(localStorage.getItem('listQuestion')) || [];
-                questions = questions.filter(q => q.id !== id);
-                localStorage.setItem('listQuestion', JSON.stringify(questions));
-
-                // Tải lại bảng với phân trang
-                init(questions, 'Question', 'questionTableBody');
-
-                // Đóng modal
-                closeModal('deleteQuestionModal');
-            };
-        }
-    });
+    // Xử lý nút đóng modal sửa câu hỏi
+    const btnCloseEditQuestion = document.querySelector('#editQuestionModal .btn-close');
+    if (btnCloseEditQuestion) {
+        btnCloseEditQuestion.addEventListener('click', () => {
+            console.log('Close button clicked in editQuestionModal'); // Debug
+            closeModal('editQuestionModal');
+        });
+    } else {
+        console.error('Không tìm thấy nút đóng modal (Edit Question)');
+    }
 
     // Xử lý nút hủy modal xóa câu hỏi
-    const btnCancelDeleteQuestion = document.querySelector('#deleteQuestionModal .btn-close');
+    const btnCancelDeleteQuestion = document.querySelector('#deleteQuestionModal .btn-close-delete');
     if (btnCancelDeleteQuestion) {
         btnCancelDeleteQuestion.addEventListener('click', () => {
+            console.log('Close button clicked in deleteQuestionModal'); // Debug
             closeModal('deleteQuestionModal');
         });
     } else {
@@ -414,7 +472,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         console.error('Không tìm thấy nút đóng modal (Students)');
     }
-  
+
     // Xử lý thêm tài khoản
     if (btnConfirmAdd && addAccountForm) {
         btnConfirmAdd.addEventListener('click', (e) => {
@@ -425,9 +483,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const email = formData.get('email');
                 const password = formData.get('password');
 
-               
                 const isDuplicate = listAccount.some(acc =>
-                    acc.username === nameUser || acc.email === email
+                    acc.nameUser === nameUser || acc.email === email
                 );
 
                 if (isDuplicate) {
@@ -446,13 +503,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     id: generateRandomId(),
                     nameUser: nameUser,
                     email: email,
-                    password: password
+                    password: password,
+                    status: true
                 };
 
                 listAccount.push(newAccount);
-                listAccount.reverse(); 
+                listAccount.reverse();
                 localStorage.setItem('listAccount', JSON.stringify(listAccount));
-                init(listAccount, 'Students', 'userTableBody'); 
+                init(listAccount, 'Students', 'userTableBody');
                 // Đóng modal sau khi thêm
                 modalStudents.classList.add('hidden');
                 addAccountForm.reset(); // Reset form sau khi thêm
@@ -460,16 +518,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 addAccountForm.reportValidity(); // Hiển thị thông báo lỗi nếu form không hợp lệ
             }
         });
-        
     }
+
     function lockuser(id) {
         const user = listAccount.find(acc => acc.id === id);
-        console.log(id);
-        console.log(user);
         if (user) {
             user.status = !user.status; // Đảo ngược trạng thái
             localStorage.setItem('listAccount', JSON.stringify(listAccount));
-            init(listAccount, 'Students', 'userTableBody'); 
+            init(listAccount, 'Students', 'userTableBody');
         }
     }
     window.lockuser = lockuser;
