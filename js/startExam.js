@@ -24,9 +24,14 @@ for (let i = 0; i < examInPro.questionIds.length; i++) {
     for (let j = 0; j < listQuestion.length; j++) {
         if(examInPro.questionIds[i] === listQuestion[j].id){
             questionInProgress.push(listQuestion[j]);
+            
+           
+            
         }   
     }
 }
+  
+console.log(questionInProgress);
 
 localStorage.setItem("questionInProgress", JSON.stringify(questionInProgress));
 
