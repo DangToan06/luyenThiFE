@@ -1,4 +1,12 @@
-let listQues = JSON.parse(localStorage.getItem("questionInProgress"));
+let statusExam = sessionStorage.getItem("statusExam");
+let listQues = [];
+if (statusExam === "sáng") {
+    listQues = JSON.parse(localStorage.getItem("questionInProgress"));
+}else if (statusExam === "chiều") {
+    listQues = JSON.parse(localStorage.getItem("questionInProgress2"));
+}
+console.log(listQues);
+
 let examInPro = JSON.parse(localStorage.getItem("examInProgress"));
 renderBtnQues();
 let currentIndex = 0;
