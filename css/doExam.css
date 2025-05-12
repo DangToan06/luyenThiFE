@@ -262,8 +262,13 @@ button {
 } */
 
 #working-question {
-    background-color: #096e09;
+    background-color: blue;
     color: #FFFFFF;
+}
+
+.btn-ques:hover{
+    background-color: blue;
+    color: #fff;
 }
 
 .question-selected{

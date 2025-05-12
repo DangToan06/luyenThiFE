@@ -2,7 +2,7 @@ let statusExam = sessionStorage.getItem("statusExam");
 let listQues = [];
 if (statusExam === "sáng") {
     listQues = JSON.parse(localStorage.getItem("questionInProgress"));
-}else if (statusExam === "chiều") {
+} else if (statusExam === "chiều") {
     listQues = JSON.parse(localStorage.getItem("questionInProgress2"));
 }
 console.log(listQues);
@@ -10,6 +10,23 @@ console.log(listQues);
 let examInPro = JSON.parse(localStorage.getItem("examInProgress"));
 renderBtnQues();
 let currentIndex = 0;
+
+let btnQues = document.querySelectorAll(".btn-ques");
+
+clickBtnQues()
+function clickBtnQues() {
+    btnQues.forEach((e, i) => {
+        e.addEventListener('click', () => {
+            currentIndex = i;
+            renderQuestion(currentIndex);
+            btnQues.forEach(btnCurre => {
+                btnCurre.removeAttribute("id");
+            })
+            e.setAttribute("id", "working-question");
+        });
+    });
+}
+
 let listSelectedQuestion = [];
 let listSelectedAws = [];
 // let questions = document.querySelectorAll(".question");
@@ -40,13 +57,13 @@ function awsChoice() {
 document.getElementById("next-question").addEventListener("click", () => {
     // questionButtons[currentIndex].setAttribute("id", "question-did");
     questionButtons[currentIndex].removeAttribute("id");
-    
-    
+
+
     currentIndex++;
     console.log(currentIndex);
     if (currentIndex < questionButtons.length) {
         questionButtons[currentIndex].setAttribute("id", "working-question");
-    } else if(currentIndex >= questionButtons.length){
+    } else if (currentIndex >= questionButtons.length) {
         currentIndex = 0;
         renderQuestion(currentIndex);
         questionButtons[currentIndex].setAttribute("id", "working-question");
@@ -82,7 +99,12 @@ function updateTimer() {
         totalTime--;
     } else {
         clearInterval(timerInterval);
-        alert("Hết giờ! Bài thi sẽ được nộp tự động.");
+        Swal.fire({
+            icon: "info",
+            title: "Hết Giờ bài thi sẽ tự động nộp",
+            showConfirmButton: false,
+            timer: 1500
+        });
         setTimeout(() => {
             addAwsAtLocal()
             location.href = "Endexam.html"
@@ -155,7 +177,7 @@ function escapeHTML(str) {
 function renderBtnQues() {
     let btnQues = document.getElementById("number-question");
     for (let i = 1; i < listQues.length; i++) {
-        btnQues.innerHTML += `<button>${i + 1}</button>`;
+        btnQues.innerHTML += `<button class ="btn-ques">${i + 1}</button>`;
     }
 }
 
@@ -232,6 +254,11 @@ btnSubmit.addEventListener('click', () => {
             location.href = "Endexam.html"
         }, 1000);
     } else {
-        alert("So caau hoir banj lamf khoog du");
+        Swal.fire({
+            icon: "warning",
+            title: "Số câu bạn làm không đủ",
+            showConfirmButton: false,
+            timer: 1500
+        });
     }
 });
