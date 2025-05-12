@@ -1,7 +1,6 @@
 let listQues = JSON.parse(localStorage.getItem("questionInProgress"));
 let examInPro = JSON.parse(localStorage.getItem("examInProgress"));
 renderBtnQues();
-
 let currentIndex = 0;
 let listSelectedQuestion = [];
 let listSelectedAws = [];

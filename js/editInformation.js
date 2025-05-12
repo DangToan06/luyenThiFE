@@ -220,4 +220,3 @@ function changeAvatar() {
     document.getElementById("profile-image").src = avatar;
     closeModal('avatarModal') 
 }
-

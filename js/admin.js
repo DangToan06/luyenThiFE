@@ -29,15 +29,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Hàm tạo ID tự động cho câu hỏi
-   function generateQuestionId(questions) {
-    let newId;
-    let existingIds = new Set(questions.map(q => q.id));
-    do {
-        const randomNum = Math.floor(Math.random() * 900) + 100; // Tạo số ngẫu nhiên từ 100 đến 999
-        newId = `q${randomNum}`;
-    } while (existingIds.has(newId)); // Lặp đến khi tạo ra ID chưa bị trùng
-    return newId;
-}
+    function generateQuestionId(questions) {
+        let newId;
+        let existingIds = new Set(questions.map(q => q.id));
+        do {
+            const randomNum = Math.floor(Math.random() * 900) + 100; // Tạo số ngẫu nhiên từ 100 đến 999
+            newId = `q${randomNum}`;
+        } while (existingIds.has(newId)); // Lặp đến khi tạo ra ID chưa bị trùng
+        return newId;
+    }
 
     // Hàm gắn sự kiện cho bảng Question
     function setupQuestionTableEvents() {
@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Hàm init cho phân trang
     function init(renderList, nameList, nameId) {
-        const itemsPerPage = 5;
+        const itemsPerPage = 3;
         let currentPage = 1;
         const totalItems = renderList.length;
         const totalPages = Math.ceil(totalItems / itemsPerPage);
@@ -179,8 +179,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         <td>${item.durationMinutes} minutes</td>
                         <td>${item.totalQuest}</td>
                         <td class="action-buttons">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                            <button class="btn-delete">Delete</button>
+                            <button class="btn-edit" data-id="${item.id}"><i class="fa-solid fa-pen-to-square" style="color: #3e1ce9;"></i></button>
+                            <button class="btn-delete" data-id="${item.id}"><i class="fa-solid fa-trash" style="color: #ff0000;"></i></button>
                         </td>
                     </tr>`;
                 case "Question":
@@ -467,11 +467,11 @@ document.addEventListener('DOMContentLoaded', () => {
         btnOpenModalStudents.addEventListener('click', () => {
             if (modalStudents) {
                 modalStudents.classList.remove('hidden');
-                addAccountForm?.reset(); // Reset form khi mở modal
+                addAccountForm?.reset();
             }
         });
     } else {
-        console.error('Không tìm thấy nút mở modal (Students)');
+        console.log('Không tìm thấy nút mở modal (Students)');
     }
 
     // Đóng modal
@@ -480,21 +480,20 @@ document.addEventListener('DOMContentLoaded', () => {
             if (modalStudents) modalStudents.classList.add('hidden');
         });
     } else {
-        console.error('Không tìm thấy nút đóng modal (Students)');
+        console.log('Không tìm thấy nút đóng modal (Students)');
     }
 
     // Xử lý thêm tài khoản
     if (btnConfirmAdd && addAccountForm) {
         btnConfirmAdd.addEventListener('click', (e) => {
-            e.preventDefault(); // Ngăn hành vi mặc định của nút
+            e.preventDefault();
             if (addAccountForm.checkValidity()) {
                 const formData = new FormData(addAccountForm);
                 const nameUser = formData.get('username');
                 const email = formData.get('email');
                 const password = formData.get('password');
 
-                const isDuplicate = listAccount.some(acc =>
-                    acc.nameUser === nameUser || acc.email === email
+                const isDuplicate = listAccount.some(acc => acc.email === email
                 );
 
                 if (isDuplicate) {
@@ -521,29 +520,41 @@ document.addEventListener('DOMContentLoaded', () => {
                 listAccount.reverse();
                 localStorage.setItem('listAccount', JSON.stringify(listAccount));
                 init(listAccount, 'Students', 'userTableBody');
-                // Đóng modal sau khi thêm
                 modalStudents.classList.add('hidden');
-                addAccountForm.reset(); // Reset form sau khi thêm
+                addAccountForm.reset();
             } else {
-                addAccountForm.reportValidity(); // Hiển thị thông báo lỗi nếu form không hợp lệ
+                addAccountForm.reportValidity();
             }
         });
     }
 
     function lockuser(id) {
         const user = listAccount.find(acc => acc.id === id);
-        if (user) {
-            user.status = !user.status; // Đảo ngược trạng thái
-            localStorage.setItem('listAccount', JSON.stringify(listAccount));
-            init(listAccount, 'Students', 'userTableBody');
-        }
+        Swal.fire({
+            title: "Do you want to save the changes?",
+            showDenyButton: true,
+            // showCancelButton: true,
+            confirmButtonText: "Yes",
+            denyButtonText: `no`
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire("Saved!", "", "success");
+                if (user) {
+                    user.status = !user.status; // Đảo ngược trạng thái
+                    localStorage.setItem('listAccount', JSON.stringify(listAccount));
+                    init(listAccount, 'Students', 'userTableBody');
+                }
+            } else if (result.isDenied) {
+                Swal.fire("Changes are not saved", "", "info");
+            }
+        });
     }
     window.lockuser = lockuser;
 
     // Mở/đóng modal
-function openModalQues(modal) { document.getElementById(modal).classList.remove('hidden'); }
+    function openModalQues(modal) { document.getElementById(modal).classList.remove('hidden'); }
     function closeModalQues(modal) { document.getElementById(modal).classList.add('hidden'); }
-    
+
     function openModal(modal) { modal.classList.remove('hidden'); }
     function closeModal(modal) { modal.classList.add('hidden'); }
 
@@ -661,9 +672,7 @@ function openModalQues(modal) { document.getElementById(modal).classList.remove(
 
 });
 
-// document.addEventListener('DOMContentLoaded', () => {
 
-// });
 
 
 function showErrorModal(message) {

@@ -48,7 +48,7 @@ handleResponsiveLayout();
 
 // VALID ĐĂNG KÝ
 const btnSignUp = document.getElementById("btn-sign-up");
-
+let Account = {};
 btnSignUp.addEventListener("click", () => {
     let inputNameSignUpValue = document.getElementById("input-name-sign-up").value;
     let inputDateSignUpValue = document.getElementById("input-date-sign-up").value;
