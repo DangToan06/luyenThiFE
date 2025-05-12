@@ -277,109 +277,102 @@ const listExam = JSON.parse(localStorage.getItem("listExam")) || [
     {
         id: "exam001",
         title: "Đề thi số 1",
-        questionIds: [
-            "q101",
-            "q102",
-            "q103",
-            "q104",
-            "q105",
-            "q106",
-            "q107",
-            "q108",
-            "q109",
-            "q101"
-        ], // thêm id câu hỏi vào đây
-        durationMinutes: 30, // thời gian làm bài (phút)
-        randomize: true, // có ngẫu nhiên câu hỏi hay không
-        member: 1024, // tổng số học viên 
-        totalQuest: 10, // tổng số câu hỏi có trong đề thi
+        questionIds: ["q101", "q102", "q103", "q104", "q105", "q106", "q107", "q108", "q109", "q110"],
+        questionIds2: ["q111", "q112", "q113", "q114", "q115", "q116", "q117", "q118", "q119", "q120"],
+        durationMinutes: 30,
+        randomize: true,
+        member: 1024,
+        totalQuest: 20
     },
     {
         id: "exam002",
         title: "Đề thi số 2",
-        questionIds: [
-            "q111",
-            "q112",
-            "q113",
-            "q114",
-            "q115",
-            "q116",
-            "q117",
-            "q118",
-            "q119",
-            "q120"
-        ],
+        questionIds: ["q205", "q202", "q203", "q205", "q204", "q206", "q208", "q208", "q209", "q210"],
+        questionIds2: ["q211", "q212", "q213", "q214", "q215", "q216", "q217", "q218", "q219", "q220"],
         durationMinutes: 30,
         randomize: true,
         member: 1024,
-        totalQuest: 10,
+        totalQuest: 20
     },
     {
         id: "exam003",
         title: "Đề thi số 3",
-        questionIds: [
-            "q201",
-            "q202",
-            "q203",
-            "q204",
-            "q205",
-            "q206",
-            "q207",
-            "q208",
-            "q209",
-            "q201"
-        ],
+        questionIds: ["q103", "q103", "q105", "q107", "q109", "q111", "q113", "q115", "q117", "q119"],
+        questionIds2: ["q102", "q104", "q106", "q108", "q110", "q112", "q114", "q116", "q118", "q120"],
         durationMinutes: 30,
         randomize: true,
         member: 1024,
-        totalQuest: 20,
+        totalQuest: 20
     },
     {
         id: "exam004",
         title: "Đề thi số 4",
-        questionIds: [
-            "q211",
-            "q212",
-            "q213",
-            "q214",
-            "q215",
-            "q216",
-            "q217",
-            "q218",
-            "q219",
-            "q220"
-        ],
+        questionIds: ["q204", "q203", "q205", "q207", "q209", "q211", "q213", "q215", "q217", "q219"],
+        questionIds2: ["q202", "q204", "q206", "q208", "q210", "q212", "q214", "q216", "q218", "q220"],
         durationMinutes: 30,
         randomize: true,
         member: 1024,
-        totalQuest: 20,
+        totalQuest: 20
     },
     {
         id: "exam005",
         title: "Đề thi số 5",
-        questionIds: [],
+        questionIds: ["q107", "q106", "q111", "q116", "q201", "q206", "q211", "q216", "q104", "q109"],
+        questionIds2: ["q102", "q107", "q112", "q117", "q202", "q207", "q212", "q217", "q105", "q110"],
         durationMinutes: 30,
         randomize: true,
         member: 1024,
-        totalQuest: 10,
+        totalQuest: 20
     },
     {
         id: "exam006",
         title: "Đề thi số 6",
-        questionIds: [],
+        questionIds: ["q109", "q108", "q113", "q118", "q203", "q208", "q213", "q218", "q106", "q101"],
+        questionIds2: ["q104", "q109", "q114", "q119", "q204", "q209", "q214", "q219", "q107", "q102"],
         durationMinutes: 30,
         randomize: true,
         member: 1024,
-        totalQuest: 10,
+        totalQuest: 20
     },
     {
         id: "exam007",
         title: "Đề thi số 7",
-        questionIds: [],
+        questionIds: ["q1011", "q110", "q115", "q120", "q205", "q210", "q215", "q220", "q108", "q103"],
+        questionIds2: ["q106", "q111", "q116", "q201", "q206", "q211", "q216", "q104", "q109", "q102"],
         durationMinutes: 30,
         randomize: true,
         member: 1024,
-        totalQuest: 10,
+        totalQuest: 20
+    },
+    {
+        id: "exam008",
+        title: "Đề thi số 8",
+        questionIds: ["q120", "q112", "q117", "q202", "q207", "q212", "q217", "q105", "q110", "q103"],
+        questionIds2: ["q108", "q113", "q118", "q203", "q208", "q213", "q218", "q106", "q111", "q104"],
+        durationMinutes: 30,
+        randomize: true,
+        member: 1024,
+        totalQuest: 20
+    },
+    {
+        id: "exam009",
+        title: "Đề thi số 9",
+        questionIds: ["q109", "q114", "q119", "q204", "q209", "q214", "q219", "q107", "q112", "q117"],
+        questionIds2: ["q110", "q115", "q120", "q205", "q210", "q215", "q220", "q108", "q113", "q118"],
+        durationMinutes: 30,
+        randomize: true,
+        member: 1024,
+        totalQuest: 20
+    },
+    {
+        id: "exam010",
+        title: "Đề thi số 10",
+        questionIds: ["q101", "q102", "q103", "q104", "q105", "q106", "q107", "q108", "q109", "q110"],
+        questionIds2: ["q111", "q112", "q113", "q114", "q115", "q116", "q117", "q118", "q119", "q120"],
+        durationMinutes: 30,
+        randomize: true,
+        member: 1024,
+        totalQuest: 20
     }
 ];
 const listArticle = JSON.parse(localStorage.getItem("listArticle")) || [
