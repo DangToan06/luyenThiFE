@@ -124,18 +124,18 @@ function searchExamQuestions() {
     renderExam(filteredList);
 }
 
-function getTimeAgo(dateStr) {
-    const now = new Date();
-    const postDate = new Date(dateStr);
-    const diffTime = now - postDate;
-    const diffMonths = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 30));
+// function getTimeAgo(dateStr) {
+//     const now = new Date();
+//     const postDate = new Date(dateStr);
+//     const diffTime = now - postDate;
+//     const diffMonths = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 30));
 
-    if (diffMonths < 0) {
-        return `Còn ${Math.abs(diffMonths)} tháng nữa`;
-    }
+//     if (diffMonths < 0) {
+//         return `Còn ${Math.abs(diffMonths)} tháng nữa`;
+//     }
 
-    return `${diffMonths} tháng trước`;
-}
+//     return `${diffMonths} tháng trước`;
+// }
 
 function renderArticles() {
     const listPostElement = document.querySelector(".list-post");
