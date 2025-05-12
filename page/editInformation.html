@@ -57,17 +57,16 @@
       <li>Tiếng Việt</li>
       <li>Tiếng Anh</li>
       <li>Tiếng Nhật</li>
-      <li class="menu-account">
-        <div>
-          <img src="" alt="avatar">
-          <div class="name-email-nav">
-            <span>Đặng Toàn</span>
-            <span>toan@gmail.com</span>
-          </div>
-        </div>
-        <i class="fa-solid fa-arrow-right-from-bracket"></i>
-      </li>
     </ul>
+    <div class="menu-account" >
+        <div onclick="viewProfile()">
+            <div class="name-email-nav">
+                <span>Đặng Toàn</span>
+                <span>toan@gmail.com</span>
+            </div>
+        </div>
+        <i class="fa-solid fa-arrow-right-from-bracket"  onclick="signOut()"></i>
+    </div>
   </div>
   <div class="container">
     <div class="left-column">
@@ -157,10 +156,6 @@
         <div class="form-group">
           <label for="editName">Họ và Tên</label>
           <input type="text" id="editName" value="Trần Minh Quang" class="box-input-edit" />
-        </div>
-        <div class="form-group">
-          <label for="editEmail">email</label>
-          <input type="email" id="editEmail" value="quangngu@gmail.com" class="box-input-edit" />
         </div>
         <div class="form-group">
           <label for="editBirthday">Ngày sinh</label>

@@ -1,11 +1,11 @@
-//Hiệu ứng nút menu ở head
+
 function avatar1() {
     let acc = JSON.parse(localStorage.getItem("AccountNow"));
     document.getElementById("avatar").src = acc.avata;
 }
 avatar1()
-const menuHeader = document.getElementById("menu-header");
 
+const menuHeader = document.getElementById("menu-header");
 menuHeader.addEventListener('click', () => {
     toggleMenu();
 });

@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>View result</title>
+    <link rel="stylesheet" href="../css/exam.css" />
+    <link rel="stylesheet" href="../css/Complete the test.css" />
+    <link rel="stylesheet" href="../css/nav.css" />
+    <link rel="stylesheet" href="../css/footer.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>View result</title>
-  <link rel="stylesheet" href="../css/exam.css" />
-  <link rel="stylesheet" href="../css/Complete the test.css">
-  <link rel="stylesheet" href="../css/nav.css">
-  <link rel="stylesheet" href="../css/footer.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
-</head>
-
-<body>
-  <header>
-    <nav class="header-page-admin">
+  <body>
+    <header>
+      <nav class="header-page-admin">
         <img src="../assets/img/logoRikkei.png" alt="logo" class="logo-head" onclick="homePage()" />
         <div class="acc-lang">
           <div class="language-wrapper">
@@ -39,46 +38,45 @@
             </div>
           </div>
           <div class="divider"></div>
-          <img src="" alt="avatar" class="avatar" id="avatar" style="object-fit: cover;"/>
-          <div class="avatar-dropdown" id="avatar-dropdown" style="display: none;">
+          <img src="" alt="avatar" class="avatar" id="avatar" style="object-fit: cover" />
+          <div class="avatar-dropdown" id="avatar-dropdown" style="display: none">
             <div class="dropdown-option" onclick="viewProfile()">Thông Tin</div>
-            <div class="dropdown-option" onclick="signOut()"><button style="border: none; background-color: white; cursor: pointer; font-size: 20px;" onclick="signOutAdmin()" ><i class="fa-solid fa-right-from-bracket"></i></button>Đăng xuất</div>
-          </div> 
+            <div class="dropdown-option" onclick="signOut()">
+              <button style="border: none; background-color: white; cursor: pointer; font-size: 20px" onclick="signOutAdmin()"><i class="fa-solid fa-right-from-bracket"></i></button>Đăng xuất
+            </div>
+          </div>
         </div>
         <i class="fa-solid fa-bars" id="menu-nav"></i>
-        <i class="fa-solid fa-xmark" style="display: none;" id="close-menu-nav"></i>
-    </nav>
+        <i class="fa-solid fa-xmark" style="display: none" id="close-menu-nav"></i>
+      </nav>
 
-    <div class="menu" id="menu" style="display: none;">
-      <div class="menu-header" id="menu-header">
-        <span>Ngôn ngữ</span>
-        <i class="fa-solid fa-chevron-down" id="arrow"></i>
-      </div>
-      <ul class="menu-content" id="menuContent">
-        <li>Tiếng Việt</li>
-        <li>Tiếng Anh</li>
-        <li>Tiếng Nhật</li>
-        <li class="menu-account">
-          <div>
-            <img src="../assets/Dropdown.png" alt="avatar">
+      <div class="menu" id="menu" style="display: none">
+        <div class="menu-header" id="menu-header">
+          <span>Ngôn ngữ</span>
+          <i class="fa-solid fa-chevron-down" id="arrow"></i>
+        </div>
+        <ul class="menu-content" id="menuContent">
+          <li>Tiếng Việt</li>
+          <li>Tiếng Anh</li>
+          <li>Tiếng Nhật</li>
+        </ul>
+        <div class="menu-account">
+          <div onclick="viewProfile()">
             <div class="name-email-nav">
               <span>Đặng Toàn</span>
               <span>toan@gmail.com</span>
             </div>
           </div>
-          <i class="fa-solid fa-arrow-right-from-bracket"></i>
-        </li>
-      </ul>
-    </div>
-
-    </div>
-  </header>
+          <i class="fa-solid fa-arrow-right-from-bracket" onclick="signOut()"></i>
+        </div>
+      </div>
+    </header>
     <main class="app-main-content">
       <nav class="app-breadcrumb">Trang chủ / <strong>Đề thi số 1</strong></nav>
       <h1 class="app-title">Đề thi số 1</h1>
 
       <div class="app-tabs">
-        <button class="app-tab ">Bài thi</button>
+        <button class="app-tab">Bài thi</button>
         <button class="app-tab active">Xem kết quả</button>
       </div>
 
@@ -93,10 +91,8 @@
           <h2>Chúc mừng bạn đã hoàn thành bài thi</h2>
           <p>Hãy xem kết quả và tiếp tục cải thiện để đạt mục tiêu FE của bạn.</p>
           <div class="button-group">
-            <button class="retry-btn">Làm lại <i class="fa-solid fa-rotate-left"></i> </button>
-            <button class="complete-btn">
-              Hoàn thành <i class="fa-solid fa-arrow-right"></i>
-            </button>
+            <button class="retry-btn">Làm lại <i class="fa-solid fa-rotate-left"></i></button>
+            <button class="complete-btn">Hoàn thành <i class="fa-solid fa-arrow-right"></i></button>
           </div>
         </div>
       </section>
@@ -109,8 +105,7 @@
             <h4>Cơ sở 1</h4>
             <p>
               <i class="fa-solid fa-location-dot" style="color: #ffffff"></i>
-              Tầng 7, khối A tòa nhà Sông Đà, đường Phạm Hùng, phường Mỹ Đình 1,
-              Quận Nam Từ Liêm, Hà Nội
+              Tầng 7, khối A tòa nhà Sông Đà, đường Phạm Hùng, phường Mỹ Đình 1, Quận Nam Từ Liêm, Hà Nội
             </p>
             <p>
               <i class="fa-solid fa-phone-volume" style="color: #ffffff"></i>
@@ -121,8 +116,7 @@
             <h4>Cơ sở 2</h4>
             <p>
               <i class="fa-solid fa-location-dot" style="color: #ffffff"></i>
-              Tầng 22, khối A tòa nhà Sông Đà, Phạm Hùng, Mỹ Đình 1, Quận Nam Từ
-              Liêm, Hà Nội
+              Tầng 22, khối A tòa nhà Sông Đà, Phạm Hùng, Mỹ Đình 1, Quận Nam Từ Liêm, Hà Nội
             </p>
             <p>
               <i class="fa-solid fa-phone-volume" style="color: #ffffff"></i>
@@ -133,8 +127,7 @@
             <h4>Cơ sở 3</h4>
             <p>
               <i class="fa-solid fa-location-dot" style="color: #ffffff"></i>
-              Tầng 12, Tòa nhà Đảm Bảo An Toàn Hàng Hải phía Nam, Số 42 đường Tự
-              Cường, phường 4, Tân Bình, TP HCM
+              Tầng 12, Tòa nhà Đảm Bảo An Toàn Hàng Hải phía Nam, Số 42 đường Tự Cường, phường 4, Tân Bình, TP HCM
             </p>
             <p>
               <i class="fa-solid fa-phone-volume" style="color: #ffffff"></i>
@@ -145,8 +138,7 @@
             <h4>Cơ sở 4</h4>
             <p>
               <i class="fa-solid fa-location-dot" style="color: #ffffff"></i>
-              Tầng 4, Tòa Ricco, số 363 Nguyễn Hữu Thọ, phường Khuê Trung, quận
-              Cẩm Lệ, Đà Nẵng
+              Tầng 4, Tòa Ricco, số 363 Nguyễn Hữu Thọ, phường Khuê Trung, quận Cẩm Lệ, Đà Nẵng
             </p>
             <p>
               <i class="fa-solid fa-phone-volume" style="color: #ffffff"></i>
@@ -157,8 +149,7 @@
             <h4>Cơ sở 5</h4>
             <p>
               <i class="fa-solid fa-location-dot" style="color: #ffffff"></i>
-              Tầng 3, toà TSA Bulding, Số 77 Lê Trung Nghĩa, Phường 12, Tân
-              Bình, Thành phố Hồ Chí Minh
+              Tầng 3, toà TSA Bulding, Số 77 Lê Trung Nghĩa, Phường 12, Tân Bình, Thành phố Hồ Chí Minh
             </p>
             <p>
               <i class="fa-solid fa-phone-volume" style="color: #ffffff"></i>
@@ -169,8 +160,7 @@
             <h4>Cơ sở Fukuoka</h4>
             <p>
               <i class="fa-solid fa-location-dot" style="color: #ffffff"></i>
-              Tokan Fukuoka 2nd Building 417 Hiecho 1-chome-18, Hakata-ku,
-              Fukuoka, Japan
+              Tokan Fukuoka 2nd Building 417 Hiecho 1-chome-18, Hakata-ku, Fukuoka, Japan
             </p>
             <p>
               <i class="fa-solid fa-phone-volume" style="color: #ffffff"></i>
@@ -181,8 +171,7 @@
             <h4>Cơ sở PTIT Hà Nội</h4>
             <p>
               <i class="fa-solid fa-location-dot" style="color: #ffffff"></i>
-              Học viện Công nghệ Bưu chính viễn thông, Km10, đường Nguyễn Trãi,
-              Hà Đông, Hà Nội
+              Học viện Công nghệ Bưu chính viễn thông, Km10, đường Nguyễn Trãi, Hà Đông, Hà Nội
             </p>
             <p>
               <i class="fa-solid fa-phone-volume" style="color: #ffffff"></i>
@@ -193,8 +182,7 @@
             <h4>Cơ sở PTIT Hồ Chí Minh</h4>
             <p>
               <i class="fa-solid fa-location-dot" style="color: #ffffff"></i>
-              Học viện Công nghệ Bưu chính viễn thông, 97 Man Thiện, Phường Hiệp
-              Phú, Thủ Đức, TP HCM
+              Học viện Công nghệ Bưu chính viễn thông, 97 Man Thiện, Phường Hiệp Phú, Thủ Đức, TP HCM
             </p>
             <p>
               <i class="fa-solid fa-phone-volume" style="color: #ffffff"></i>
@@ -223,6 +211,5 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../js/chart.js"></script>
     <script src="/js/turnPage.js"></script>
-</body>
-
+  </body>
 </html>
