@@ -25,7 +25,7 @@ function renderExam(list) {
 
     const btnDoExam = document.querySelectorAll(".btn-do-exam");
 
-    btnDoExam.forEach((enterBtn,i) => {
+    btnDoExam.forEach((enterBtn, i) => {
         enterBtn.addEventListener("click", () => {
             console.log(list[i]);
             localStorage.setItem("examInProgress", JSON.stringify(list[i]));
@@ -45,7 +45,7 @@ let currentPage = 1;
 
 const totalPages = Math.ceil(listExam.length / itemsPerPage);
 
-function paginate (page){
+function paginate(page) {
     const start = (page - 1) * itemsPerPage;
     const end = start + itemsPerPage;
     const pageIterm = listExam.slice(start, end);
@@ -119,9 +119,9 @@ function searchExamQuestions() {
     let searchInput = document.getElementById("searchExam").value.toLowerCase();
     console.log(searchInput);
     let filteredList = listExam.filter(exam => {
-        return exam.title.toLowerCase().includes(searchInput) ;
-    }   );
-    renderExam(filteredList);   
+        return exam.title.toLowerCase().includes(searchInput);
+    });
+    renderExam(filteredList);
 }
 
 function getTimeAgo(dateStr) {
@@ -139,9 +139,9 @@ function getTimeAgo(dateStr) {
 
 function renderArticles() {
     const listPostElement = document.querySelector(".list-post");
+    const lastFourArticles = listArticle.slice(-4);
     listPostElement.innerHTML = "";
-
-    listArticle.forEach(article => {
+    lastFourArticles.forEach(article => {
         const li = document.createElement("li");
         li.classList.add("item-post");
 
@@ -159,5 +159,30 @@ function renderArticles() {
         listPostElement.appendChild(li);
     });
 }
+renderArticles()
+function getTimeAgo(dateString) {
+    const now = new Date();
+    const articleDate = new Date(dateString);
+    const diffMs = now - articleDate;
+    const diffSeconds = Math.floor(diffMs / 1000);
+    const diffMinutes = Math.floor(diffSeconds / 60);
+    const diffHours = Math.floor(diffMinutes / 60);
+    const diffDays = Math.floor(diffHours / 24);
+    const diffMonths = Math.floor(diffDays / 30);
+    const diffYears = Math.floor(diffDays / 365);
 
-document.addEventListener("DOMContentLoaded", renderArticles);
+    if (diffYears > 0) {
+        return `${diffYears} năm trước`;
+    } else if (diffMonths > 0) {
+        return `${diffMonths} tháng trước`;
+    } else if (diffDays > 0) {
+        return `${diffDays} ngày trước`;
+    } else if (diffHours > 0) {
+        return `${diffHours} giờ trước`;
+    } else if (diffMinutes > 0) {
+        return `${diffMinutes} phút trước`;
+    } else {
+        return `Vừa xong`;
+    }
+}
+
