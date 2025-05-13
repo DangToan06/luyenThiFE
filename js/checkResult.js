@@ -1,7 +1,7 @@
 let listQuesDo = JSON.parse(localStorage.getItem("listSelectedQuestion"));
 let listSelectedAws = JSON.parse(localStorage.getItem("listSelectedAws"));
 // Hiển thị tất cả câu hỏi và hết quả 
-
+let examInPro = JSON.parse(localStorage.getItem("examInProgress"));
 //render câu hỏi
 
 renderQuestion();
@@ -78,3 +78,15 @@ function escapeHTML(str) {
 document.getElementById("internal-article").addEventListener('click', () => {
   location.href = "Endexam.html";
 });
+
+//Tên đề thi hiện tại
+
+document.querySelectorAll(".name-test").forEach( e => {
+    e.textContent = "";
+    e.textContent = examInPro.title
+});
+
+//Thời gian của đề thi ngày
+
+document.getElementById('exam-time').textContent = "";
+document.getElementById('exam-time').textContent = `Thời gian thi: ${examInPro.durationMinutes} phút `

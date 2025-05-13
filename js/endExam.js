@@ -7,7 +7,7 @@ if (statusExam === "sáng") {
 }
 let listSelectedAws = JSON.parse(localStorage.getItem("listSelectedAws"));
 let questionTrue = 0;
-
+let examInPro = JSON.parse(localStorage.getItem("examInProgress"));
 searchTrueQues()
 
 function searchTrueQues() {
@@ -99,4 +99,11 @@ document.getElementById("go-home-page").addEventListener('click', () => {
 //Nút làm lại bài kiểm tra
 document.getElementById("retake-th-exam").addEventListener('click', () => {
     location.href = "doExam.html";
+});
+
+//Hiển thị đề hiện tại
+
+document.querySelectorAll(".app-title").forEach( e => {
+    e.textContent = "";
+    e.textContent = examInPro.title;
 });
