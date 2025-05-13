@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <input type="number" id="examDuration" placeholder="Thời gian" required>
           </div>
           <div class="form-group">
-            <label for="questionSearch">Tìm kiếm câu hỏi:</label>
+            <label for="questionSearch">Tìm kiếm câu hỏi ca sáng:</label>
             <input type="text" id="questionSearch" placeholder="Nhập ID hoặc nội dung câu hỏi">
             <div id="searchResults" class="search-results"></div>
             <div class="search-actions">
@@ -23,8 +23,22 @@ document.addEventListener("DOMContentLoaded", function () {
             </div>
           </div>
           <div class="form-group">
-            <label>Câu hỏi đã chọn: <span id="selectedCount">0</span> câu</label>
+            <label>Câu hỏi ca sáng đã chọn: <span id="selectedCount">0</span> câu</label>
             <div id="selectedQuestions" class="selected-questions"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="questionSearch2">Tìm kiếm câu hỏi ca chiều:</label>
+            <input type="text" id="questionSearch2" placeholder="Nhập ID hoặc nội dung câu hỏi">
+            <div id="searchResults2" class="search-results"></div>
+            <div class="search-actions">
+              <button type="button" class="btn-select-all2">Chọn tất cả</button>
+              <button type="button" class="btn-deselect-all2">Bỏ chọn tất cả</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Câu hỏi ca chiều đã chọn: <span id="selectedCount2">0</span> câu</label>
+            <div id="selectedQuestions2" class="selected-questions"></div>
           </div>
           <div class="modal-exam-actions">
             <button type="submit" class="btn-save-exam">Lưu</button>
@@ -64,7 +78,11 @@ document.addEventListener("DOMContentLoaded", function () {
   let selectedQuestionIds = [];
   let currentSearchResults = [];
   let currentPage = 1;
-  const itemsPerPage = 5;
+  const itemsPerPage = 3;
+
+  // Thêm biến trạng thái cho ca chiều
+  let selectedQuestionIds2 = [];
+  let currentSearchResults2 = [];
 
   // Tạo ID đề thi ngẫu nhiên
   function generateUniqueExamId() {
@@ -127,6 +145,57 @@ document.addEventListener("DOMContentLoaded", function () {
       })
       .join("");
     selectedCount.textContent = selectedQuestionIds.length;
+  }
+
+  // Thêm hàm tìm kiếm cho ca chiều
+  function searchQuestions2(query) {
+    if (!query || !searchResults2) {
+      if (searchResults2) searchResults2.innerHTML = "";
+      currentSearchResults2 = [];
+      return;
+    }
+    query = query.toLowerCase();
+    currentSearchResults2 = (listQuestion || []).filter((q) => {
+      let isSelected = selectedQuestionIds2.some((id) => id === q.id);
+      return (
+        !isSelected &&
+        (q.id.toLowerCase().indexOf(query) !== -1 ||
+          q.content.toLowerCase().indexOf(query) !== -1)
+      );
+    });
+    updateSearchResults2();
+  }
+
+  // Cập nhật kết quả tìm kiếm ca chiều
+  function updateSearchResults2() {
+    if (!searchResults2) return;
+    searchResults2.innerHTML = currentSearchResults2
+      .map(
+        (q) => `
+      <div class="search-result-item" data-id="${q.id}">
+        <div class="checkbox-wrapper">
+          <input type="checkbox" class="question-checkbox" data-id="${q.id}" id="checkbox2-${q.id}">
+          <label for="checkbox2-${q.id}" class="checkbox-label"></label>
+        </div>
+        <span class="question-text">${q.id}: ${q.content}</span>
+      </div>
+    `
+      )
+      .join("");
+  }
+
+  // Cập nhật danh sách câu hỏi đã chọn ca chiều
+  function updateSelectedQuestions2() {
+    if (!selectedQuestions2 || !selectedCount2) return;
+    selectedQuestions2.innerHTML = selectedQuestionIds2
+      .map((id) => {
+        const question = (listQuestion || []).find((q) => q.id === id);
+        return question
+          ? `<div class="selected-question-item">${id}: ${question.content}</div>`
+          : "";
+      })
+      .join("");
+    selectedCount2.textContent = selectedQuestionIds2.length;
   }
 
   // Hiển thị bảng nội dung
@@ -317,7 +386,9 @@ document.addEventListener("DOMContentLoaded", function () {
           examTitle.value = exam.title;
           examDuration.value = exam.durationMinutes;
           selectedQuestionIds = [...exam.questionIds];
+          selectedQuestionIds2 = [...exam.questionIds2];
           updateSelectedQuestions();
+          updateSelectedQuestions2();
           modal.classList.add("show");
         }
       } else if (button.className === "btn-delete") {
@@ -358,7 +429,9 @@ document.addEventListener("DOMContentLoaded", function () {
         examForm.reset();
         currentExamId = null;
         selectedQuestionIds = [];
+        selectedQuestionIds2 = [];
         updateSelectedQuestions();
+        updateSelectedQuestions2();
         modal.classList.add("show");
       }
     });
@@ -376,16 +449,14 @@ document.addEventListener("DOMContentLoaded", function () {
     examForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      const title = examTitle ? examTitle.value.trim() : ""; // Lấy tiêu đề đề thi, loại bỏ khoảng trắng đầu/cuối nếu có
+      const title = examTitle ? examTitle.value.trim() : "";
       const duration = examDuration ? parseInt(examDuration.value) : 0;
 
-      // Kiểm tra thời gian hợp lệ
       if (isNaN(duration) || duration <= 0) {
         await Swal.fire("Lỗi!", "Thời gian phải lớn hơn 0 phút.", "error");
         return;
       }
 
-      // Kiểm tra tên đề thi trùng
       const isTitleDuplicate = (listExam || []).some((exam) => {
         return (
           exam.title.toLowerCase() === title.toLowerCase() &&
@@ -398,37 +469,32 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
 
-      // Tạo dữ liệu đề thi
       const examData = {
         title: title,
         durationMinutes: duration,
         questionIds: selectedQuestionIds,
+        questionIds2: selectedQuestionIds2,
         randomize: true,
         member: 0,
-        totalQuest: selectedQuestionIds.length,
+        totalQuest: selectedQuestionIds.length + selectedQuestionIds2.length
       };
 
-      // Cập nhật nếu đang sửa đề thi
       if (currentExamId && listExam) {
         const index = listExam.findIndex((exam) => exam.id === currentExamId);
         if (index !== -1) {
           listExam[index] = { id: currentExamId, ...examData };
           await Swal.fire("Thành công!", "Đã cập nhật đề thi!", "success");
         }
-      }
-      // Thêm mới đề thi
-      else if (listExam) {
+      } else if (listExam) {
         examData.id = generateUniqueExamId();
         listExam.unshift(examData);
         await Swal.fire("Thành công!", "Đã thêm đề thi mới!", "success");
       }
 
-      // Lưu vào localStorage
       if (listExam) {
         localStorage.setItem("listExam", JSON.stringify(listExam));
       }
 
-      // Reset giao diện
       if (examSearch) {
         examSearch.value = "";
       }
@@ -452,6 +518,63 @@ document.addEventListener("DOMContentLoaded", function () {
       );
       currentPage = 1;
       renderContent(filteredExams);
+    });
+  }
+
+  // Thêm sự kiện cho tìm kiếm ca chiều
+  const questionSearch2 = document.getElementById("questionSearch2");
+  if (questionSearch2) {
+    questionSearch2.addEventListener("input", () =>
+      searchQuestions2(questionSearch2.value)
+    );
+  }
+
+  // Thêm sự kiện cho nút chọn tất cả ca chiều
+  const selectAllBtn2 = document.querySelector(".btn-select-all2");
+  if (selectAllBtn2) {
+    selectAllBtn2.addEventListener("click", () => {
+      if (!searchResults2) return;
+      const checkboxes = searchResults2.querySelectorAll(".question-checkbox");
+      checkboxes.forEach((checkbox) => {
+        if (!checkbox.checked) {
+          checkbox.checked = true;
+          const id = checkbox.dataset.id;
+          if (!selectedQuestionIds2.some((qid) => qid === id)) {
+            selectedQuestionIds2.push(id);
+          }
+        }
+      });
+      updateSelectedQuestions2();
+    });
+  }
+
+  // Thêm sự kiện cho nút bỏ chọn tất cả ca chiều
+  const deselectAllBtn2 = document.querySelector(".btn-deselect-all2");
+  if (deselectAllBtn2) {
+    deselectAllBtn2.addEventListener("click", () => {
+      if (!searchResults2) return;
+      searchResults2.querySelectorAll(".question-checkbox").forEach((cb) => {
+        cb.checked = false;
+      });
+      selectedQuestionIds2 = [];
+      updateSelectedQuestions2();
+    });
+  }
+
+  // Thêm sự kiện cho checkbox ca chiều
+  if (searchResults2) {
+    searchResults2.addEventListener("change", (e) => {
+      if (e.target.className === "question-checkbox") {
+        const id = e.target.dataset.id;
+        if (e.target.checked) {
+          if (!selectedQuestionIds2.some((qid) => qid === id)) {
+            selectedQuestionIds2.push(id);
+          }
+        } else {
+          selectedQuestionIds2 = selectedQuestionIds2.filter((qid) => qid !== id);
+        }
+        updateSelectedQuestions2();
+      }
     });
   }
 
