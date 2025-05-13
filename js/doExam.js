@@ -123,7 +123,7 @@ function renderQuestion(index) {
     const q = listQues[index];
     let checked;
     html = `
-        <p id="question">Câu số ${index + 1}</p>
+        <p id="question"  class="name-test">Câu số ${index + 1}</p>
         <p id="topic">Front-end</p>
         <p id="topic">Lập trình</p>
         <p id="name-question">${q.content}</p>
@@ -262,3 +262,15 @@ btnSubmit.addEventListener('click', () => {
         });
     }
 });
+
+//Tên đề thi hiện tại
+
+document.querySelectorAll(".name-test").forEach( e => {
+    e.textContent = "";
+    e.textContent = examInPro.title
+});
+
+//Thời gian của đề thi ngày
+
+document.getElementById('exam-time').textContent = "";
+document.getElementById('exam-time').textContent = `Thời gian thi: ${examInPro.durationMinutes} phút `

@@ -55,18 +55,18 @@ btnEdit.addEventListener("click", () => {
 
     if (!validBlank(editLastNameValue, editBirthdayValue)) {
         Swal.fire({
-            title: "Box input is not blank",
-            text: "email or usrname or birthday is blank",
+            title: "Không được để trtống",
+            text: "Email,tên người dùng hoặc ngày sinh không được để trống",
             icon: "error"
         });
     } else {
 
         Swal.fire({
-            title: "Do you want to save the changes?",
+            title: "Bạn có muốn lưu thay đổi",
             showDenyButton: true,
             showCancelButton: true,
-            confirmButtonText: "Save",
-            denyButtonText: `Don't save`
+            confirmButtonText: "Lưu",
+            denyButtonText: `Không lưu`
         }).then((result) => {
             if (result.isConfirmed) {
                 accNow.nameUser = editLastNameValue;
@@ -80,7 +80,7 @@ btnEdit.addEventListener("click", () => {
                 localStorage.setItem("listAccount", JSON.stringify(listAcc));
                 localStorage.setItem("AccountNow", JSON.stringify(accNow));
                 Swal.fire({
-                    title: "Saved!",
+                    title: "Lưu thành công!!",
                     icon: "success",
                     timer: 1500,
                     showConfirmButton: false,
@@ -90,7 +90,7 @@ btnEdit.addEventListener("click", () => {
                     location.reload();
                 });
             } else if (result.isDenied) {
-                Swal.fire("Changes are not saved", "", "info");
+                Swal.fire("Thay đổi không được lưu", "", "info");
             }
         });
 
@@ -123,20 +123,20 @@ btnChangePass.addEventListener("click", () => {
 
     if (!validBlank(currentPasswordValue, newPasswordValue, confirmPasswordVlaue)) {
         Swal.fire({
-            title: "Box input is not blank",
-            text: "email or usrname or birthday is blank",
+            title: "Không được để trông",
+            text: "Các ô nhập không được để trống",
             icon: "error"
         });
     } else if (!isValidPasswd(currentPasswordValue)) {
         Swal.fire({
-            title: "Password format is incorrect",
-            text: "password must be 8 characters",
+            title: "Mật khẩu sai định dạng",
+            text: "Mật khẩu phải đủ 8 ký tự",
             icon: "error"
         });
     } else if (!isRePasswd(newPasswordValue, confirmPasswordVlaue)) {
         Swal.fire({
-            title: "rePassword is incorrect",
-            text: "Password does not match",
+            title: "Mật khẩu sai",
+            text: "Mật khẩu xác nhận không khớp với mật khẩu mới",
             icon: "error"
         });
     }else if(!checkPassCure (currentPasswordValue)){
@@ -147,15 +147,15 @@ btnChangePass.addEventListener("click", () => {
         });
     }else {
         Swal.fire({
-            title: "Do you want to save the changes?",
+            title: "Bạn có muốn lưu thay đổi hiện tại",
             showDenyButton: true,
             showCancelButton: true,
-            confirmButtonText: "Save",
-            denyButtonText: `Don't save`
+            confirmButtonText: "Lưu",
+            denyButtonText: `Không lưu`
         }).then((result) => {
             if (result.isConfirmed) {
                 Swal.fire({
-                    title: "Saved!",
+                    title: "Lưu thành công!",
                     icon: "success",
                     timer: 1500,
                     showConfirmButton: false,
@@ -173,7 +173,7 @@ btnChangePass.addEventListener("click", () => {
                     location.reload();
                 });
             } else if (result.isDenied) {
-                Swal.fire("Changes are not saved", "", "info");
+                Swal.fire("Thay đổi không thành công", "", "info");
             }
         });
     }
