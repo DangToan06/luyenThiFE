@@ -139,7 +139,13 @@ btnChangePass.addEventListener("click", () => {
             text: "Password does not match",
             icon: "error"
         });
-    } else {
+    }else if(!checkPassCure (currentPasswordValue)){
+         Swal.fire({
+            title: "Mật khẩu sai",
+            text: "Mật khẩu bạn nhập không khớp với mật khẩu tài khoản",
+            icon: "error"
+        });
+    }else {
         Swal.fire({
             title: "Do you want to save the changes?",
             showDenyButton: true,
@@ -190,6 +196,12 @@ function isRePasswd(newpasswd, repasswd) {
     return false;
 }
 
+function checkPassCure (passwd){
+    if(accNow.password === passwd){
+        return true;
+    }
+    return false;
+}
 document.getElementById("profile-image").src = accNow.avata;
 function changeAvatar() {
     event.preventDefault();

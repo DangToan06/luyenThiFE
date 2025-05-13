@@ -1,4 +1,11 @@
-let listQuesDo = JSON.parse(localStorage.getItem("questionInProgress"));
+let listQuesDo = [];
+let statusExam = sessionStorage.getItem("statusExam");
+if (statusExam === "sáng") {
+    listQuesDo = JSON.parse(localStorage.getItem("questionInProgress"));
+} else if (statusExam === "chiều") {
+    listQuesDo = JSON.parse(localStorage.getItem("questionInProgress2"));
+}
+// console.log(listQues);
 let listSelectedAws = JSON.parse(localStorage.getItem("listSelectedAws"));
 let questionTrue = 0;
 
