@@ -95,6 +95,37 @@
 }
 
 /* CSS cho kết quả tìm kiếm câu hỏi */
+.search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Chiếm toàn bộ chiều rộng */
+.search-box input[type="text"] {
+  width: 100%;
+  padding: 10px 35px 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.search-box input[type="text"]:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.search-box i {
+  position: absolute;
+  right: 10px;
+  font-size: 16px;
+  color: #888;
+  pointer-events: none;
+}
+
 .search-results {
   max-height: 200px;
   overflow-y: auto;
