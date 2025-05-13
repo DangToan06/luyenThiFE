@@ -5,7 +5,6 @@ if (statusExam === "sáng") {
 } else if (statusExam === "chiều") {
     listQuesDo = JSON.parse(localStorage.getItem("questionInProgress2"));
 }
-// console.log(listQues);
 let listSelectedAws = JSON.parse(localStorage.getItem("listSelectedAws"));
 let questionTrue = 0;
 
