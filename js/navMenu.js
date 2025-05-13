@@ -2,6 +2,8 @@
 function avatar1() {
     let acc = JSON.parse(localStorage.getItem("AccountNow"));
     document.getElementById("avatar").src = acc.avata;
+    document.getElementById("navName").innerHTML = acc.nameUser;
+    document.getElementById("navEmail").innerHTML = acc.email;
 }
 avatar1()
 
