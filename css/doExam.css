@@ -269,6 +269,7 @@ button {
 .btn-ques:hover{
     background-color: blue;
     color: #fff;
+    cursor: pointer;
 }
 
 .question-selected{
