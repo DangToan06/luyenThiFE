@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <td>${item.id}</td>
                         <td>${item.nameUser}</td>
                         <td>${item.email}</td>
-                        <td>Student</td>
+                        <td>Sinh viên</td>
                         <td class="action-buttons">
                             <button class="btn-delete" onclick="lockuser(${item.id})">
                                  ${item.status === true ? '<i class="fa-solid fa-lock-open"></i>' : '<i class="fa-solid fa-lock"></i>'}
@@ -273,19 +273,19 @@ document.addEventListener('DOMContentLoaded', () => {
             let sectionId;
 
             switch (linkText) {
-                case 'Dashboard':
+                case 'Bảng điều khiển':
                     sectionId = 'Dashboard';
                     break;
-                case 'Students':
+                case 'Sinh viên':
                     sectionId = 'Students';
                     break;
-                case 'Exam Question':
+                case 'Bài thi':
                     sectionId = 'Exam-Question';
                     break;
-                case 'Question':
+                case 'Câu hỏi':
                     sectionId = 'Question';
                     break;
-                case 'Article':
+                case 'Bài viết':
                     sectionId = 'Article';
                     break;
                 default:
@@ -297,16 +297,16 @@ document.addEventListener('DOMContentLoaded', () => {
             if (selectedSection) {
                 selectedSection.classList.remove('none');
                 switch (linkText) {
-                    case 'Students':
+                    case 'Sinh viên':
                         init(listAccount, 'Students', 'userTableBody');
                         break;
-                    case 'Exam Question':
+                    case 'Bài thi':
                         init(listExam, 'Exam-Question', 'examTableBody');
                         break;
-                    case 'Question':
+                    case 'Câu hỏi':
                         init(listQuestion, 'Question', 'questionTableBody');
                         break;
-                    case 'Article':
+                    case 'Bài viết':
                         const articles = getArticleList();
                         init(articles, 'Article', 'articleTableBody');
 
@@ -531,21 +531,21 @@ document.addEventListener('DOMContentLoaded', () => {
     function lockuser(id) {
         const user = listAccount.find(acc => acc.id === id);
         Swal.fire({
-            title: "Do you want to save the changes?",
+            title: "Có chắc muốn khóa hay mở khóa tài khản này",
             showDenyButton: true,
             // showCancelButton: true,
-            confirmButtonText: "Yes",
-            denyButtonText: `no`
+            confirmButtonText: "Đồng ý",
+            denyButtonText: `Không`
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire("Saved!", "", "success");
+                Swal.fire("Thay đổi trạng thái tài khoản thành công!", "", "success");
                 if (user) {
                     user.status = !user.status; // Đảo ngược trạng thái
                     localStorage.setItem('listAccount', JSON.stringify(listAccount));
                     init(listAccount, 'Students', 'userTableBody');
                 }
             } else if (result.isDenied) {
-                Swal.fire("Changes are not saved", "", "info");
+                Swal.fire("Thay đổi trạng thái tài khoản không thành công!", "", "info");
             }
         });
     }

@@ -6,16 +6,16 @@ document.addEventListener("DOMContentLoaded", function () {
         <h3 id="modalTitle">Thêm bài thi mới</h3>
         <form id="examForm" class="modal-exam-form">
           <div class="form-group">
-            <label for="examTitle">Title:</label>
+            <label for="examTitle">Tên đề thi:</label>
             <input type="text" id="examTitle" placeholder="Tên đề thi" required>
           </div>
           <div class="form-group">
-            <label for="examDuration">Duration:</label>
+            <label for="examDuration">Thời Gian làm bài:</label>
             <input type="number" id="examDuration" placeholder="Thời gian" required>
           </div>
           <div class="form-group">
-            <label for="questionSearch">Tìm kiếm câu hỏi:</label>
-            <input type="text" id="questionSearch" placeholder="Nhập ID hoặc bất kì nội dung câu hỏi để tìm">
+            <label for="questionSearch">Tìm kiếm câu hỏi ca sáng:</label>
+            <input type="text" id="questionSearch" placeholder="Nhập ID hoặc nội dung câu hỏi">
             <div id="searchResults" class="search-results"></div>
             <div class="search-actions">
               <button type="button" class="btn-select-all">Chọn tất cả</button>
@@ -23,8 +23,22 @@ document.addEventListener("DOMContentLoaded", function () {
             </div>
           </div>
           <div class="form-group">
-            <label>Câu hỏi đã chọn: <span id="selectedCount">0</span> câu</label>
+            <label>Câu hỏi ca sáng đã chọn: <span id="selectedCount">0</span> câu</label>
             <div id="selectedQuestions" class="selected-questions"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="questionSearch2">Tìm kiếm câu hỏi ca chiều:</label>
+            <input type="text" id="questionSearch2" placeholder="Nhập ID hoặc nội dung câu hỏi">
+            <div id="searchResults2" class="search-results"></div>
+            <div class="search-actions">
+              <button type="button" class="btn-select-all2">Chọn tất cả</button>
+              <button type="button" class="btn-deselect-all2">Bỏ chọn tất cả</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Câu hỏi ca chiều đã chọn: <span id="selectedCount2">0</span> câu</label>
+            <div id="selectedQuestions2" class="selected-questions"></div>
           </div>
           <div class="modal-exam-actions">
             <button type="submit" class="btn-save-exam">Lưu</button>
@@ -36,8 +50,10 @@ document.addEventListener("DOMContentLoaded", function () {
   `;
   document.body.insertAdjacentHTML("beforeend", modalHTML);
 
-  // Lấy các phần tử cần dùng
+  // Lấy các phần tử DOM và kiểm tra sự tồn tại
   const modal = document.getElementById("examModal");
+  if (!modal) return;
+
   const modalTitle = document.getElementById("modalTitle");
   const examForm = document.getElementById("examForm");
   const examTitle = document.getElementById("examTitle");
@@ -62,36 +78,46 @@ document.addEventListener("DOMContentLoaded", function () {
   let selectedQuestionIds = [];
   let currentSearchResults = [];
   let currentPage = 1;
-  const itemsPerPage = 5; // Đồng bộ với admin.js
+  const itemsPerPage = 3;
+
+  // Thêm biến trạng thái cho ca chiều
+  let selectedQuestionIds2 = [];
+  let currentSearchResults2 = [];
 
   // Tạo ID đề thi ngẫu nhiên
   function generateUniqueExamId() {
-    let newId;
-    do {
-      newId =
-        "exam" + String(Math.floor(Math.random() * 1000)).padStart(3, "0");
-    } while (listExam.some((exam) => exam.id === newId));
-    return newId;
+    while (true) {
+      const randomNum = Math.floor(Math.random() * 1000);
+      const newId = "exam" + String(randomNum).padStart(3, "0"); // Tạo ID bài thi bằng cách chuyển thành chuỗi, thêm ký tự vào đầu chuỗi
+      if (!listExam || !listExam.some((exam) => exam.id === newId)) {
+        // Kiểm tra ID chưa tồn tại
+        return newId;
+      }
+    }
   }
 
   // Tìm kiếm câu hỏi
   function searchQuestions(query) {
-    if (!query) {
-      searchResults.innerHTML = "";
+    if (!query || !searchResults) {
+      if (searchResults) searchResults.innerHTML = "";
       currentSearchResults = [];
       return;
     }
-    currentSearchResults = listQuestion.filter(
-      (q) =>
-        (q.id.toLowerCase().includes(query.toLowerCase()) ||
-          q.content.toLowerCase().includes(query.toLowerCase())) &&
-        !selectedQuestionIds.includes(q.id)
-    );
+    query = query.toLowerCase();
+    currentSearchResults = (listQuestion || []).filter((q) => {
+      let isSelected = selectedQuestionIds.some((id) => id === q.id); // Kiểm tra xem ID của câu hỏi hiện tại (q.id) có nằm trong mảng selectedQuestionIds không
+      return (
+        !isSelected &&
+        (q.id.toLowerCase().indexOf(query) !== -1 ||
+          q.content.toLowerCase().indexOf(query) !== -1)
+      );
+    });
     updateSearchResults();
   }
 
   // Cập nhật danh sách kết quả tìm kiếm
   function updateSearchResults() {
+    if (!searchResults) return;
     searchResults.innerHTML = currentSearchResults
       .map(
         (q) => `
@@ -109,9 +135,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Cập nhật danh sách câu hỏi đã chọn
   function updateSelectedQuestions() {
+    if (!selectedQuestions || !selectedCount) return;
     selectedQuestions.innerHTML = selectedQuestionIds
       .map((id) => {
-        const question = listQuestion.find((q) => q.id === id);
+        const question = (listQuestion || []).find((q) => q.id === id);
         return question
           ? `<div class="selected-question-item">${id}: ${question.content}</div>`
           : "";
@@ -120,8 +147,60 @@ document.addEventListener("DOMContentLoaded", function () {
     selectedCount.textContent = selectedQuestionIds.length;
   }
 
-  // Logic phân trang
+  // Thêm hàm tìm kiếm cho ca chiều
+  function searchQuestions2(query) {
+    if (!query || !searchResults2) {
+      if (searchResults2) searchResults2.innerHTML = "";
+      currentSearchResults2 = [];
+      return;
+    }
+    query = query.toLowerCase();
+    currentSearchResults2 = (listQuestion || []).filter((q) => {
+      let isSelected = selectedQuestionIds2.some((id) => id === q.id);
+      return (
+        !isSelected &&
+        (q.id.toLowerCase().indexOf(query) !== -1 ||
+          q.content.toLowerCase().indexOf(query) !== -1)
+      );
+    });
+    updateSearchResults2();
+  }
+
+  // Cập nhật kết quả tìm kiếm ca chiều
+  function updateSearchResults2() {
+    if (!searchResults2) return;
+    searchResults2.innerHTML = currentSearchResults2
+      .map(
+        (q) => `
+      <div class="search-result-item" data-id="${q.id}">
+        <div class="checkbox-wrapper">
+          <input type="checkbox" class="question-checkbox" data-id="${q.id}" id="checkbox2-${q.id}">
+          <label for="checkbox2-${q.id}" class="checkbox-label"></label>
+        </div>
+        <span class="question-text">${q.id}: ${q.content}</span>
+      </div>
+    `
+      )
+      .join("");
+  }
+
+  // Cập nhật danh sách câu hỏi đã chọn ca chiều
+  function updateSelectedQuestions2() {
+    if (!selectedQuestions2 || !selectedCount2) return;
+    selectedQuestions2.innerHTML = selectedQuestionIds2
+      .map((id) => {
+        const question = (listQuestion || []).find((q) => q.id === id);
+        return question
+          ? `<div class="selected-question-item">${id}: ${question.content}</div>`
+          : "";
+      })
+      .join("");
+    selectedCount2.textContent = selectedQuestionIds2.length;
+  }
+
+  // Hiển thị bảng nội dung
   function renderContent(renderList) {
+    if (!contentList) return;
     contentList.innerHTML = "";
     const totalItems = renderList.length;
     const start = (currentPage - 1) * itemsPerPage;
@@ -137,7 +216,7 @@ document.addEventListener("DOMContentLoaded", function () {
           <td>${item.totalQuest}</td>
           <td class="action-buttons">
             <button class="btn-edit" data-id="${item.id}"><i class="fa-solid fa-pen-to-square" style="color: #3e1ce9;"></i></button>
-                  <button class="btn-delete" data-id="${item.id}"><i class="fa-solid fa-trash" style="color: #ff0000;"></i></button>
+            <button class="btn-delete" data-id="${item.id}"><i class="fa-solid fa-trash" style="color: #ff0000;"></i></button>
           </td>
         </tr>`;
     });
@@ -145,7 +224,9 @@ document.addEventListener("DOMContentLoaded", function () {
     renderPagination(renderList);
   }
 
+  // Hiển thị phân trang
   function renderPagination(renderList) {
+    if (!pageNumbersContainer) return;
     const totalItems = renderList.length;
     const totalPages = Math.ceil(totalItems / itemsPerPage);
     pageNumbersContainer.innerHTML = "";
@@ -174,7 +255,9 @@ document.addEventListener("DOMContentLoaded", function () {
     updateButtons(totalPages);
   }
 
+  // Thiết lập sự kiện phân trang
   function setupPaginationEvents(renderList) {
+    if (!pageNumbersContainer) return;
     const pageButtons = pageNumbersContainer.querySelectorAll(".page-button");
     pageButtons.forEach((button) => {
       button.addEventListener("click", () => {
@@ -183,101 +266,132 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
 
-    firstPageBtn.onclick = () => {
-      currentPage = 1;
-      renderContent(renderList);
-    };
-    prevPageBtn.onclick = () => {
-      if (currentPage > 1) currentPage--;
-      renderContent(renderList);
-    };
-    nextPageBtn.onclick = () => {
-      if (currentPage < Math.ceil(renderList.length / itemsPerPage))
-        currentPage++;
-      renderContent(renderList);
-    };
-    lastPageBtn.onclick = () => {
-      currentPage = Math.ceil(renderList.length / itemsPerPage);
-      renderContent(renderList);
-    };
+    if (firstPageBtn) {
+      firstPageBtn.onclick = () => {
+        currentPage = 1;
+        renderContent(renderList);
+      };
+    }
+    if (prevPageBtn) {
+      prevPageBtn.onclick = () => {
+        if (currentPage > 1) {
+          currentPage--;
+          renderContent(renderList);
+        }
+      };
+    }
+    if (nextPageBtn) {
+      nextPageBtn.onclick = () => {
+        if (currentPage < Math.ceil(renderList.length / itemsPerPage)) {
+          currentPage++;
+          renderContent(renderList);
+        }
+      };
+    }
+    if (lastPageBtn) {
+      lastPageBtn.onclick = () => {
+        currentPage = Math.ceil(renderList.length / itemsPerPage);
+        renderContent(renderList);
+      };
+    }
   }
 
+  // Cập nhật trạng thái nút phân trang
   function updateButtons(totalPages) {
-    firstPageBtn.disabled = currentPage === 1;
-    prevPageBtn.disabled = currentPage === 1;
-    nextPageBtn.disabled = currentPage === totalPages;
-    lastPageBtn.disabled = currentPage === totalPages;
+    if (firstPageBtn) firstPageBtn.disabled = currentPage === 1;
+    if (prevPageBtn) prevPageBtn.disabled = currentPage === 1;
+    if (nextPageBtn) nextPageBtn.disabled = currentPage === totalPages;
+    if (lastPageBtn) lastPageBtn.disabled = currentPage === totalPages;
   }
 
-  // Hàm cập nhật bảng
+  // Cập nhật bảng
   function updateExamTable(renderList = listExam) {
-    currentPage = 1; // Đặt về trang 1
-    renderContent(renderList);
+    currentPage = 1;
+    renderContent(renderList || []);
   }
 
   // Sự kiện tìm kiếm câu hỏi
-  questionSearch.addEventListener("input", (e) =>
-    searchQuestions(e.target.value)
-  );
+  if (questionSearch) {
+    questionSearch.addEventListener("input", () =>
+      searchQuestions(questionSearch.value)
+    );
+  }
 
   // Chọn tất cả kết quả tìm kiếm
-  document.querySelector(".btn-select-all").addEventListener("click", () => {
-    searchResults.querySelectorAll(".question-checkbox").forEach((checkbox) => {
-      if (!checkbox.checked) {
-        checkbox.checked = true;
-        const id = checkbox.dataset.id;
-        if (!selectedQuestionIds.includes(id)) selectedQuestionIds.push(id);
-      }
+  const selectAllBtn = document.querySelector(".btn-select-all");
+  if (selectAllBtn) {
+    selectAllBtn.addEventListener("click", () => {
+      if (!searchResults) return;
+      const checkboxes = searchResults.querySelectorAll(".question-checkbox");
+      checkboxes.forEach((checkbox) => {
+        if (!checkbox.checked) {
+          checkbox.checked = true;
+          const id = checkbox.dataset.id;
+          if (!selectedQuestionIds.some((qid) => qid === id)) {
+            selectedQuestionIds.push(id);
+          }
+        }
+      });
+      updateSelectedQuestions();
     });
-    updateSelectedQuestions();
-  });
+  }
 
   // Bỏ chọn tất cả
-  document.querySelector(".btn-deselect-all").addEventListener("click", () => {
-    searchResults
-      .querySelectorAll(".question-checkbox")
-      .forEach((cb) => (cb.checked = false));
-    selectedQuestionIds = [];
-    updateSelectedQuestions();
-  });
-
-  // Thêm hoặc gỡ câu hỏi khỏi danh sách đã chọn
-  searchResults.addEventListener("change", (e) => {
-    if (e.target.classList.contains("question-checkbox")) {
-      const id = e.target.dataset.id;
-      if (e.target.checked) {
-        if (!selectedQuestionIds.includes(id)) selectedQuestionIds.push(id);
-      } else {
-        selectedQuestionIds = selectedQuestionIds.filter((qid) => qid !== id);
-      }
+  const deselectAllBtn = document.querySelector(".btn-deselect-all");
+  if (deselectAllBtn) {
+    deselectAllBtn.addEventListener("click", () => {
+      if (!searchResults) return;
+      searchResults.querySelectorAll(".question-checkbox").forEach((cb) => {
+        cb.checked = false;
+      });
+      selectedQuestionIds = [];
       updateSelectedQuestions();
-    }
-  });
+    });
+  }
 
-  // Thêm xử lý sự kiện cho bảng Exam Question
+  // Thêm hoặc bỏ câu hỏi đã chọn
+  if (searchResults) {
+    searchResults.addEventListener("change", (e) => {
+      if (e.target.className === "question-checkbox") {
+        const id = e.target.dataset.id;
+        if (e.target.checked) {
+          if (!selectedQuestionIds.some((qid) => qid === id)) {
+            selectedQuestionIds.push(id);
+          }
+        } else {
+          selectedQuestionIds = selectedQuestionIds.filter((qid) => qid !== id);
+        }
+        updateSelectedQuestions();
+      }
+    });
+  }
+
+  // Xử lý sự kiện cho bảng
   const examTable = document.querySelector("#Exam-Question .admin-table");
   if (examTable) {
     examTable.addEventListener("click", async (e) => {
-      const target = e.target.closest("button");
-      if (!target) return;
+      const button = e.target.closest("button");
+      if (!button) return;
 
-      const row = target.closest("tr");
+      const row = button.closest("tr");
       if (!row) return;
 
       const examId = row.cells[0].textContent;
-      const exam = listExam.find((ex) => ex.id === examId);
+      const exam = (listExam || []).find((ex) => ex.id === examId);
 
-      if (target.classList.contains("btn-edit")) {
-        if (exam) {
+      if (button.className === "btn-edit") {
+        if (exam && modal && modalTitle && examTitle && examDuration) {
           currentExamId = exam.id;
           modalTitle.textContent = "Chỉnh sửa bài thi";
           examTitle.value = exam.title;
           examDuration.value = exam.durationMinutes;
           selectedQuestionIds = [...exam.questionIds];
+          selectedQuestionIds2 = [...exam.questionIds2];
           updateSelectedQuestions();
+          updateSelectedQuestions2();
           modal.classList.add("show");
         }
-      } else if (target.classList.contains("btn-delete")) {
+      } else if (button.className === "btn-delete") {
         try {
           const result = await Swal.fire({
             title: "Xác nhận xóa?",
@@ -288,12 +402,12 @@ document.addEventListener("DOMContentLoaded", function () {
             cancelButtonText: "Hủy",
           });
 
-          if (result.isConfirmed) {
+          if (result.isConfirmed && listExam) {
             const index = listExam.findIndex((exam) => exam.id === examId);
             if (index !== -1) {
               listExam.splice(index, 1);
               localStorage.setItem("listExam", JSON.stringify(listExam));
-              examSearch.value = "";
+              if (examSearch) examSearch.value = "";
               updateExamTable();
               Swal.fire("Đã xóa!", "Đề thi đã được xóa.", "success");
             }
@@ -306,102 +420,164 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Thêm xử lý sự kiện cho nút Add New Exam
+  // Sự kiện nút thêm đề thi
   const addExamBtn = document.querySelector("#Exam-Question .btn-add");
   if (addExamBtn) {
     addExamBtn.addEventListener("click", () => {
-      modalTitle.textContent = "Thêm bài thi mới";
-      examForm.reset();
-      currentExamId = null;
-      selectedQuestionIds = [];
-      updateSelectedQuestions();
-      modal.classList.add("show");
+      if (modal && modalTitle && examForm) {
+        modalTitle.textContent = "Thêm bài thi mới";
+        examForm.reset();
+        currentExamId = null;
+        selectedQuestionIds = [];
+        selectedQuestionIds2 = [];
+        updateSelectedQuestions();
+        updateSelectedQuestions2();
+        modal.classList.add("show");
+      }
     });
   }
 
-  // Thêm xử lý sự kiện cho nút đóng modal
+  // Sự kiện đóng modal
   if (closeBtn) {
     closeBtn.addEventListener("click", () => {
-      modal.classList.remove("show");
+      if (modal) modal.classList.remove("show");
     });
   }
 
-  // Thêm xử lý sự kiện cho form lưu đề thi
+  // Xử lý lưu đề thi
   if (examForm) {
     examForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      try {
-        const title = examTitle.value.trim();
-        const duration = parseInt(examDuration.value);
+      const title = examTitle ? examTitle.value.trim() : "";
+      const duration = examDuration ? parseInt(examDuration.value) : 0;
 
-        if (isNaN(duration) || duration <= 0) {
-          await Swal.fire("Lỗi!", "Thời gian phải lớn hơn 00 phút.", "error");
-          return;
-        }
+      if (isNaN(duration) || duration <= 0) {
+        await Swal.fire("Lỗi!", "Thời gian phải lớn hơn 0 phút.", "error");
+        return;
+      }
 
-        const isTitleDuplicate = listExam.some(
-          (exam) =>
-            exam.title.toLowerCase() === title.toLowerCase() &&
-            exam.id !== currentExamId
+      const isTitleDuplicate = (listExam || []).some((exam) => {
+        return (
+          exam.title.toLowerCase() === title.toLowerCase() &&
+          exam.id !== currentExamId
         );
-        if (isTitleDuplicate) {
-          await Swal.fire(
-            "Lỗi!",
-            "Tên đề thi đã tồn tại. Vui lòng chọn tên khác.",
-            "error"
-          );
-          return;
+      });
+
+      if (isTitleDuplicate) {
+        await Swal.fire("Lỗi!", "Tên đề thi đã tồn tại.", "error");
+        return;
+      }
+
+      const examData = {
+        title: title,
+        durationMinutes: duration,
+        questionIds: selectedQuestionIds,
+        questionIds2: selectedQuestionIds2,
+        randomize: true,
+        member: 0,
+        totalQuest: selectedQuestionIds.length + selectedQuestionIds2.length
+      };
+
+      if (currentExamId && listExam) {
+        const index = listExam.findIndex((exam) => exam.id === currentExamId);
+        if (index !== -1) {
+          listExam[index] = { id: currentExamId, ...examData };
+          await Swal.fire("Thành công!", "Đã cập nhật đề thi!", "success");
         }
+      } else if (listExam) {
+        examData.id = generateUniqueExamId();
+        listExam.unshift(examData);
+        await Swal.fire("Thành công!", "Đã thêm đề thi mới!", "success");
+      }
 
-        const examData = {
-          title: title,
-          durationMinutes: duration,
-          questionIds: selectedQuestionIds,
-          randomize: true,
-          member: 0,
-          totalQuest: selectedQuestionIds.length,
-        };
-
-        if (currentExamId) {
-          const index = listExam.findIndex((exam) => exam.id === currentExamId);
-          if (index !== -1) {
-            listExam[index] = { ...listExam[index], ...examData };
-            await Swal.fire(
-              "Thành công!",
-              "Đã cập nhật và chỉnh sửa đề thi!",
-              "success"
-            );
-          }
-        } else {
-          examData.id = generateUniqueExamId();
-          listExam.unshift(examData);
-          await Swal.fire("Thành công!", "Đã thêm đề thi mới!", "success");
-        }
-
+      if (listExam) {
         localStorage.setItem("listExam", JSON.stringify(listExam));
+      }
+
+      if (examSearch) {
         examSearch.value = "";
-        updateExamTable();
+      }
+
+      updateExamTable();
+
+      if (modal) {
         modal.classList.remove("show");
-      } catch (error) {
-        console.error("Lỗi khi lưu đề thi:", error);
-        Swal.fire("Lỗi!", "Không thể lưu đề thi.", "error");
       }
     });
   }
 
   // Tìm kiếm đề thi
-  examSearch.addEventListener("input", (e) => {
-    const query = e.target.value.toLowerCase();
-    const filteredExams = listExam.filter(
-      (exam) =>
-        exam.id.toLowerCase().includes(query) ||
-        exam.title.toLowerCase().includes(query)
-    );
-    currentPage = 1; // Đặt về trang 1 khi tìm kiếm
-    renderContent(filteredExams);
-  });
+  if (examSearch) {
+    examSearch.addEventListener("input", () => {
+      const query = examSearch.value.toLowerCase();
+      const filteredExams = (listExam || []).filter(
+        (exam) =>
+          exam.id.toLowerCase().indexOf(query) !== -1 ||
+          exam.title.toLowerCase().indexOf(query) !== -1
+      );
+      currentPage = 1;
+      renderContent(filteredExams);
+    });
+  }
 
-  // Khởi tạo bảng ban đầu
+  // Thêm sự kiện cho tìm kiếm ca chiều
+  const questionSearch2 = document.getElementById("questionSearch2");
+  if (questionSearch2) {
+    questionSearch2.addEventListener("input", () =>
+      searchQuestions2(questionSearch2.value)
+    );
+  }
+
+  // Thêm sự kiện cho nút chọn tất cả ca chiều
+  const selectAllBtn2 = document.querySelector(".btn-select-all2");
+  if (selectAllBtn2) {
+    selectAllBtn2.addEventListener("click", () => {
+      if (!searchResults2) return;
+      const checkboxes = searchResults2.querySelectorAll(".question-checkbox");
+      checkboxes.forEach((checkbox) => {
+        if (!checkbox.checked) {
+          checkbox.checked = true;
+          const id = checkbox.dataset.id;
+          if (!selectedQuestionIds2.some((qid) => qid === id)) {
+            selectedQuestionIds2.push(id);
+          }
+        }
+      });
+      updateSelectedQuestions2();
+    });
+  }
+
+  // Thêm sự kiện cho nút bỏ chọn tất cả ca chiều
+  const deselectAllBtn2 = document.querySelector(".btn-deselect-all2");
+  if (deselectAllBtn2) {
+    deselectAllBtn2.addEventListener("click", () => {
+      if (!searchResults2) return;
+      searchResults2.querySelectorAll(".question-checkbox").forEach((cb) => {
+        cb.checked = false;
+      });
+      selectedQuestionIds2 = [];
+      updateSelectedQuestions2();
+    });
+  }
+
+  // Thêm sự kiện cho checkbox ca chiều
+  if (searchResults2) {
+    searchResults2.addEventListener("change", (e) => {
+      if (e.target.className === "question-checkbox") {
+        const id = e.target.dataset.id;
+        if (e.target.checked) {
+          if (!selectedQuestionIds2.some((qid) => qid === id)) {
+            selectedQuestionIds2.push(id);
+          }
+        } else {
+          selectedQuestionIds2 = selectedQuestionIds2.filter((qid) => qid !== id);
+        }
+        updateSelectedQuestions2();
+      }
+    });
+  }
+
+  // Khởi tạo bảng
   updateExamTable();
 });

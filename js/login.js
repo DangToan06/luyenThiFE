@@ -61,15 +61,15 @@ btnSignUp.addEventListener("click", () => {
     let checkboxSignUpValue = document.getElementById("checkbox-sign-up").checked;
 
     if (!validBlank(inputNameSignUpValue, inputDateSignUpValue, inputEmailSignUpValue, inputPasswdSignUpValue, inputRepasswdSignUpValue, checkboxSignUpValue)) {
-        showWarning("input is not blank");
+        showWarning("Không được để trông");
     } else if (!isValidEmail(inputEmailSignUpValue)) {
-        showWarning("email format is incorrect");
+        showWarning("Email sai định dạng");
     } else if (!isValidPasswd(inputPasswdSignUpValue)) {
-        showWarning("password must be 8 characters");
+        showWarning("Mật khẩu phải đủ 8 ký tự");
     } else if (!isRePasswd(inputPasswdSignUpValue, inputRepasswdSignUpValue)) {
-        showWarning("Password does not match");
+        showWarning("Mật Khẩu không khớp");
     } else if (existEmail(inputEmailSignUpValue)) {
-        showWarning("Email exist");
+        showWarning("Email đã tồn tại");
     } else {
         Account.id = Math.floor(1000 + Math.random() * 9000);
         Account.nameUser = inputNameSignUpValue;
@@ -195,7 +195,7 @@ btnLogin.addEventListener('click', () => {
     //     }, 800);
     // }
     if (!searchAccInList(inputNameSignInValue, inputPasswdSignInValue)) {
-        showWarning("Email or password incorrect");
+        showWarning("Email hoặc mật khẩu sai");
     } else {
         //Lưu vị trí tài khoản hiện tại
 
@@ -206,12 +206,12 @@ btnLogin.addEventListener('click', () => {
         });
         let AccountNow = JSON.parse(localStorage.getItem("AccountNow"));
         if (AccountNow.status === true) {
-            showSuccessful("Login successful");
+            showSuccessful("Đăng Nhập Thành Công");
             setTimeout(() => {
                 window.location.href = "page/home.html";
             }, 800)
-        } else {
-            showWarning("Account is locked");
+        }else {
+            showWarning("Tài Khản đã bị khóa");
         }
     }
 
