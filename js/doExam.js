@@ -46,7 +46,7 @@ function awsChoice() {
             });
 
             let selectedLabel = this.closest("label");
-            selectedLabel.style.backgroundColor = " #BC2228";
+            selectedLabel.style.backgroundColor = "rgb(9, 228, 240)";
             selectedLabel.style.color = " #fff";
             selectedLabel.style.fontWeight = "500";
 

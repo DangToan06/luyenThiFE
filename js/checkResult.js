@@ -3,7 +3,6 @@ let listSelectedAws = JSON.parse(localStorage.getItem("listSelectedAws"));
 // Hiển thị tất cả câu hỏi và hết quả 
 let examInPro = JSON.parse(localStorage.getItem("examInProgress"));
 //render câu hỏi
-
 renderQuestion();
 
 function renderQuestion() {
