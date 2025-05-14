@@ -27,31 +27,31 @@
         <li class="nav-item">
           <a href="#" class="nav-link active">
             <i class="fas fa-chart-pie"></i>
-            <span>Dashboard</span>
+            <span>Bảng điều khiển</span>
           </a>
         </li>
         <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="fas fa-users"></i>
-            <span>Students</span>
+            <span>Sinh viên</span>
           </a>
         </li>
         <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="fas fa-clipboard-list"></i>
-            <span>Exam Question</span>
+            <span>Bài thi</span>
           </a>
         </li>
         <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="fas fa-question-circle"></i>
-            <span>Question</span>
+            <span>Câu hỏi</span>
           </a>
         </li>
         <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="fas fa-newspaper"></i>
-            <span>Article</span>
+            <span>Bài viết</span>
           </a>
         </li>
       </ul>
@@ -107,28 +107,28 @@
               <i class="fas fa-users blue"></i>
             </div>
             <div class="stat-value">2,547</div>
-            <div class="stat-label">Total Students</div>
+            <div class="stat-label">Tổng số học sinh</div>
           </div>
           <div class="stat-card">
             <div class="stat-icon">
               <i class="fas fa-clipboard-list"></i>
             </div>
             <div class="stat-value">186</div>
-            <div class="stat-label">Exam Question</div>
+            <div class="stat-label">Tổng số bài thi</div>
           </div>
           <div class="stat-card">
             <div class="stat-icon">
               <i class="fas fa-graduation-cap orange"></i>
             </div>
             <div class="stat-value">87.5%</div>
-            <div class="stat-label">Average Grade</div>
+            <div class="stat-label">Điểm trung bình</div>
           </div>
           <div class="stat-card">
             <div class="stat-icon">
-              <i class="fas fa-dollar-sign green"></i>
+              <i class="fa-solid fa-pen" style="font-size: 1rem; color: #d21e1e;"></i>
             </div>
-            <div class="stat-value">$847,245</div>
-            <div class="stat-label">Revenue</div>
+            <div class="stat-value">100</div>
+            <div class="stat-label">Tổng lượt làm bài</div>
           </div>
         </div>
 
@@ -136,7 +136,7 @@
         <div class="content-grid">
           <!-- Activity Feed -->
           <div class="content-section">
-            <h3 class="section-title">Recent Activity</h3>
+            <h3 class="section-title">Hoạt động gần đây</h3>
             <div class="activity-item">
               <div class="activity-avatar">
                 <img src="../assets/Dropdown.png" alt="Sarah Johnson" />
@@ -210,14 +210,14 @@
 
         <!-- Students Table -->
         <div class="students-section">
-          <h3 class="section-title">Recent Students</h3>
+          <h3 class="section-title">Học viên gần đây</h3>
           <table class="students-table">
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Name</th>
-                <th>Status</th>
-                <th>Action</th>
+                <th>Tên</th>
+                <th>Trạng thái</th>
+                <th>Chi tiết</th>
               </tr>
             </thead>
             <tbody>
@@ -267,16 +267,16 @@
     </section>
     <section id="Students" class="none" style="width: 100%">
       <div class="admin-section main-container">
-        <h2><i class="fa-solid fa-users"></i> Manage Users</h2>
-        <button class="btn-add">Add New User</button>
+        <h2><i class="fa-solid fa-users"></i>Quản lý sinh viên</h2>
+        <button class="btn-add">Thêm sinh viên mới</button>
         <table class="admin-table">
           <thead>
             <tr>
               <th>ID</th>
-              <th>Username</th>
+              <th>Tên sinh viên</th>
               <th>Email</th>
-              <th>Role</th>
-              <th>Actions</th>
+              <th>Vai trò</th>
+              <th>Trạng thái</th>
             </tr>
           </thead>
           <tbody id="userTableBody">
@@ -284,7 +284,7 @@
               <td>1</td>
               <td>john_doe</td>
               <td>john@example.com</td>
-              <td>Student</td>
+              <td>Sinh viên</td>
               <td class="action-buttons">
                 <button class="btn-delete">Lock</button>
               </td>
@@ -311,27 +311,27 @@
     </section>
     <section id="Exam-Question" class="none" style="width: 100%">
       <div class="admin-section main-container">
-        <h2><i class="fa-solid fa-book-open"></i> Manage Exams</h2>
+        <h2><i class="fa-solid fa-book-open"></i> Quản lý bài thi</h2>
         <div class="search-box">
           <input type="text" id="searchExam" placeholder="Tìm kiếm bài thi...">
           <i class="fas fa-search"></i>
         </div>
-        <button class="btn-add">Add New Exam</button>
+        <button class="btn-add">Thêm bài thi mới</button>
         <table class="admin-table">
           <thead>
             <tr>
               <th>ID</th>
-              <th>Title</th>
-              <th>Duration</th>
-              <th>Questions</th>
-              <th>Actions</th>
+              <th>Tên bài thi</th>
+              <th>Thời gian làm bài</th>
+              <th>Câu hỏi</th>
+              <th>Hành động</th>
             </tr>
           </thead>
           <tbody id="examTableBody">
             <tr>
               <td>1</td>
               <td>Đề thi số 1</td>
-              <td>120 minutes</td>
+              <td>120 phút</td>
               <td>100</td>
               <td class="action-buttons">
                 <button class="btn-edit">Edit</button>
@@ -341,7 +341,7 @@
             <tr>
               <td>2</td>
               <td>Đề thi số 2</td>
-              <td>120 minutes</td>
+              <td>120 phút</td>
               <td>100</td>
               <td class="action-buttons">
                 <button class="btn-edit">Edit</button>
@@ -361,14 +361,14 @@
     </section>
     <section id="Question" class="none" style="width: 100%">
       <div class="admin-section main-container">
-        <h2><i class="fa-solid fa-question-circle"></i> Manage Questions</h2>
-        <button class="btn-add">Add New Question</button>
+        <h2><i class="fa-solid fa-question-circle"></i> Quản lý câu hỏi</h2>
+        <button class="btn-add">Thêm câu hỏi mới</button>
         <table class="admin-table">
           <thead>
             <tr>
               <th>ID</th>
-              <th>Question Text</th>
-              <th>Actions</th>
+              <th>Câu hỏi</th>
+              <th>Hành động</th>
             </tr>
           </thead>
           <tbody id="questionTableBody">
@@ -404,16 +404,16 @@
     <!-- bài viết -->
     <section id="Article" class="none" style="width: 100%">
       <div class="admin-section main-container">
-        <h2><i class="fa-solid fa-newspaper"></i> Manage Posts</h2>
-        <button class="btn-add">Add New Post</button>
+        <h2><i class="fa-solid fa-newspaper"></i> Quản lý bài viết</h2>
+        <button class="btn-add">Thêm bài viết mới</button>
         <table class="admin-table">
           <thead>
             <tr>
               <th>ID</th>
-              <th>Title</th>
-              <th>Posted Date</th>
-              <th>Author</th>
-              <th>Actions</th>
+              <th>Tiếu đề</th>
+              <th>Ngày đăng</th>
+              <th>Tác giả</th>
+              <th>Hành động</th>
             </tr>
           </thead>
           <tbody id="articleTableBody">

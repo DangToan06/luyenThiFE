@@ -6,11 +6,11 @@ document.addEventListener("DOMContentLoaded", function () {
         <h3 id="modalTitle">Thêm bài thi mới</h3>
         <form id="examForm" class="modal-exam-form">
           <div class="form-group">
-            <label for="examTitle">Title:</label>
+            <label for="examTitle">Tên đề thi:</label>
             <input type="text" id="examTitle" placeholder="Tên đề thi" required>
           </div>
           <div class="form-group">
-            <label for="examDuration">Duration:</label>
+            <label for="examDuration">Thời Gian làm bài:</label>
             <input type="number" id="examDuration" placeholder="Thời gian" required>
           </div>
           <div class="form-group">
@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let selectedQuestionIds = [];
   let currentSearchResults = [];
   let currentPage = 1;
-  const itemsPerPage = 5;
+  const itemsPerPage = 3;
 
   // Tạo ID đề thi ngẫu nhiên
   function generateUniqueExamId() {
