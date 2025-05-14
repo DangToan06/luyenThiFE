@@ -26,7 +26,7 @@ function init(renderListd) {
                     <h3>${item.title}</h3>
                     <div class="info">
                         <div><i class="fa-solid fa-clock"></i> ${item.durationMinutes} phút</div>
-                        <div><i class="fa-solid fa-book-open"></i> 1 bài thi</div>
+                        <div><i class="fa-solid fa-book-open"></i> 2 bài thi</div>
                     </div>
                     <div class="info">
                         <div><i class="fa-solid fa-comment-dots"></i> ${item.totalQuest} câu hỏi</div>
