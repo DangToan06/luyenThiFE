@@ -1,3 +1,5 @@
+const { functions } = require("lodash");
+
 function homePage() {
     window.location.href = "home.html";
 }
@@ -7,6 +9,6 @@ function signOut() {
 function signOutAdmin() {
     window.location.href = "/page/loginadmin.html";
 }
-function viewProfile() {
-    window.location.href = "editInformation.html"; // điều hướng tới trang chi tiết
+function forgotpassword() {
+    window.location.href = "/page/forgotPassword.html"; 
 }

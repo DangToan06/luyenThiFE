@@ -170,6 +170,11 @@ document.addEventListener('DOMContentLoaded', () => {
                                  ${item.status === true ? '<i class="fa-solid fa-lock-open"></i>' : '<i class="fa-solid fa-lock"></i>'}
                             </button>
                         </td>
+                        <td class="action-buttons">
+                            <button class="btn-delete" onclick="seeDetails(${item.id})">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                        </td>
                     </tr>`;
                 case "Exam-Question":
                     return `
@@ -695,4 +700,32 @@ function getArticleList() {
 
 function saveArticleList(list) {
     localStorage.setItem('listArticle', JSON.stringify(list));
+}
+
+function seeDetails(id) {
+    let user = listAccount.find(acc => acc.id === id);
+    console.log(user);
+    let modalDetails = document.getElementById('seeDetails');
+    modalDetails.classList.remove('hidden');
+    let detailsContent = document.getElementById('pointExam');
+    detailsContent.innerHTML="";
+    let btn = document.getElementById('closeDetails');
+    btn.addEventListener('click', () => {
+        modalDetails.classList.add('hidden');
+    });
+    let infoUser = document.getElementById('infoStudent');
+    infoUser.innerHTML = `
+        <p style="font-weight: 640;">Tên: ${user.nameUser}</p>
+        <p style="font-weight: 640;">Ngày sinh: ${user.date}</p>
+        <p style="font-weight: 640;">email: ${user.email}</p>
+    `;
+    user.history.forEach((item, index) => {
+        detailsContent.innerHTML += `
+        <tr>
+            <td>${item.examName}</td>
+            <td>${item.time}</td>
+            <td>${item.morningExam.score}</td>
+            <td>${item.afternoonExam.score}</td>
+        </tr>`;
+    });
 }

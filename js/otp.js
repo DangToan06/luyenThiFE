@@ -24,6 +24,8 @@ function checkOTP() {
     }
 }
 function nextPage() {
+    let AccountTemp = JSON.parse(sessionStorage.getItem("AccountTemp"));
+    listAccount.push(AccountTemp);
     window.location.href = "../index.html";
 }
 function setupInputBehavior() {

@@ -77,8 +77,7 @@ btnSignUp.addEventListener("click", () => {
         Account.email = inputEmailSignUpValue;
         Account.password = inputPasswdSignUpValue;
         Account.status = true;
-        listAccount.push(Account);
-        localStorage.setItem("listAccount", JSON.stringify(listAccount));
+        sessionStorage.setItem("AccountTemp", JSON.stringify(Account));
         // ????????????????????????
         let otp = generateOTP();
         sessionStorage.setItem("OTP", otp);

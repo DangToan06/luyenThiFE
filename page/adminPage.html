@@ -287,6 +287,7 @@
               <th>Email</th>
               <th>Vai trò</th>
               <th>Trạng thái</th>
+              <th>Điểm</th>
             </tr>
           </thead>
           <tbody id="userTableBody">
@@ -649,6 +650,36 @@
           </button>
           <button type="button" class="btn-close" id="closeAddModal">
             Hủy
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal xem chi tiết -->
+    <div class="modal hidden" id="seeDetails" >
+      <div class="modal-overlay"></div>
+      <div class="modal-content" style="width: 50%;">
+        <h3>Thông Tin Học sinh</h3>
+        <div style="margin-bottom: 20px;display: flex; flex-direction: column; gap: 5px;" id="infoStudent">
+        </div>
+         <table style="width: 100%; text-align: center;">
+            <thead>
+                <th>
+                    Tên Bài Thi
+                </th>
+                <th>
+                    Thời gian làm bài
+                </th>
+                <th>
+                    Điểm
+                </th>
+            </thead>
+            <Tbody id="pointExam">
+            </Tbody>
+         </table>
+        <div class="modal-actions">
+          <button type="button" class="btn-close" id="closeDetails">
+            Đóng
           </button>
         </div>
       </div>
