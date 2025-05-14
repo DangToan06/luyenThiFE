@@ -45,7 +45,10 @@ function handleResponsiveLayout() {
 window.addEventListener('resize', handleResponsiveLayout);
 handleResponsiveLayout();
 
-
+// mã OTP 
+function generateOTP() {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+}
 // VALID ĐĂNG KÝ
 const btnSignUp = document.getElementById("btn-sign-up");
 let Account = {};
@@ -76,12 +79,28 @@ btnSignUp.addEventListener("click", () => {
         Account.status = true;
         listAccount.push(Account);
         localStorage.setItem("listAccount", JSON.stringify(listAccount));
-        generateOTP();
         // ????????????????????????
+        let otp = generateOTP();
+        sessionStorage.setItem("OTP", otp);
         showSuccessful("Creative account successful")
-        setTimeout(() => {
-            window.location.href = "page/otp.html";
-        });
+        emailjs.init('ctukBCXWCujNRHSar');
+        emailjs.send(
+            'service_trdu09h', // service ID
+            'template_ecdruua', // template_ecdruua
+            { email: inputEmailSignUpValue,
+                OTP: otp,
+            }, 
+            'ctukBCXWCujNRHSar' // public key
+        )
+            .then((result) => {
+                console.log("gửi thành công" + result.text);
+                window.location.href = "page/otp.html";
+            }, (error) => {
+                console.error('FAILED...', error);
+            });
+        // setTimeout(() => {
+            
+        // }, 500);
     }
 });
 
@@ -165,7 +184,7 @@ toggleRePassword.addEventListener('click', () => {
 const btnLogin = document.getElementById("btn-login");
 
 btnLogin.addEventListener('click', () => {
-    
+
     let inputPasswdSignInValue = document.getElementById("input-passwd-sign-in").value;
     let inputNameSignInValue = document.getElementById("input-name-sign-in").value;
     // if (inputNameSignInValue === adminEmail && inputPasswdSignInValue === adminPasswd) {
@@ -191,7 +210,7 @@ btnLogin.addEventListener('click', () => {
             setTimeout(() => {
                 window.location.href = "page/home.html";
             }, 800)
-        }else {
+        } else {
             showWarning("Account is locked");
         }
     }

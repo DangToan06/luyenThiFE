@@ -6,7 +6,27 @@ const listAccount = JSON.parse(localStorage.getItem("listAccount")) || [
         email: "toan@gmail.com",
         password: "11111111",
         status: false,
-        avata: "https://i.pinimg.com/474x/95/2f/a5/952fa53028d4770ddea0333d27550f8f.jpg"
+        avata: "https://i.pinimg.com/474x/95/2f/a5/952fa53028d4770ddea0333d27550f8f.jpg",
+        history: {
+            morningExam: [
+                {
+                    examId: "exam_sang_2025",
+                    score: 70,
+                    answers: [
+
+                    ]
+                }
+            ],
+            afternoonExam: [
+                {
+                    examId: "exam_sang_2025",
+                    score: 70,
+                    answers: [
+
+                    ]
+                }
+            ],
+        },
     },
     {
         id: 2,
