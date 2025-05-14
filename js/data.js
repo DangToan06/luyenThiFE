@@ -2,31 +2,28 @@ const listAccount = JSON.parse(localStorage.getItem("listAccount")) || [
     {
         id: 1,
         nameUser: "toàn",
-        date: "2025-05-15",
+        date: "14-05-2025",
         email: "toan@gmail.com",
         password: "11111111",
-        status: false,
+        status: true,
         avata: "https://i.pinimg.com/474x/95/2f/a5/952fa53028d4770ddea0333d27550f8f.jpg",
-        history: {
-            morningExam: [
+        history: [
+            {
+                examId: "exam001",
+                examName: "Đề thi số 1",
+                time: 10,
+                morningExam:
                 {
-                    examId: "exam_sang_2025",
                     score: 70,
-                    answers: [
-
-                    ]
-                }
-            ],
-            afternoonExam: [
+                    answers: []
+                },
+                afternoonExam:
                 {
-                    examId: "exam_sang_2025",
                     score: 70,
-                    answers: [
-
-                    ]
+                    answers: []
                 }
-            ],
-        },
+            },
+        ]
     },
     {
         id: 2,

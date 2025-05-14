@@ -46,7 +46,7 @@ function awsChoice() {
             });
 
             let selectedLabel = this.closest("label");
-            selectedLabel.style.backgroundColor = " #BC2228";
+            selectedLabel.style.backgroundColor = "rgb(9, 228, 240)";
             selectedLabel.style.color = " #fff";
             selectedLabel.style.fontWeight = "500";
 
@@ -234,8 +234,12 @@ function bindAnswerEvents() {
 // Lưu các đáp án vừa làm trên localStorage
 
 function addAwsAtLocal() {
-    localStorage.setItem("listSelectedQuestion", JSON.stringify(listSelectedQuestion));
-    localStorage.setItem("listSelectedAws", JSON.stringify(listSelectedAws));
+    if (statusExam === "sáng") {
+        localStorage.setItem("listSelectedAwsMorning", JSON.stringify(listSelectedAws));
+    } else if (statusExam === "chiều") {
+        localStorage.setItem("listSelectedAwsAfternoon", JSON.stringify(listSelectedAws));
+    }
+    // localStorage.setItem("listSelectedQuestion", JSON.stringify(listSelectedQuestion));
 }
 
 
@@ -265,7 +269,7 @@ btnSubmit.addEventListener('click', () => {
 
 //Tên đề thi hiện tại
 
-document.querySelectorAll(".name-test").forEach( e => {
+document.querySelectorAll(".name-test").forEach(e => {
     e.textContent = "";
     e.textContent = examInPro.title
 });

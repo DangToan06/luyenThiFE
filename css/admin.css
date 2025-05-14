@@ -734,3 +734,9 @@ body {
     background-color: #d12b30;
     color: #fff;
 }
+
+td {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0;
+}
