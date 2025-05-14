@@ -35,11 +35,13 @@ for (let i = 0; i < examInPro.questionIds2.length; i++) {
         }   
     }
 }
-  
+import _ from 'https://cdn.skypack.dev/lodash';
+let quest1 = _.shuffle(questionInProgress)
+let quest2 = _.shuffle(questionInProgress2)
 console.log(questionInProgress);
 console.log(questionInProgress2);
-localStorage.setItem("questionInProgress", JSON.stringify(questionInProgress));
-localStorage.setItem("questionInProgress2", JSON.stringify(questionInProgress2));
+localStorage.setItem("questionInProgress", JSON.stringify(quest1));
+localStorage.setItem("questionInProgress2", JSON.stringify(quest2));
 
 let statusExam = "sáng"
 sessionStorage.setItem("statusExam", statusExam);

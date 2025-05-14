@@ -1,15 +1,4 @@
-function getRandomDigit() {
-    return Math.floor(Math.random() * 10);
-}
 
-function generateOTP() {
-    var otp = '';
-    for (var i = 0; i < 6; i++) {
-        otp += getRandomDigit();
-    }
-    sessionStorage.setItem('OTP', otp);
-    console.log("OTP tạo ra:", otp);
-}
 
 function getUserOTP() {
     var inputs = document.querySelectorAll("#input-number-OTP input");
