@@ -87,7 +87,17 @@
           </div>
         </div>
         <div class="divider"></div>
-        <button style="border: none; background-color: white; cursor: pointer; font-size: 20px;" onclick="signOutAdmin()" ><i class="fa-solid fa-right-from-bracket"></i></button>
+        <button
+          style="
+            border: none;
+            background-color: white;
+            cursor: pointer;
+            font-size: 20px;
+          "
+          onclick="signOutAdmin()"
+        >
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
       </div>
       <i class="fa-solid fa-bars" id="menu-nav"></i>
       <i
@@ -313,7 +323,11 @@
       <div class="admin-section main-container">
         <h2><i class="fa-solid fa-book-open"></i> Manage Exams</h2>
         <div class="search-box">
-          <input type="text" id="searchExam" placeholder="Tìm kiếm bài thi...">
+          <input
+            type="text"
+            id="searchExam"
+            placeholder="Tìm kiếm bài thi theo ID hoặc Title..."
+          />
           <i class="fas fa-search"></i>
         </div>
         <button class="btn-add">Add New Exam</button>
@@ -398,7 +412,7 @@
           <span id="Question-pageNumbers"></span>
           <button id="Question-nextPage">&rsaquo;</button>
           <button id="Question-lastPage">&raquo;</button>
-        </div>      
+        </div>
       </div>
     </section>
     <!-- bài viết -->
@@ -426,7 +440,7 @@
           <span id="Article-pageNumbers"></span>
           <button id="Article-nextPage">&rsaquo;</button>
           <button id="Article-lastPage">&raquo;</button>
-        </div>  
+        </div>
       </div>
     </section>
 
@@ -517,83 +531,125 @@
     </div>
 
     <!-- Modal Thêm Câu Hỏi -->
-<div class="modal modal-add hidden" id="addQuestionModal">
-  <div class="modal-overlay"></div>
-  <div class="modal-content">
-    <h3>Thêm Câu Hỏi Mới</h3>
-    <form class="modal-form-add" id="addQuestionForm">
-      <label>Câu hỏi:</label>
-      <input type="text" id="addQuestionText" placeholder="Nhập câu hỏi" required />
-      <label>Đáp án 1:</label>
-      <input type="text" id="addAnswer1" placeholder="Đáp án 1" required />
-      <label>Đáp án 2:</label>
-      <input type="text" id="addAnswer2" placeholder="Đáp án 2" required />
-      <label>Đáp án 3:</label>
-      <input type="text" id="addAnswer3" placeholder="Đáp án 3" required />
-      <label>Đáp án 4:</label>
-      <input type="text" id="addAnswer4" placeholder="Đáp án 4" required />
-      <label>Đáp án đúng:</label>
-      <input type="text" id="addCorrectAnswer" placeholder="Nhập đáp án đúng" required />
-      <div class="modal-actions">
-        <button type="submit" class="btn-add-post">Lưu</button>
-        <button type="button" class="btn-close">Đóng</button>
+    <div class="modal modal-add hidden" id="addQuestionModal">
+      <div class="modal-overlay"></div>
+      <div class="modal-content">
+        <h3>Thêm Câu Hỏi Mới</h3>
+        <form class="modal-form-add" id="addQuestionForm">
+          <label>Câu hỏi:</label>
+          <input
+            type="text"
+            id="addQuestionText"
+            placeholder="Nhập câu hỏi"
+            required
+          />
+          <label>Đáp án 1:</label>
+          <input type="text" id="addAnswer1" placeholder="Đáp án 1" required />
+          <label>Đáp án 2:</label>
+          <input type="text" id="addAnswer2" placeholder="Đáp án 2" required />
+          <label>Đáp án 3:</label>
+          <input type="text" id="addAnswer3" placeholder="Đáp án 3" required />
+          <label>Đáp án 4:</label>
+          <input type="text" id="addAnswer4" placeholder="Đáp án 4" required />
+          <label>Đáp án đúng:</label>
+          <input
+            type="text"
+            id="addCorrectAnswer"
+            placeholder="Nhập đáp án đúng"
+            required
+          />
+          <div class="modal-actions">
+            <button type="submit" class="btn-add-post">Lưu</button>
+            <button type="button" class="btn-close">Đóng</button>
+          </div>
+        </form>
       </div>
-    </form>
-  </div>
-</div>
-
-<!-- Modal Sửa Câu Hỏi -->
-<div class="modal modal-edit hidden" id="editQuestionModal">
-  <div class="modal-overlay"></div>
-  <div class="modal-content">
-    <h3>Sửa Câu Hỏi</h3>
-    <form class="modal-form-edit" id="editQuestionForm">
-      <input type="hidden" id="editQuestionId" name="editQuestionId">
-      <label>Câu hỏi:</label>
-      <input type="text" id="editQuestionText" placeholder="Nhập câu hỏi" required />
-      <label>Đáp án 1:</label>
-      <input type="text" id="editAnswer1" placeholder="Đáp án 1" required />
-      <label>Đáp án 2:</label>
-      <input type="text" id="editAnswer2" placeholder="Đáp án 2" required />
-      <label>Đáp án 3:</label>
-      <input type="text" id="editAnswer3" placeholder="Đáp án 3" required />
-      <label>Đáp án 4:</label>
-      <input type="text" id="editAnswer4" placeholder="Đáp án 4" required />
-      <label>Đáp án đúng:</label>
-      <input type="text" id="editCorrectAnswer" placeholder="Nhập đáp án đúng" required />
-      <div class="modal-actions">
-        <button type="submit" class="btn-save-edit">Lưu</button>
-        <button type="button" class="btn-close">Đóng</button>
-      </div>
-    </form>
-  </div>
-</div>
-
-<!-- Modal Xóa Câu Hỏi -->
-<div class="modal modal-delete hidden" id="deleteQuestionModal">
-  <div class="modal-overlay"></div>
-  <div class="modal-content">
-    <h3>Xác nhận xóa câu hỏi</h3>
-    <p>Bạn có chắc chắn muốn xóa câu hỏi này không?</p>
-    <div class="modal-actions">
-      <button class="btn-confirm-delete" id="confirmDelete">Xóa</button>
-      <button class="btn-close-delete">Hủy</button>
     </div>
-  </div>
-</div>
+
+    <!-- Modal Sửa Câu Hỏi -->
+    <div class="modal modal-edit hidden" id="editQuestionModal">
+      <div class="modal-overlay"></div>
+      <div class="modal-content">
+        <h3>Sửa Câu Hỏi</h3>
+        <form class="modal-form-edit" id="editQuestionForm">
+          <input type="hidden" id="editQuestionId" name="editQuestionId" />
+          <label>Câu hỏi:</label>
+          <input
+            type="text"
+            id="editQuestionText"
+            placeholder="Nhập câu hỏi"
+            required
+          />
+          <label>Đáp án 1:</label>
+          <input type="text" id="editAnswer1" placeholder="Đáp án 1" required />
+          <label>Đáp án 2:</label>
+          <input type="text" id="editAnswer2" placeholder="Đáp án 2" required />
+          <label>Đáp án 3:</label>
+          <input type="text" id="editAnswer3" placeholder="Đáp án 3" required />
+          <label>Đáp án 4:</label>
+          <input type="text" id="editAnswer4" placeholder="Đáp án 4" required />
+          <label>Đáp án đúng:</label>
+          <input
+            type="text"
+            id="editCorrectAnswer"
+            placeholder="Nhập đáp án đúng"
+            required
+          />
+          <div class="modal-actions">
+            <button type="submit" class="btn-save-edit">Lưu</button>
+            <button type="button" class="btn-close">Đóng</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal Xóa Câu Hỏi -->
+    <div class="modal modal-delete hidden" id="deleteQuestionModal">
+      <div class="modal-overlay"></div>
+      <div class="modal-content">
+        <h3>Xác nhận xóa câu hỏi</h3>
+        <p>Bạn có chắc chắn muốn xóa câu hỏi này không?</p>
+        <div class="modal-actions">
+          <button class="btn-confirm-delete" id="confirmDelete">Xóa</button>
+          <button class="btn-close-delete">Hủy</button>
+        </div>
+      </div>
+    </div>
     <!-- Modal thêm tài khoản -->
     <div class="modal hidden" id="addAccountModal">
       <div class="modal-overlay"></div>
       <div class="modal-content">
         <h3>Thêm Tài Khoản</h3>
         <form class="modal-form" id="addAccountForm">
-          <input type="text" name="username" placeholder="Nhập tên tài khoản" autocomplete="username" required />
-          <input type="email" name="email" placeholder="Nhập email" autocomplete="email" required />
-          <input type="password" name="password" placeholder="Nhập mật khẩu" autocomplete="new-password" required />
+          <input
+            type="text"
+            name="username"
+            placeholder="Nhập tên tài khoản"
+            autocomplete="username"
+            required
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Nhập email"
+            autocomplete="email"
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Nhập mật khẩu"
+            autocomplete="new-password"
+            required
+          />
         </form>
         <div class="modal-actions">
-          <button type="button" class="btn-add-post" id="confirmAdd">Add</button>
-          <button type="button" class="btn-close" id="closeAddModal">Hủy</button>
+          <button type="button" class="btn-add-post" id="confirmAdd">
+            Add
+          </button>
+          <button type="button" class="btn-close" id="closeAddModal">
+            Hủy
+          </button>
         </div>
       </div>
     </div>
@@ -602,7 +658,8 @@
     <script src="../js/navMenu.js"></script>
     <script src="/js/admin.js"></script>
     <script src="/js/turnPage.js"></script>
-    <script src="../js/editExamAdmin.js"></script><script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../js/editExamAdmin.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="sweetalert2.all.min.js"></script>
   </body>
 </html>
