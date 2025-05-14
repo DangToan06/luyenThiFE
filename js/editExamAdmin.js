@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let currentExamId = null;
   let selectedQuestionIds = [];
   let currentSearchResults = [];
-  let currentPage = 1;
+  let currentPage = 1; // Trang hiện tại trong phân trang
   const itemsPerPage = 3;
   let selectedQuestionIds2 = [];
   let currentSearchResults2 = [];
@@ -89,6 +89,23 @@ document.addEventListener("DOMContentLoaded", function () {
   if (typeof listQuestion === "undefined") {
     listQuestion = JSON.parse(localStorage.getItem("listQuestion")) || [];
   }
+
+  // Thêm hàm cập nhật member cho listExam
+  function updateExamMembers() {
+    // Lấy số lượng tài khoản từ listAccount
+    const memberCount = listAccount.length;
+    
+    // Cập nhật member cho tất cả các đề thi
+    listExam.forEach(exam => {
+      exam.member = memberCount;
+    });
+    
+    // Lưu lại vào localStorage
+    localStorage.setItem("listExam", JSON.stringify(listExam));
+  }
+
+  // Gọi hàm cập nhật khi trang được tải
+  updateExamMembers();
 
   // Tạo ID đề thi ngẫu nhiên
   function generateUniqueExamId() {
@@ -395,8 +412,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Sự kiện tìm kiếm câu hỏi ca sáng
   if (questionSearch) {
+    // Tắt autocomplete của trình duyệt
+    questionSearch.setAttribute("autocomplete", "off");
     questionSearch.addEventListener("input", function () {
       searchQuestions(questionSearch.value);
+    });
+    // Khi focus vào input sẽ hiển thị tất cả câu hỏi chưa chọn
+    questionSearch.addEventListener("focus", function () {
+      // Hiển thị tất cả câu hỏi chưa chọn
+      currentSearchResults = (listQuestion || []).filter(function (q) {
+        let isSelected = selectedQuestionIds.some(function (id) {
+          return id === q.id;
+        });
+        return !isSelected;
+      });
+      updateSearchResults();
     });
   }
 
@@ -569,7 +599,7 @@ document.addEventListener("DOMContentLoaded", function () {
   if (examForm) {
     examForm.addEventListener("submit", async function (e) {
       e.preventDefault();
-      const title = examTitle ? examTitle.value.trim() : ""; // Loại bỏ kí tự đầu và cuối của chuỗi
+      const title = examTitle ? examTitle.value.trim() : "";
       const duration = examDuration ? parseInt(examDuration.value) : 0;
       if (isNaN(duration) || duration <= 0) {
         await Swal.fire("Lỗi!", "Thời gian phải lớn hơn 0 phút.", "error");
@@ -595,7 +625,7 @@ document.addEventListener("DOMContentLoaded", function () {
         questionIds: selectedQuestionIds,
         questionIds2: selectedQuestionIds2,
         randomize: true,
-        member: 0,
+        member: listAccount.length, // Cập nhật member từ số lượng tài khoản
         totalQuest: selectedQuestionIds.length + selectedQuestionIds2.length,
       };
       if (currentExamId && listExam) {
@@ -649,8 +679,20 @@ document.addEventListener("DOMContentLoaded", function () {
   // Sự kiện tìm kiếm ca chiều
   const questionSearch2 = document.getElementById("questionSearch2");
   if (questionSearch2) {
+    // Tắt autocomplete của trình duyệt
+    questionSearch2.setAttribute("autocomplete", "off");
     questionSearch2.addEventListener("input", function () {
       searchQuestions2(questionSearch2.value);
+    });
+    // Khi focus vào input sẽ hiển thị tất cả câu hỏi chưa chọn
+    questionSearch2.addEventListener("focus", function () {
+      currentSearchResults2 = (listQuestion || []).filter(function (q) {
+        let isSelected = selectedQuestionIds2.some(function (id) {
+          return id === q.id;
+        });
+        return !isSelected;
+      });
+      updateSearchResults2();
     });
   }
 
