@@ -1,5 +1,14 @@
-let listQuesDo = JSON.parse(localStorage.getItem("listSelectedQuestion"));
-let listSelectedAws = JSON.parse(localStorage.getItem("listSelectedAws"));
+let listQuesDo = [];
+let listSelectedAws = [];
+let statusExam = sessionStorage.getItem("statusExam");
+
+if (statusExam === "sáng") {
+  listQuesDo = JSON.parse(localStorage.getItem("questionInProgress"));
+  listSelectedAws =  JSON.parse(localStorage.getItem("listSelectedAwsMorning"));
+} else if (statusExam === "chiều") {
+  listQuesDo = JSON.parse(localStorage.getItem("questionInProgress2"));
+  listSelectedAws =  JSON.parse(localStorage.getItem("listSelectedAwsAfternoon"));
+}
 // Hiển thị tất cả câu hỏi và hết quả 
 let examInPro = JSON.parse(localStorage.getItem("examInProgress"));
 //render câu hỏi
@@ -80,9 +89,9 @@ document.getElementById("internal-article").addEventListener('click', () => {
 
 //Tên đề thi hiện tại
 
-document.querySelectorAll(".name-test").forEach( e => {
-    e.textContent = "";
-    e.textContent = examInPro.title
+document.querySelectorAll(".name-test").forEach(e => {
+  e.textContent = "";
+  e.textContent = examInPro.title
 });
 
 //Thời gian của đề thi ngày

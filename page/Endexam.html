@@ -74,36 +74,76 @@
     </header>
 
     <main class="app-main-content">
-        <nav class="app-breadcrumb">Trang chủ / <strong class="app-title" style="font-size: 0.9rem; font-weight: 600;">Đề thi số 1</strong></nav>
+        <nav class="app-breadcrumb">Trang chủ / <strong class="app-title"
+                style="font-size: 0.9rem; font-weight: 600;">Đề thi số 1</strong></nav>
         <h1 class="app-title">Đề thi số 1</h1>
 
         <div class="app-tabs">
             <button class="app-tab active" id="btn-show-total">Đề Thi Ca Sáng</button>
+            <button class="app-tab " id="btn-show-total-afternoon">Đề Thi Ca Chiều</button>
             <button class="app-tab" id="btn-show-result">Xem kết quả</button>
         </div>
 
-        <section class="app-main-section" id="show-total">
+        <!-- Màn hình ca sáng -->
+        <section class="app-main-section" id="show-total" style="display: none">
             <div class="app-mascot-section">
                 <img src="../assets/img/Cat.png" alt="Mascot" class="app-mascot-image" />
                 <h2 id="totalResu"></h2>
                 <p>Hãy nghỉ ngơi một chút và sẵn sàng chinh phục ca thi tiếp theo!</p>
             </div>
-            <button class="btn-show-result" id="btn-check-result">Xem đáp án <i
+            <div style="display: flex; gap: 2%; justify-content: center; margin-top: 2%">
+                <button class="app-tab retake-th-exam">Làm lại <i class="fa-solid fa-reply"></i></button>
+                <button class="btn-show-result">Xem đáp án <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+        </section>
+
+        <!-- Màn hình ca chiều -->
+        <section class="app-main-section" id="show-total-afternoon" style="display: none">
+            <div class="app-mascot-section">
+                <img src="../assets/img/Cat.png" alt="Mascot" class="app-mascot-image" />
+                <h2 id="totalResuAfter"></h2>
+                <p>Hãy nghỉ ngơi một chút và sẵn sàng chinh phục ca thi tiếp theo!</p>
+            </div>
+            <div style="display: flex; gap: 2%; justify-content: center; margin-top: 2%">
+                <button class="app-tab retake-th-exam">Làm lại <i class="fa-solid fa-reply"></i></button>
+                <button class="btn-show-result">Xem đáp án <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+        </section>
+
+        <!-- Màn hình kết quả -->
+        <section class="app-main-section" id="show-result" style="display: none">
+            <div style="display: flex; gap: 6%; justify-content: center;">
+                <div>
+                    <h4>Đề thi ca sáng</h4>
+                    <canvas id="scoreCanvas" width="150" height="150"></canvas>
+                    <p id="scoreText" class="scoreText"
+                        style="text-align: center; font-weight: bolder; font-size: 1.4rem">
+                        80/100</p>
+                </div>
+                <div>
+                    <h4>Đề thi ca chiều</h4>
+                    <canvas id="scoreCanvasAfternoon" width="150" height="150"></canvas>
+                    <p id="scoreTextAfternoon" class="scoreText"
+                        style="text-align: center; font-weight: bolder; font-size: 1.4rem">
+                        80/100</p>
+                </div>
+            </div>
+            <h2>Chúc mừng bạn đã hoàn thành bài thi</h2>
+            <p style="color: #666; margin-bottom: 2%;" >Hãy nghỉ ngơi một chút và sẵn sàng chinh phục ca thi tiếp theo!</p>
+
+            <button class="btn-show-result" id="go-home-page">Quay lại trang chủ <i
                     class="fa-solid fa-arrow-right"></i></button>
         </section>
 
-        <section class="app-main-section" id="show-result" style="display: none">
-            <h3>Điểm của bạn</h3>
-            <canvas id="scoreCanvas" width="150" height="150"></canvas>
-            <p id="scoreText" class="scoreText" style="text-align: center; font-weight: bolder; font-size: 1.4rem">
-                80/100</p>
-            <h2>Chúc mừng bạn đã hoàn thành bài thi</h2>
-            <p style="color: #666">Hãy nghỉ ngơi một chút và sẵn sàng chinh phục ca thi tiếp theo!</p>
-            <div style="display: flex; gap: 2%; justify-content: center; margin-top: 2%">
-                <button class="app-tab" id="retake-th-exam">Làm lại <i class="fa-solid fa-reply"></i></button>
-                <button class="btn-show-result" id="go-home-page">Quay lại trang chủ <i
-                        class="fa-solid fa-arrow-right"></i></button>
+        <!-- Màn hình khi chưa làm bài thi này -->
+        <section class="app-main-section" id="show-notdo-thisExam" style="display: none;">
+            <div class="app-mascot-section">
+                <img src="../assets/img/Cat.png" alt="Mascot" class="app-mascot-image" />
+                <h2 id="totalResu">Bạn chưa hoàn thành bài thi này!</h2>
+                <p>Hãy bắt đầu ngay để tiến gần hơn đến mục tiêu FE của mình</p>
             </div>
+            <button class="btn-show-result" id="btn-do-this-exam">Bắt đầu làm bài <i
+                    class="fa-solid fa-arrow-right"></i></button>
         </section>
     </main>
     <footer class="footer">

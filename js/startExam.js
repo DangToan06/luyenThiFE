@@ -63,3 +63,9 @@ morningExam.addEventListener('click', () => {
     console.log(statusExam);
     sessionStorage.setItem("statusExam", statusExam);
 })
+
+//Trước khi làm bài
+let listSelectedAws = [];
+
+localStorage.setItem("listSelectedAwsMorning", JSON.stringify(listSelectedAws));
+localStorage.setItem("listSelectedAwsAfternoon", JSON.stringify(listSelectedAws));
