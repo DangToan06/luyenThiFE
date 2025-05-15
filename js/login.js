@@ -70,6 +70,8 @@ btnSignUp.addEventListener("click", () => {
         showWarning("Mật Khẩu không khớp");
     } else if (existEmail(inputEmailSignUpValue)) {
         showWarning("Email đã tồn tại");
+    }else if (valiDate(inputDateSignUpValue) === false) {
+        showWarning("Ngày sinh không hợp lệ");
     } else {
         Account.id = Math.floor(1000 + Math.random() * 9000);
         Account.nameUser = inputNameSignUpValue;
@@ -285,3 +287,12 @@ function showSuccessful(message) {
     // }, 3000);
 }
 
+function valiDate(date){
+    let today = new Date();
+    today.setHours(0, 0, 0, 0);
+    date = new Date(date);
+    date.setHours(0, 0, 0, 0);
+    if (date > today) {
+        return false;
+    }
+}
