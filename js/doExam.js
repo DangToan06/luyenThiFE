@@ -46,7 +46,7 @@ function awsChoice() {
             });
 
             let selectedLabel = this.closest("label");
-            selectedLabel.style.backgroundColor = "rgb(9, 228, 240)";
+            selectedLabel.style.backgroundColor = "#2225bc";
             selectedLabel.style.color = " #fff";
             selectedLabel.style.fontWeight = "500";
 
@@ -140,7 +140,7 @@ function renderQuestion(index) {
             }
         }
 
-        const style = checked ? 'style="background-color: #BC2228; color: #fff; font-weight: 500;"' : "";
+        const style = checked ? 'style="background-color: #2225bc; color: #fff; font-weight: 500;"' : "";
 
         // listSelectedQuestion.forEach( e => {
         //     choiceAws = e === 
