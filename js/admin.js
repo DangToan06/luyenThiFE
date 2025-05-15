@@ -524,6 +524,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 listAccount.push(newAccount);
                 listAccount.reverse();
                 localStorage.setItem('listAccount', JSON.stringify(listAccount));
+                
+                // Cập nhật member trong listExam
+                const listExam = JSON.parse(localStorage.getItem('listExam')) || [];
+                listExam.forEach(exam => {
+                    exam.member = listAccount.length;
+                });
+                localStorage.setItem('listExam', JSON.stringify(listExam));
+                
                 init(listAccount, 'Students', 'userTableBody');
                 modalStudents.classList.add('hidden');
                 addAccountForm.reset();
@@ -547,6 +555,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (user) {
                     user.status = !user.status; // Đảo ngược trạng thái
                     localStorage.setItem('listAccount', JSON.stringify(listAccount));
+                    
+                    // Cập nhật member trong listExam
+                    const listExam = JSON.parse(localStorage.getItem('listExam')) || [];
+                    listExam.forEach(exam => {
+                        exam.member = listAccount.length;
+                    });
+                    localStorage.setItem('listExam', JSON.stringify(listExam));
+                    
                     init(listAccount, 'Students', 'userTableBody');
                 }
             } else if (result.isDenied) {
