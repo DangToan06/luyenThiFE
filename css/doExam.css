@@ -148,12 +148,12 @@ section {
 
 
 #class-answer input[type="radio"] {
-    accent-color: #BC2228;
+    accent-color: #2225bc;
     margin-right: 15px;
 }
 
 #class-answer label:hover{
-    background-color: #BC2228;
+    background-color: #2225bc;
     color: #fff;
 }
 
