@@ -788,7 +788,211 @@ document.addEventListener('DOMContentLoaded', () => {
             detailsContent.innerHTML = '<tr><td colspan="3">Không có lịch sử thi</td></tr>';
         }
     }
-    window.seeDetails = seeDetails;
+
+    // Xử lý thêm tài khoản
+    if (btnConfirmAdd && addAccountForm) {
+        btnConfirmAdd.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (addAccountForm.checkValidity()) {
+                const formData = new FormData(addAccountForm);
+                const nameUser = formData.get('username');
+                const email = formData.get('email');
+                const password = formData.get('password');
+
+                const isDuplicate = listAccount.some(acc => acc.email === email
+                );
+
+                if (isDuplicate) {
+                    alert('Tên tài khoản hoặc email đã tồn tại!');
+                    return;
+                }
+
+                // Tạo ID ngẫu nhiên
+                function generateRandomId() {
+                    const random3Digit = Math.floor(Math.random() * 900) + 100;
+                    let checkId = listAccount.some(acc => acc.id === random3Digit);
+                    return checkId ? generateRandomId() : random3Digit;
+                }
+
+                const newAccount = {
+                    id: generateRandomId(),
+                    nameUser: nameUser,
+                    email: email,
+                    password: password,
+                    status: true,
+                    history: [],
+                };
+
+                listAccount.push(newAccount);
+                listAccount.reverse();
+                localStorage.setItem('listAccount', JSON.stringify(listAccount));
+                
+                // Cập nhật member trong listExam
+                const listExam = JSON.parse(localStorage.getItem('listExam')) || [];
+                listExam.forEach(exam => {
+                    exam.member = listAccount.length;
+                });
+                localStorage.setItem('listExam', JSON.stringify(listExam));
+                
+                init(listAccount, 'Students', 'userTableBody');
+                modalStudents.classList.add('hidden');
+                addAccountForm.reset();
+            } else {
+                addAccountForm.reportValidity();
+            }
+        });
+    }
+
+    function lockuser(id) {
+        const user = listAccount.find(acc => acc.id === id);
+        Swal.fire({
+            title: "Có chắc muốn khóa hay mở khóa tài khản này",
+            showDenyButton: true,
+            // showCancelButton: true,
+            confirmButtonText: "Đồng ý",
+            denyButtonText: `Không`
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire("Thay đổi trạng thái tài khoản thành công!", "", "success");
+                if (user) {
+                    user.status = !user.status; // Đảo ngược trạng thái
+                    localStorage.setItem('listAccount', JSON.stringify(listAccount));
+                    
+                    // Cập nhật member trong listExam
+                    const listExam = JSON.parse(localStorage.getItem('listExam')) || [];
+                    listExam.forEach(exam => {
+                        exam.member = listAccount.length;
+                    });
+                    localStorage.setItem('listExam', JSON.stringify(listExam));
+                    
+                    init(listAccount, 'Students', 'userTableBody');
+                }
+            } else if (result.isDenied) {
+                Swal.fire("Thay đổi trạng thái tài khoản không thành công!", "", "info");
+            }
+        });
+    }
+    window.lockuser = lockuser;
+
+    // Mở/đóng modal
+    function openModalQues(modal) { document.getElementById(modal).classList.remove('hidden'); }
+    function closeModalQues(modal) { document.getElementById(modal).classList.add('hidden'); }
+
+    function openModal(modal) { modal.classList.remove('hidden'); }
+    function closeModal(modal) { modal.classList.add('hidden'); }
+
+    // Modal
+    const modalAdd = document.querySelector('.modal-add');
+    const modalEdit = document.querySelector('.modal-edit');
+    const modalDelete = document.querySelector('.modal-delete');
+
+    // Form
+    const formAdd = document.querySelector('.modal-form-add');
+    const formEdit = document.querySelector('.modal-form-edit');
+
+    // Button
+    const btnAddPost = document.querySelector('#Article .btn-add');
+    const btnCloseAdd = modalAdd.querySelector('.btn-close');
+    const btnCloseEdit = modalEdit.querySelector('.btn-close');
+    const btnCloseDelete = modalDelete.querySelector('.btn-close-delete');
+    const btnConfirmDelete = modalDelete.querySelector('.btn-confirm-delete');
+
+    // ID tạm để chỉnh sửa/xóa
+    let currentEditId = null;
+    let currentDeleteId = null;
+
+    // Nút mở modal
+    btnAddPost.addEventListener('click', () => openModal(modalAdd));
+    btnCloseAdd.addEventListener('click', () => closeModal(modalAdd));
+    btnCloseEdit.addEventListener('click', () => closeModal(modalEdit));
+    btnCloseDelete.addEventListener('click', () => closeModal(modalDelete));
+
+    // Thêm bài viết
+    formAdd.addEventListener('submit', e => {
+        e.preventDefault();
+        const [title, content, time, author] = [...formAdd.querySelectorAll('input')].map(i => i.value.trim());
+        const today = new Date().toISOString().split('T')[0];
+
+        if (!title || !content || !time || !author || isNaN(time) || time < 5 || time > 120 || /[a-zA-Z]/.test(time)) {
+            showErrorModal('Vui lòng nhập đầy đủ và hợp lệ');
+            return;
+        }
+
+
+        const articles = getArticleList();
+        const newId = articles.length > 0 ? Math.max(...articles.map(a => a.id)) + 1 : 1;
+        articles.unshift({ id: newId, title, content, date: today, time, author });
+        closeModal(modalAdd);
+        saveArticleList(articles);
+        init(articles, 'Article', 'articleTableBody');
+
+    });
+
+    // Sửa & Xóa bằng delegation
+    document.getElementById('articleTableBody').addEventListener('click', e => {
+        const target = e.target.closest('button');
+        if (!target) return;
+
+        const id = +target.dataset.id;
+        const list = JSON.parse(localStorage.getItem('listArticle')) || [];
+        const article = list.find(a => a.id === id);
+        if (!article) return;
+
+        if (target.classList.contains('btn-edit')) {
+            currentEditId = id;
+            formEdit.title.value = article.title;
+            formEdit.content.value = article.content;
+            formEdit.date.value = article.date;
+            formEdit.time.value = article.time;
+            formEdit.author.value = article.author;
+            openModal(modalEdit);
+        }
+
+        if (target.classList.contains('btn-delete')) {
+            currentDeleteId = id;
+            openModal(modalDelete);
+        }
+    });
+
+    // Cập nhật bài viết
+    formEdit.addEventListener('submit', e => {
+        e.preventDefault();
+        const [title, content, date, time, author] = [
+            formEdit.title.value.trim(),
+            formEdit.content.value.trim(),
+            formEdit.date.value,
+            formEdit.time.value.trim(),
+            formEdit.author.value.trim()
+        ];
+
+        if (!title || !content || !date || !time || !author || isNaN(time) || time < 5 || time > 120 || /[a-zA-Z]/.test(time)) {
+            showErrorModal('Thông tin không hợp lệ');
+            return;
+        }
+
+        const articles = getArticleList();
+        const index = articles.findIndex(a => a.id === currentEditId);
+        if (index !== -1) {
+            articles[index] = { id: currentEditId, title, content, date, time, author };
+            saveArticleList(articles);
+            closeModal(modalEdit);
+            init(articles, 'Article', 'articleTableBody');
+        }
+
+
+    });
+
+    // Xóa bài viết
+    btnConfirmDelete.addEventListener('click', () => {
+
+        let articles = getArticleList();
+        articles = articles.filter(a => a.id !== currentDeleteId);
+        saveArticleList(articles);
+        closeModal(modalDelete);
+        init(articles, 'Article', 'articleTableBody');
+
+    });
+
 });
 
 function showErrorModal(message) {
