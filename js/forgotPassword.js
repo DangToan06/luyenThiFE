@@ -130,7 +130,9 @@ function nextPage() {
     }
     localStorage.setItem("listAccount", JSON.stringify(listAccount));
     showSuccessful("Đổi Mật KHẩu Thành Công")
-    window.location.href = "../index.html";
+    setTimeout(() => {
+        window.location.href = "../index.html";
+    }, 500);
 }
 function generateOTP() {
     return Math.floor(100000 + Math.random() * 900000).toString();

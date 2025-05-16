@@ -882,35 +882,35 @@ document.addEventListener('DOMContentLoaded', () => {
     function closeModal(modal) { modal.classList.add('hidden'); }
 
     // Modal
-    const modalAdd = document.querySelector('.modal-add');
-    const modalEdit = document.querySelector('.modal-edit');
-    const modalDelete = document.querySelector('.modal-delete');
+    const modalAdd1 = document.querySelector('.modal-add');
+    const modalEdit1 = document.querySelector('.modal-edit');
+    const modalDelete1 = document.querySelector('.modal-delete');
 
     // Form
-    const formAdd = document.querySelector('.modal-form-add');
-    const formEdit = document.querySelector('.modal-form-edit');
+    const formAdd1 = document.querySelector('.modal-form-add');
+    const formEdit1 = document.querySelector('.modal-form-edit');
 
     // Button
-    const btnAddPost = document.querySelector('#Article .btn-add');
-    const btnCloseAdd = modalAdd.querySelector('.btn-close');
-    const btnCloseEdit = modalEdit.querySelector('.btn-close');
-    const btnCloseDelete = modalDelete.querySelector('.btn-close-delete');
-    const btnConfirmDelete = modalDelete.querySelector('.btn-confirm-delete');
+    const btnAddPost1 = document.querySelector('#Article .btn-add');
+    const btnCloseAdd1 = modalAdd1.querySelector('.btn-close');
+    const btnCloseEdit1 = modalEdit1.querySelector('.btn-close');
+    const btnCloseDelete1 = modalDelete1.querySelector('.btn-close-delete');
+    const btnConfirmDelete1 = modalDelete1.querySelector('.btn-confirm-delete');
 
     // ID tạm để chỉnh sửa/xóa
-    let currentEditId = null;
-    let currentDeleteId = null;
+    let currentEditId1 = null;
+    let currentDeleteId1 = null;
 
     // Nút mở modal
-    btnAddPost.addEventListener('click', () => openModal(modalAdd));
-    btnCloseAdd.addEventListener('click', () => closeModal(modalAdd));
-    btnCloseEdit.addEventListener('click', () => closeModal(modalEdit));
-    btnCloseDelete.addEventListener('click', () => closeModal(modalDelete));
+    btnAddPost1.addEventListener('click', () => openModal(modalAdd1));
+    btnCloseAdd1.addEventListener('click', () => closeModal(modalAdd1));
+    btnCloseEdit1.addEventListener('click', () => closeModal(modalEdit1));
+    btnCloseDelete1.addEventListener('click', () => closeModal(modalDelete1));
 
     // Thêm bài viết
-    formAdd.addEventListener('submit', e => {
+    formAdd1.addEventListener('submit', e => {
         e.preventDefault();
-        const [title, content, time, author] = [...formAdd.querySelectorAll('input')].map(i => i.value.trim());
+        const [title, content, time, author] = [...formAdd1.querySelectorAll('input')].map(i => i.value.trim());
         const today = new Date().toISOString().split('T')[0];
 
         if (!title || !content || !time || !author || isNaN(time) || time < 5 || time > 120 || /[a-zA-Z]/.test(time)) {
@@ -922,7 +922,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const articles = getArticleList();
         const newId = articles.length > 0 ? Math.max(...articles.map(a => a.id)) + 1 : 1;
         articles.unshift({ id: newId, title, content, date: today, time, author });
-        closeModal(modalAdd);
+        closeModal(modalAdd1);
         saveArticleList(articles);
         init(articles, 'Article', 'articleTableBody');
 
@@ -939,30 +939,30 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!article) return;
 
         if (target.classList.contains('btn-edit')) {
-            currentEditId = id;
-            formEdit.title.value = article.title;
-            formEdit.content.value = article.content;
-            formEdit.date.value = article.date;
-            formEdit.time.value = article.time;
-            formEdit.author.value = article.author;
-            openModal(modalEdit);
+            currentEditId1 = id;
+            formEdit1.title.value = article.title;
+            formEdit1.content.value = article.content;
+            formEdit1.date.value = article.date;
+            formEdit1.time.value = article.time;
+            formEdit1.author.value = article.author;
+            openModal(modalEdit1);
         }
 
         if (target.classList.contains('btn-delete')) {
-            currentDeleteId = id;
-            openModal(modalDelete);
+            currentDeleteId1 = id;
+            openModal(modalDelete1);
         }
     });
 
     // Cập nhật bài viết
-    formEdit.addEventListener('submit', e => {
+    formEdit1.addEventListener('submit', e => {
         e.preventDefault();
         const [title, content, date, time, author] = [
-            formEdit.title.value.trim(),
-            formEdit.content.value.trim(),
-            formEdit.date.value,
-            formEdit.time.value.trim(),
-            formEdit.author.value.trim()
+            formEdit1.title.value.trim(),
+            formEdit1.content.value.trim(),
+            formEdit1.date.value,
+            formEdit1.time.value.trim(),
+            formEdit1.author.value.trim()
         ];
 
         if (!title || !content || !date || !time || !author || isNaN(time) || time < 5 || time > 120 || /[a-zA-Z]/.test(time)) {
@@ -971,11 +971,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const articles = getArticleList();
-        const index = articles.findIndex(a => a.id === currentEditId);
+        const index = articles.findIndex(a => a.id === currentEditId1);
         if (index !== -1) {
-            articles[index] = { id: currentEditId, title, content, date, time, author };
+            articles[index] = { id: currentEditId1, title, content, date, time, author };
             saveArticleList(articles);
-            closeModal(modalEdit);
+            closeModal(modalEdit1);
             init(articles, 'Article', 'articleTableBody');
         }
 
@@ -983,12 +983,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Xóa bài viết
-    btnConfirmDelete.addEventListener('click', () => {
+    btnConfirmDelete1.addEventListener('click', () => {
 
         let articles = getArticleList();
-        articles = articles.filter(a => a.id !== currentDeleteId);
+        articles = articles.filter(a => a.id !== currentDeleteId1);
         saveArticleList(articles);
-        closeModal(modalDelete);
+        closeModal(modalDelete1);
         init(articles, 'Article', 'articleTableBody');
 
     });

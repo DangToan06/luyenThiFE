@@ -12,3 +12,6 @@ function signOutAdmin() {
 function forgotpassword() {
     window.location.href = "/page/forgotPassword.html"; 
 }
+function viewProfile() {
+    window.location.href = "/page/editInformation.html"
+}
