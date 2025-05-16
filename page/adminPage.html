@@ -374,48 +374,50 @@
         </div>
       </div>
     </section>
-    <section id="Question" class="none" style="width: 100%">
-      <div class="admin-section main-container">
-        <h2><i class="fa-solid fa-question-circle"></i> Quản lý câu hỏi</h2>
-        <button class="btn-add">Thêm câu hỏi mới</button>
-        <table class="admin-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Câu hỏi</th>
-              <th>Hành động</th>
-            </tr>
-          </thead>
-          <tbody id="questionTableBody">
-            <tr>
-              <td>1</td>
-              <td>What is the purpose of useState in React?</td>
-              <td>1</td>
-              <td class="action-buttons">
-                <button class="btn-edit">Edit</button>
-                <button class="btn-delete">Delete</button>
-              </td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Is JavaScript single-threaded?</td>
-              <td>2</td>
-              <td class="action-buttons">
-                <button class="btn-edit">Edit</button>
-                <button class="btn-delete">Delete</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="pagination">
-          <button id="Question-firstPage">&laquo;</button>
-          <button id="Question-prevPage">&lsaquo;</button>
-          <span id="Question-pageNumbers"></span>
-          <button id="Question-nextPage">&rsaquo;</button>
-          <button id="Question-lastPage">&raquo;</button>
-        </div>
-      </div>
-    </section>
+    <!-- Section Question -->
+<section id="Question" class="none" style="width: 100%">
+  <div class="admin-section main-container">
+    <h2><i class="fa-solid fa-question-circle"></i> Quản lý câu hỏi</h2>
+    <button class="btn-add">Thêm câu hỏi mới</button>
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Câu hỏi</th>
+          <th>Số đáp án</th> <!-- Thêm cột mới -->
+          <th>Hành động</th>
+        </tr>
+      </thead>
+      <tbody id="questionTableBody">
+        <tr>
+          <td>1</td>
+          <td>What is the purpose of useState in React?</td>
+          <td>4</td>
+          <td class="action-buttons">
+            <button class="btn-edit">Edit</button>
+            <button class="btn-delete">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Is JavaScript single-threaded?</td>
+          <td>2</td>
+          <td class="action-buttons">
+            <button class="btn-edit">Edit</button>
+            <button class="btn-delete">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="pagination">
+      <button id="Question-firstPage">«</button>
+      <button id="Question-prevPage">‹</button>
+      <span id="Question-pageNumbers"></span>
+      <button id="Question-nextPage">›</button>
+      <button id="Question-lastPage">»</button>
+    </div>
+  </div>
+</section>
     <!-- bài viết -->
     <section id="Article" class="none" style="width: 100%">
       <div class="admin-section main-container">
@@ -532,90 +534,119 @@
     </div>
 
     <!-- Modal Thêm Câu Hỏi -->
-    <div class="modal modal-add hidden" id="addQuestionModal">
-      <div class="modal-overlay"></div>
-      <div class="modal-content">
-        <h3>Thêm Câu Hỏi Mới</h3>
-        <form class="modal-form-add" id="addQuestionForm">
-          <label>Câu hỏi:</label>
-          <input
-            type="text"
-            id="addQuestionText"
-            placeholder="Nhập câu hỏi"
-            required
-          />
-          <label>Đáp án 1:</label>
-          <input type="text" id="addAnswer1" placeholder="Đáp án 1" required />
-          <label>Đáp án 2:</label>
-          <input type="text" id="addAnswer2" placeholder="Đáp án 2" required />
-          <label>Đáp án 3:</label>
-          <input type="text" id="addAnswer3" placeholder="Đáp án 3" required />
-          <label>Đáp án 4:</label>
-          <input type="text" id="addAnswer4" placeholder="Đáp án 4" required />
-          <label>Đáp án đúng:</label>
-          <input
-            type="text"
-            id="addCorrectAnswer"
-            placeholder="Nhập đáp án đúng"
-            required
-          />
-          <div class="modal-actions">
-            <button type="submit" class="btn-add-post">Lưu</button>
-            <button type="button" class="btn-close">Đóng</button>
-          </div>
-        </form>
+<div class="modal modal-add hidden" id="addQuestionModal">
+  <div class="modal-overlay"></div>
+  <div class="modal-content">
+    <h3>Thêm Câu Hỏi Mới</h3>
+    <form class="modal-form-add" id="addQuestionForm">
+      <div class="form-group">
+        <label>Số lượng đáp án:</label>
+        <select id="addAnswerCount" name="answerCount">
+          <option value="4">4 đáp án</option>
+          <option value="2">2 đáp án (Đúng/Sai)</option>
+        </select>
       </div>
-    </div>
-
-    <!-- Modal Sửa Câu Hỏi -->
-    <div class="modal modal-edit hidden" id="editQuestionModal">
-      <div class="modal-overlay"></div>
-      <div class="modal-content">
-        <h3>Sửa Câu Hỏi</h3>
-        <form class="modal-form-edit" id="editQuestionForm">
-          <input type="hidden" id="editQuestionId" name="editQuestionId" />
-          <label>Câu hỏi:</label>
-          <input
-            type="text"
-            id="editQuestionText"
-            placeholder="Nhập câu hỏi"
-            required
-          />
-          <label>Đáp án 1:</label>
-          <input type="text" id="editAnswer1" placeholder="Đáp án 1" required />
-          <label>Đáp án 2:</label>
-          <input type="text" id="editAnswer2" placeholder="Đáp án 2" required />
-          <label>Đáp án 3:</label>
-          <input type="text" id="editAnswer3" placeholder="Đáp án 3" required />
-          <label>Đáp án 4:</label>
-          <input type="text" id="editAnswer4" placeholder="Đáp án 4" required />
-          <label>Đáp án đúng:</label>
-          <input
-            type="text"
-            id="editCorrectAnswer"
-            placeholder="Nhập đáp án đúng"
-            required
-          />
-          <div class="modal-actions">
-            <button type="submit" class="btn-save-edit">Lưu</button>
-            <button type="button" class="btn-close">Đóng</button>
-          </div>
-        </form>
+      <div class="form-group">
+        <label>Câu hỏi:</label>
+        <input type="text" id="addQuestionText" placeholder="Nhập câu hỏi" required />
       </div>
-    </div>
-
-    <!-- Modal Xóa Câu Hỏi -->
-    <div class="modal modal-delete hidden" id="deleteQuestionModal">
-      <div class="modal-overlay"></div>
-      <div class="modal-content">
-        <h3>Xác nhận xóa câu hỏi</h3>
-        <p>Bạn có chắc chắn muốn xóa câu hỏi này không?</p>
-        <div class="modal-actions">
-          <button class="btn-confirm-delete" id="confirmDelete">Xóa</button>
-          <button class="btn-close-delete">Hủy</button>
+      <div class="form-group answer-group" data-answer="1">
+        <label>Đáp án 1:</label>
+        <input type="text" id="addAnswer1" placeholder="Đáp án 1" required />
+      </div>
+      <div class="form-group answer-group" data-answer="2">
+        <label>Đáp án 2:</label>
+        <input type="text" id="addAnswer2" placeholder="Đáp án 2" required />
+      </div>
+      <div class="form-group answer-group" data-answer="3">
+        <label>Đáp án 3:</label>
+        <input type="text" id="addAnswer3" placeholder="Đáp án 3" required />
+      </div>
+      <div class="form-group answer-group" data-answer="4">
+        <label>Đáp án 4:</label>
+        <input type="text" id="addAnswer4" placeholder="Đáp án 4" required />
+      </div>
+      <div class="form-group">
+        <label>Đáp án đúng:</label>
+        <div class="radio-group" id="addCorrectAnswerGroup">
+          <label><input type="radio" name="addCorrectAnswer" value="0" required /> Đáp án 1</label>
+          <label><input type="radio" name="addCorrectAnswer" value="1" /> Đáp án 2</label>
+          <label><input type="radio" name="addCorrectAnswer" value="2" /> Đáp án 3</label>
+          <label><input type="radio" name="addCorrectAnswer" value="3" /> Đáp án 4</label>
         </div>
       </div>
+      <div class="modal-actions">
+        <button type="submit" class="btn-add-post">Lưu</button>
+        <button type="button" class="btn-close">Đóng</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal Sửa Câu Hỏi -->
+<div class="modal modal-edit hidden" id="editQuestionModal">
+  <div class="modal-overlay"></div>
+  <div class="modal-content">
+    <h3>Sửa Câu Hỏi</h3>
+    <form class="modal-form-edit" id="editQuestionForm">
+      <input type="hidden" id="editQuestionId" name="editQuestionId" />
+      <div class="form-group">
+        <label>Số lượng đáp án:</label>
+        <select id="editAnswerCount" name="answerCount">
+          <option value="4">4 đáp án</option>
+          <option value="2">2 đáp án (Đúng/Sai)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Câu hỏi:</label>
+        <input type="text" id="editQuestionText" placeholder="Nhập câu hỏi" required />
+      </div>
+      <div class="form-group answer-group" data-answer="1">
+        <label>Đáp án 1:</label>
+        <input type="text" id="editAnswer1" placeholder="Đáp án 1" required />
+      </div>
+      <div class="form-group answer-group" data-answer="2">
+        <label>Đáp án 2:</label>
+        <input type="text" id="editAnswer2" placeholder="Đáp án 2" required />
+      </div>
+      <div class="form-group answer-group" data-answer="3">
+        <label>Đáp án 3:</label>
+        <input type="text" id="editAnswer3" placeholder="Đáp án 3" required />
+      </div>
+      <div class="form-group answer-group" data-answer="4">
+        <label>Đáp án 4:</label>
+        <input type="text" id="editAnswer4" placeholder="Đáp án 4" required />
+      </div>
+      <div class="form-group">
+        <label>Đáp án đúng:</label>
+        <div class="radio-group" id="editCorrectAnswerGroup">
+          <label><input type="radio" name="editCorrectAnswer" value="0" required /> Đáp án 1</label>
+          <label><input type="radio" name="editCorrectAnswer" value="1" /> Đáp án 2</label>
+          <label><input type="radio" name="editCorrectAnswer" value="2" /> Đáp án 3</label>
+          <label><input type="radio" name="editCorrectAnswer" value="3" /> Đáp án 4</label>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button type="submit" class="btn-save-edit">Lưu</button>
+        <button type="button" class="btn-close">Đóng</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal Xóa Câu Hỏi -->
+<div class="modal modal-delete hidden" id="deleteQuestionModal">
+  <div class="modal-overlay"></div>
+  <div class="modal-content">
+    <h3>Xác nhận xóa</h3>
+    <p>Bạn có chắc muốn xóa câu hỏi này?</p>
+    <div class="modal-actions">
+      <button type="button" id="confirmDelete" class="btn-confirm-delete">Xóa</button>
+      <button type="button" class="btn-close-delete">Hủy</button>
     </div>
+  </div>
+</div>
+
     <!-- Modal thêm tài khoản -->
     <div class="modal hidden" id="addAccountModal">
       <div class="modal-overlay"></div>
