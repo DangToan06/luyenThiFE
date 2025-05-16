@@ -7,24 +7,22 @@ function formatRelativeDate(dateStr) {
 
 document.addEventListener('DOMContentLoaded', () => {
     // Hàm mở modal
-    function openModal(modalId) {
-        const modal = document.getElementById(modalId);
+    function openModal(modal) {
         if (modal) {
             modal.classList.remove('hidden');
-            console.log(`Modal ${modalId} opened`); // Debug
+            console.log(`Modal opened: ${modal.id || modal.className}`);
         } else {
-            console.error(`Modal with ID ${modalId} not found`);
+            console.error('Modal not found');
         }
     }
 
     // Hàm đóng modal
-    function closeModal(modalId) {
-        const modal = document.getElementById(modalId);
+    function closeModal(modal) {
         if (modal) {
             modal.classList.add('hidden');
-            console.log(`Modal ${modalId} closed`); // Debug
+            console.log(`Modal closed: ${modal.id || modal.className}`);
         } else {
-            console.error(`Modal with ID ${modalId} not found`);
+            console.error('Modal not found');
         }
     }
 
@@ -33,10 +31,39 @@ document.addEventListener('DOMContentLoaded', () => {
         let newId;
         let existingIds = new Set(questions.map(q => q.id));
         do {
-            const randomNum = Math.floor(Math.random() * 900) + 100; // Tạo số ngẫu nhiên từ 100 đến 999
+            const randomNum = Math.floor(Math.random() * 900) + 100;
             newId = `q${randomNum}`;
-        } while (existingIds.has(newId)); // Lặp đến khi tạo ra ID chưa bị trùng
+        } while (existingIds.has(newId));
         return newId;
+    }
+
+    // Hàm cập nhật hiển thị đáp án dựa trên số lượng
+    function updateAnswerFields(modalId, answerCount) {
+        const form = document.querySelector(`#${modalId} .modal-form-${modalId === 'addQuestionModal' ? 'add' : 'edit'}`);
+        const answerGroups = form.querySelectorAll('.answer-group');
+        const radioGroup = form.querySelector(`#${modalId === 'addQuestionModal' ? 'addCorrectAnswerGroup' : 'editCorrectAnswerGroup'}`);
+        const radios = radioGroup.querySelectorAll('input[name$="CorrectAnswer"]');
+
+        answerGroups.forEach((group, index) => {
+            if (index < answerCount) {
+                group.style.display = 'block';
+                group.querySelector('input').required = true;
+            } else {
+                group.style.display = 'none';
+                group.querySelector('input').required = false;
+                group.querySelector('input').value = '';
+            }
+        });
+
+        radios.forEach((radio, index) => {
+            const label = radio.parentElement;
+            if (index < answerCount) {
+                label.style.display = 'inline-block';
+            } else {
+                label.style.display = 'none';
+                radio.checked = false;
+            }
+        });
     }
 
     // Hàm gắn sự kiện cho bảng Question
@@ -48,7 +75,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         table.addEventListener('click', (e) => {
-            console.log('Click detected:', e.target); // Debug
             const button = e.target.closest('button');
             if (!button) return;
 
@@ -60,64 +86,108 @@ document.addEventListener('DOMContentLoaded', () => {
             const id = row.cells[0].textContent;
 
             if (button.classList.contains('btn-edit')) {
-                console.log('Edit button clicked'); // Debug
-                console.log('Editing question ID:', id); // Debug
-
-                // Lấy câu hỏi từ listQuestion
                 const question = listQuestion.find(q => q.id === id);
-
                 if (question) {
-                    console.log('Question found:', question); // Debug
-                    // Điền dữ liệu vào modal sửa
+                    const editQuestionForm = document.getElementById('editQuestionForm');
                     const editQuestionText = document.getElementById('editQuestionText');
                     const editAnswer1 = document.getElementById('editAnswer1');
                     const editAnswer2 = document.getElementById('editAnswer2');
                     const editAnswer3 = document.getElementById('editAnswer3');
                     const editAnswer4 = document.getElementById('editAnswer4');
-                    const editCorrectAnswer = document.getElementById('editCorrectAnswer');
-                    const editQuestionId = document.getElementById('editQuestionId');
+                    const editCorrectAnswerRadios = document.getElementsByName('editCorrectAnswer');
+                    const editAnswerCount = document.getElementById('editAnswerCount');
 
-                    if (!editQuestionText || !editAnswer1 || !editAnswer2 || !editAnswer3 || !editAnswer4 || !editCorrectAnswer || !editQuestionId) {
+                    if (!editQuestionForm || !editQuestionText || !editAnswer1 || !editAnswer2 || !editAnswerCount) {
                         console.error('One or more form elements not found in editQuestionModal');
                         return;
                     }
 
+                    // Reset form
+                    editQuestionForm.reset();
+                    // Populate fields
                     editQuestionText.value = question.content || '';
                     editAnswer1.value = question.options && question.options[0] ? question.options[0] : '';
                     editAnswer2.value = question.options && question.options[1] ? question.options[1] : '';
                     editAnswer3.value = question.options && question.options[2] ? question.options[2] : '';
                     editAnswer4.value = question.options && question.options[3] ? question.options[3] : '';
-                    editCorrectAnswer.value = question.correctAnswer || '';
-                    editQuestionId.value = question.id; // Lưu ID vào input ẩn để sử dụng khi submit
+                    document.getElementById('editQuestionId').value = question.id;
+                    editAnswerCount.value = question.answerCount || 4;
 
-                    openModalQues('editQuestionModal');
+                    // Set correct answer radio
+                    const correctIndex = question.options.indexOf(question.correctAnswer);
+                    if (correctIndex !== -1) {
+                        editCorrectAnswerRadios[correctIndex].checked = true;
+                    }
+
+                    // Update answer fields visibility
+                    updateAnswerFields('editQuestionModal', parseInt(editAnswerCount.value));
+
+                    openModal(document.getElementById('editQuestionModal'));
                 } else {
                     console.error(`Question with ID ${id} not found in listQuestion`);
                 }
             } else if (button.classList.contains('btn-delete')) {
-                console.log('Delete button clicked');
-                openModalQues('deleteQuestionModal');
-
-                // Xử lý xác nhận xóa
+                openModal(document.getElementById('deleteQuestionModal'));
                 const confirmDelete = document.getElementById('confirmDelete');
                 if (confirmDelete) {
                     confirmDelete.onclick = () => {
-                        // Xóa câu hỏi khỏi listQuestion
                         const index = listQuestion.findIndex(q => q.id === id);
                         if (index !== -1) {
                             listQuestion.splice(index, 1);
                             localStorage.setItem('listQuestion', JSON.stringify(listQuestion));
-
-                            // Tải lại bảng với phân trang
                             init(listQuestion, 'Question', 'questionTableBody');
-
-                            // Đóng modal
-                            closeModalQues('deleteQuestionModal');
+                            closeModal(document.getElementById('deleteQuestionModal'));
                         }
                     };
                 } else {
                     console.error('Element #confirmDelete not found');
                 }
+            }
+        });
+    }
+
+    // Hàm gắn sự kiện cho bảng Article
+    function setupArticleTableEvents() {
+        const table = document.querySelector('#Article .admin-table');
+        if (!table) {
+            console.error('Table #Article .admin-table not found');
+            return;
+        }
+
+        table.addEventListener('click', (e) => {
+            console.log('Article table clicked:', e.target);
+            const button = e.target.closest('button');
+            if (!button) return;
+
+            const row = button.closest('tr');
+            if (!row) {
+                console.error('Row not found for button');
+                return;
+            }
+            const id = parseInt(row.cells[0].textContent);
+            const articles = getArticleList();
+            const article = articles.find(a => a.id === id);
+
+            if (!article) {
+                console.error(`Article with ID ${id} not found`);
+                return;
+            }
+
+            if (button.classList.contains('btn-edit')) {
+                currentEditId = id;
+                if (formEdit) {
+                    formEdit.querySelector('input[name="title"]').value = article.title;
+                    formEdit.querySelector('input[name="content"]').value = article.content;
+                    formEdit.querySelector('input[name="date"]').value = article.date;
+                    formEdit.querySelector('input[name="time"]').value = article.time;
+                    formEdit.querySelector('input[name="author"]').value = article.author;
+                    openModal(modalEdit);
+                } else {
+                    console.error('Form edit article not found');
+                }
+            } else if (button.classList.contains('btn-delete')) {
+                currentDeleteId = id;
+                openModal(modalDelete);
             }
         });
     }
@@ -142,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const pageNumbersContainer = document.getElementById(`${nameList}-pageNumbers`);
 
         function renderContent() {
-            contentList.innerHTML = "";
+            contentList.innerHTML = '';
             const start = (currentPage - 1) * itemsPerPage;
             const end = start + itemsPerPage;
             const itemsToShow = renderList.slice(start, end);
@@ -151,14 +221,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 contentList.innerHTML += generateRow(item, nameList);
             });
             renderPagination();
-            // Gắn lại sự kiện cho bảng Question
             if (nameList === 'Question') {
                 setupQuestionTableEvents();
+            } else if (nameList === 'Article') {
+                setupArticleTableEvents();
             }
         }
+
         function generateRow(item, nameList) {
             switch (nameList) {
-                case "Students":
+                case 'Students':
                     return `
                     <tr>
                         <td>${item.id}</td>
@@ -167,7 +239,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <td>Sinh viên</td>
                         <td class="action-buttons">
                             <button class="btn-delete" onclick="lockuser(${item.id})">
-                                 ${item.status === true ? '<i class="fa-solid fa-lock-open"></i>' : '<i class="fa-solid fa-lock"></i>'}
+                                ${item.status ? '<i class="fa-solid fa-lock-open"></i>' : '<i class="fa-solid fa-lock"></i>'}
                             </button>
                         </td>
                         <td class="action-buttons">
@@ -176,7 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             </button>
                         </td>
                     </tr>`;
-                case "Exam-Question":
+                case 'Exam-Question':
                     return `
                     <tr>
                         <td>${item.id}</td>
@@ -188,35 +260,36 @@ document.addEventListener('DOMContentLoaded', () => {
                             <button class="btn-delete" data-id="${item.id}"><i class="fa-solid fa-trash" style="color: #ff0000;"></i></button>
                         </td>
                     </tr>`;
-                case "Question":
+                case 'Question':
                     return `
                     <tr>
                         <td>${item.id}</td>
                         <td>${item.content}</td>
+                        <td>${item.answerCount || 4}</td>
                         <td class="action-buttons">
                             <button class="btn-edit" data-id="${item.id}"><i class="fa-solid fa-pen-to-square" style="color: #3e1ce9;"></i></button>
                             <button class="btn-delete" data-id="${item.id}"><i class="fa-solid fa-trash" style="color: #ff0000;"></i></button>
                         </td>
                     </tr>`;
-                case "Article":
+                case 'Article':
                     return `
                     <tr>
-                    <td>${item.id}</td>
-                    <td>${item.title}</td>
-                    <td>${item.date}</td>
-                    <td>${item.author}</td>
-                    <td class="action-buttons">
-                      <button class="btn-edit" data-id="${item.id}"><i class="fa-solid fa-pen-to-square" style="color: #3e1ce9;"></i></button>
-                      <button class="btn-delete" data-id="${item.id}"><i class="fa-solid fa-trash" style="color: #ff0000;"></i></button>
-                    </td>
-                  </tr>`;
+                        <td>${item.id}</td>
+                        <td>${item.title}</td>
+                        <td>${item.date}</td>
+                        <td>${item.author}</td>
+                        <td class="action-buttons">
+                            <button class="btn-edit" data-id="${item.id}"><i class="fa-solid fa-pen-to-square" style="color: #3e1ce9;"></i></button>
+                            <button class="btn-delete" data-id="${item.id}"><i class="fa-solid fa-trash" style="color: #ff0000;"></i></button>
+                        </td>
+                    </tr>`;
                 default:
                     return '';
             }
         }
 
         function renderPagination() {
-            pageNumbersContainer.innerHTML = "";
+            pageNumbersContainer.innerHTML = '';
             let startPage = Math.max(1, currentPage - 2);
             let endPage = Math.min(totalPages, startPage + 4);
 
@@ -240,9 +313,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function setupPaginationEvents() {
-            const pageButtons = pageNumbersContainer.querySelectorAll(".page-button");
+            const pageButtons = pageNumbersContainer.querySelectorAll('.page-button');
             pageButtons.forEach(button => {
-                button.addEventListener("click", () => {
+                button.addEventListener('click', () => {
                     currentPage = parseInt(button.dataset.page);
                     renderContent();
                 });
@@ -314,7 +387,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     case 'Bài viết':
                         const articles = getArticleList();
                         init(articles, 'Article', 'articleTableBody');
-
                         break;
                 }
             }
@@ -322,124 +394,346 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Xử lý modal cho Article
-    const btnOpenModalArticle = document.querySelector('#Article .btn-add');
-    const modalArticle = document.querySelector('#Article .modal-add');
-    const btnCloseArticle = modalArticle ? modalArticle.querySelector('.btn-close') : null;
+    const modalAdd = document.querySelector('.modal-add'); 
+    const modalEdit = document.querySelector('.modal-edit');
+    const modalDelete = document.querySelector('.modal-delete');
+    const formAdd = modalAdd ? modalAdd.querySelector('.modal-form-add') : null;
+    const formEdit = modalEdit ? modalEdit.querySelector('.modal-form-edit') : null;
+    const btnAddPost = document.querySelector('#Article .btn-add');
+    const btnCloseAdd = modalAdd ? modalAdd.querySelector('.btn-close') : null;
+    const btnCloseEdit = modalEdit ? modalEdit.querySelector('.btn-close') : null;
+    const btnCloseDelete = modalDelete ? modalDelete.querySelector('.btn-close-delete') : null;
+    const btnConfirmDelete = modalDelete ? modalDelete.querySelector('.btn-confirm-delete') : null;
 
-    if (btnOpenModalArticle) {
-        btnOpenModalArticle.addEventListener('click', () => {
-            if (modalArticle) modalArticle.classList.remove('hidden');
+    let currentEditId = null;
+    let currentDeleteId = null;
+
+    if (btnAddPost) {
+        console.log('Add article button found');
+        btnAddPost.addEventListener('click', () => {
+            console.log('Opening add article modal');
+            if (modalAdd) {
+                openModal(modalAdd);
+                formAdd?.reset();
+            } else {
+                console.error('Add article modal not found');
+            }
         });
     } else {
-        console.error('Không tìm thấy nút mở modal (Article)');
+        console.error('Add article button not found');
     }
 
-    if (btnCloseArticle) {
-        btnCloseArticle.addEventListener('click', () => {
-            if (modalArticle) modalArticle.classList.add('hidden');
+    if (btnCloseAdd) {
+        btnCloseAdd.addEventListener('click', () => {
+            closeModal(modalAdd);
+            formAdd?.reset();
         });
-    } else {
-        console.log('Không tìm thấy nút đóng modal (Article)');
     }
 
-    // Xử lý modal cho Question (Thêm câu hỏi)
-    const btnOpenModalQuestion = document.querySelector('#Question .btn-add');
-    const modalQuestion = document.getElementById('addQuestionModal');
-    const btnCloseQuestion = modalQuestion ? modalQuestion.querySelector('.btn-close') : null;
-
-    if (btnOpenModalQuestion) {
-        btnOpenModalQuestion.addEventListener('click', () => {
-            if (modalQuestion) modalQuestion.classList.remove('hidden');
+    if (btnCloseEdit) {
+        btnCloseEdit.addEventListener('click', () => {
+            closeModal(modalEdit);
+            formEdit?.reset();
         });
-    } else {
-        console.error('Không tìm thấy nút mở modal (Question)');
     }
 
-    if (btnCloseQuestion) {
-        btnCloseQuestion.addEventListener('click', () => {
-            if (modalQuestion) modalQuestion.classList.add('hidden');
+    if (btnCloseDelete) {
+        btnCloseDelete.addEventListener('click', () => {
+            closeModal(modalDelete);
         });
-    } else {
-        console.error('Không tìm thấy nút đóng modal (Question)');
     }
 
-    // Xử lý form thêm câu hỏi
-    const addQuestionForm = document.getElementById('addQuestionForm');
-    if (addQuestionForm) {
-        addQuestionForm.addEventListener('submit', (e) => {
+    if (formAdd) {
+        formAdd.addEventListener('submit', (e) => {
             e.preventDefault();
-            const content = document.getElementById('addQuestionText').value;
-            const options = [
-                document.getElementById('addAnswer1').value,
-                document.getElementById('addAnswer2').value,
-                document.getElementById('addAnswer3').value,
-                document.getElementById('addAnswer4').value
-            ];
-            const correctAnswer = document.getElementById('addCorrectAnswer').value;
+            console.log('Add article form submitted');
+            const inputs = formAdd.querySelectorAll('input');
+            if (inputs.length !== 4) {
+                console.error('Unexpected number of inputs in add article form:', inputs.length);
+                showErrorModal('Lỗi cấu trúc form');
+                return;
+            }
+            const [title, content, time, author] = Array.from(inputs).map(i => i.value.trim());
+            const today = new Date().toISOString().split('T')[0];
 
-            // Tạo ID tự động
-            const id = generateQuestionId(listQuestion);
+            if (!title || !content || !time || !author || isNaN(time) || time < 5 || time > 120 || /[a-zA-Z]/.test(time)) {
+                showErrorModal('Vui lòng nhập đầy đủ và hợp lệ');
+                return;
+            }
 
-            // Thêm câu hỏi mới vào listQuestion
-            listQuestion.push({ id, content, options, correctAnswer });
-            localStorage.setItem('listQuestion', JSON.stringify(listQuestion));
-
-            // Tải lại bảng với phân trang
-            init(listQuestion, 'Question', 'questionTableBody');
-            closeModalQues('addQuestionModal');
-            addQuestionForm.reset();
+            const articles = getArticleList();
+            const newId = articles.length > 0 ? Math.max(...articles.map(a => a.id)) + 1 : 1;
+            articles.unshift({ id: newId, title, content, date: today, time, author });
+            saveArticleList(articles);
+            closeModal(modalAdd);
+            formAdd.reset();
+            init(articles, 'Article', 'articleTableBody');
         });
     }
 
-    // Xử lý form sửa câu hỏi
-    const editQuestionForm = document.getElementById('editQuestionForm');
-    if (editQuestionForm) {
-        editQuestionForm.addEventListener('submit', (e) => {
+    if (formEdit) {
+        formEdit.addEventListener('submit', (e) => {
             e.preventDefault();
-            const id = document.getElementById('editQuestionId').value; // Lấy ID từ input ẩn
-            const content = document.getElementById('editQuestionText').value;
-            const options = [
-                document.getElementById('editAnswer1').value,
-                document.getElementById('editAnswer2').value,
-                document.getElementById('editAnswer3').value,
-                document.getElementById('editAnswer4').value
-            ];
-            const correctAnswer = document.getElementById('editCorrectAnswer').value;
+            console.log('Edit article form submitted');
+            const title = formEdit.querySelector('input[name="title"]').value.trim();
+            const content = formEdit.querySelector('input[name="content"]').value.trim();
+            const date = formEdit.querySelector('input[name="date"]').value;
+            const time = formEdit.querySelector('input[name="time"]').value.trim();
+            const author = formEdit.querySelector('input[name="author"]').value.trim();
 
-            // Cập nhật câu hỏi trong listQuestion
-            const index = listQuestion.findIndex(q => q.id === id);
+            if (!title || !content || !date || !time || !author || isNaN(time) || time < 5 || time > 120 || /[a-zA-Z]/.test(time)) {
+                showErrorModal('Thông tin không hợp lệ');
+                return;
+            }
+
+            const articles = getArticleList();
+            const index = articles.findIndex(a => a.id === currentEditId);
             if (index !== -1) {
-                listQuestion[index] = { id, content, options, correctAnswer };
-                localStorage.setItem('listQuestion', JSON.stringify(listQuestion));
-
-                // Tải lại bảng với phân trang
-                init(listQuestion, 'Question', 'questionTableBody');
-                closeModalQues('editQuestionModal');
+                articles[index] = { id: currentEditId, title, content, date, time, author };
+                saveArticleList(articles);
+                closeModal(modalEdit);
+                formEdit.reset();
+                init(articles, 'Article', 'articleTableBody');
             }
         });
     }
 
-    // Xử lý nút đóng modal sửa câu hỏi
-    const btnCloseEditQuestion = document.querySelector('#editQuestionModal .btn-close');
-    if (btnCloseEditQuestion) {
-        btnCloseEditQuestion.addEventListener('click', () => {
-            console.log('Close button clicked in editQuestionModal'); // Debug
-            closeModalQues('editQuestionModal');
+    if (btnConfirmDelete) {
+        btnConfirmDelete.addEventListener('click', () => {
+            console.log('Delete article confirmed');
+            let articles = getArticleList();
+            articles = articles.filter(a => a.id !== currentDeleteId);
+            saveArticleList(articles);
+            closeModal(modalDelete);
+            init(articles, 'Article', 'articleTableBody');
         });
-    } else {
-        console.error('Không tìm thấy nút đóng modal (Edit Question)');
     }
 
-    // Xử lý nút hủy modal xóa câu hỏi
-    const btnCancelDeleteQuestion = document.querySelector('#deleteQuestionModal .btn-close-delete');
-    if (btnCancelDeleteQuestion) {
-        btnCancelDeleteQuestion.addEventListener('click', () => {
-            console.log('Close button clicked in deleteQuestionModal'); // Debug
-            closeModalQues('deleteQuestionModal');
+    // Xử lý modal cho Question
+    const btnAddQuestion = document.querySelector('#Question .btn-add');
+    const modalAddQuestion = document.getElementById('addQuestionModal');
+    const modalEditQuestion = document.getElementById('editQuestionModal');
+    const modalDeleteQuestion = document.getElementById('deleteQuestionModal');
+    const formAddQuestion = document.getElementById('addQuestionForm');
+    const formEditQuestion = document.getElementById('editQuestionForm');
+    const btnCloseAddQuestion = modalAddQuestion ? modalAddQuestion.querySelector('.btn-close') : null;
+    const btnCloseEditQuestion = modalEditQuestion ? modalEditQuestion.querySelector('.btn-close') : null;
+    const btnCloseDeleteQuestion = modalDeleteQuestion ? modalDeleteQuestion.querySelector('.btn-close-delete') : null;
+
+    if (btnAddQuestion) {
+        console.log('Add question button found');
+        btnAddQuestion.addEventListener('click', () => {
+            console.log('Opening add question modal');
+            if (modalAddQuestion && formAddQuestion) {
+                openModal(modalAddQuestion);
+                formAddQuestion.reset();
+                document.getElementById('addAnswerCount').value = '4';
+                updateAnswerFields('addQuestionModal', 4);
+            } else {
+                console.error('Add question modal or form not found');
+            }
         });
     } else {
-        console.error('Không tìm thấy nút hủy modal (Delete Question)');
+        console.error('Add question button not found');
     }
+
+    if (btnCloseAddQuestion) {
+        btnCloseAddQuestion.addEventListener('click', () => {
+            closeModal(modalAddQuestion);
+            formAddQuestion?.reset();
+            updateAnswerFields('addQuestionModal', 4);
+        });
+    }
+
+    if (btnCloseEditQuestion) {
+        btnCloseEditQuestion.addEventListener('click', () => {
+            closeModal(modalEditQuestion);
+            formEditQuestion?.reset();
+            updateAnswerFields('editQuestionModal', 4);
+        });
+    }
+
+    if (btnCloseDeleteQuestion) {
+        btnCloseDeleteQuestion.addEventListener('click', () => {
+            closeModal(modalDeleteQuestion);
+        });
+    }
+
+    // Xử lý thay đổi số lượng đáp án
+    const addAnswerCountSelect = document.getElementById('addAnswerCount');
+    if (addAnswerCountSelect) {
+        addAnswerCountSelect.addEventListener('change', (e) => {
+            updateAnswerFields('addQuestionModal', parseInt(e.target.value));
+        });
+    }
+
+    const editAnswerCountSelect = document.getElementById('editAnswerCount');
+    if (editAnswerCountSelect) {
+        editAnswerCountSelect.addEventListener('change', (e) => {
+            updateAnswerFields('editQuestionModal', parseInt(e.target.value));
+        });
+    }
+
+    if (formAddQuestion) {
+        formAddQuestion.addEventListener('submit', (e) => {
+            e.preventDefault();
+            console.log('Add question form submitted');
+            const content = document.getElementById('addQuestionText').value;
+            const answerCount = parseInt(document.getElementById('addAnswerCount').value);
+            const options = [];
+            for (let i = 1; i <= answerCount; i++) {
+                const answer = document.getElementById(`addAnswer${i}`).value;
+                if (!answer) {
+                    showErrorModal('Vui lòng điền đầy đủ các đáp án');
+                    return;
+                }
+                options.push(answer);
+            }
+            const correctAnswerRadio = document.querySelector('input[name="addCorrectAnswer"]:checked');
+            if (!content || !correctAnswerRadio) {
+                showErrorModal('Vui lòng điền đầy đủ thông tin và chọn đáp án đúng');
+                return;
+            }
+            const correctAnswer = options[parseInt(correctAnswerRadio.value)];
+
+            const id = generateQuestionId(listQuestion);
+            listQuestion.push({ id, content, options, correctAnswer, answerCount });
+            localStorage.setItem('listQuestion', JSON.stringify(listQuestion));
+            init(listQuestion, 'Question', 'questionTableBody');
+            closeModal(modalAddQuestion);
+            formAddQuestion.reset();
+            updateAnswerFields('addQuestionModal', 4);
+        });
+    }
+
+    if (formEditQuestion) {
+        formEditQuestion.addEventListener('submit', (e) => {
+            e.preventDefault();
+            console.log('Edit question form submitted');
+            const id = document.getElementById('editQuestionId').value;
+            const content = document.getElementById('editQuestionText').value;
+            const answerCount = parseInt(document.getElementById('editAnswerCount').value);
+            const options = [];
+            for (let i = 1; i <= answerCount; i++) {
+                const answer = document.getElementById(`editAnswer${i}`).value;
+                if (!answer) {
+                    showErrorModal('Vui lòng điền đầy đủ các đáp án');
+                    return;
+                }
+                options.push(answer);
+            }
+            const correctAnswerRadio = document.querySelector('input[name="editCorrectAnswer"]:checked');
+            if (!content || !correctAnswerRadio) {
+                showErrorModal('Vui lòng điền đầy đủ thông tin và chọn đáp án đúng');
+                return;
+            }
+            const correctAnswer = options[parseInt(correctAnswerRadio.value)];
+
+            const index = listQuestion.findIndex(q => q.id === id);
+            if (index !== -1) {
+                listQuestion[index] = { id, content, options, correctAnswer, answerCount };
+                localStorage.setItem('listQuestion', JSON.stringify(listQuestion));
+                init(listQuestion, 'Question', 'questionTableBody');
+                closeModal(modalEditQuestion);
+                formEditQuestion.reset();
+                updateAnswerFields('editQuestionModal', 4);
+            }
+        });
+    }
+
+    // Xử lý modal cho Students
+    const btnAddStudent = document.querySelector('#Students .btn-add');
+    const modalAddStudent = document.getElementById('addAccountModal');
+    const formAddStudent = document.getElementById('addAccountForm');
+    const btnCloseStudent = modalAddStudent ? modalAddStudent.querySelector('.btn-close') : null;
+    const btnConfirmAddStudent = modalAddStudent ? modalAddStudent.querySelector('#confirmAdd') : null;
+
+    if (btnAddStudent) {
+        console.log('Add student button found');
+        btnAddStudent.addEventListener('click', () => {
+            console.log('Opening add student modal');
+            if (modalAddStudent) {
+                openModal(modalAddStudent);
+                formAddStudent?.reset();
+            } else {
+                console.error('Add account modal not found');
+            }
+        });
+    } else {
+        console.error('Add student button not found');
+    }
+
+    if (btnCloseStudent) {
+        btnCloseStudent.addEventListener('click', () => {
+            closeModal(modalAddStudent);
+            formAddStudent?.reset();
+        });
+    }
+
+    if (btnConfirmAddStudent && formAddStudent) {
+        btnConfirmAddStudent.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log('Add student form submitted');
+            if (formAddStudent.checkValidity()) {
+                const formData = new FormData(formAddStudent);
+                const nameUser = formData.get('username');
+                const email = formData.get('email');
+                const password = formData.get('password');
+
+                const isDuplicate = listAccount.some(acc => acc.email === email);
+                if (isDuplicate) {
+                    alert('Tên tài khoản hoặc email đã tồn tại!');
+                    return;
+                }
+
+                function generateRandomId() {
+                    const random3Digit = Math.floor(Math.random() * 900) + 100;
+                    let checkId = listAccount.some(acc => acc.id === random3Digit);
+                    return checkId ? generateRandomId() : random3Digit;
+                }
+
+                const newAccount = {
+                    id: generateRandomId(),
+                    nameUser,
+                    email,
+                    password,
+                    status: true
+                };
+
+                listAccount.push(newAccount);
+                listAccount.reverse();
+                localStorage.setItem('listAccount', JSON.stringify(listAccount));
+                init(listAccount, 'Students', 'userTableBody');
+                closeModal(modalAddStudent);
+                formAddStudent.reset();
+            } else {
+                formAddStudent.reportValidity();
+            }
+        });
+    }
+
+    // Xử lý khóa/mở khóa tài khoản
+    function lockuser(id) {
+        const user = listAccount.find(acc => acc.id === id);
+        Swal.fire({
+            title: 'Có chắc muốn khóa hay mở khóa tài khoản này',
+            showDenyButton: true,
+            confirmButtonText: 'Đồng ý',
+            denyButtonText: 'Không'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire('Thay đổi trạng thái tài khoản thành công!', '', 'success');
+                if (user) {
+                    user.status = !user.status;
+                    localStorage.setItem('listAccount', JSON.stringify(listAccount));
+                    init(listAccount, 'Students', 'userTableBody');
+                }
+            } else if (result.isDenied) {
+                Swal.fire('Thay đổi trạng thái tài khoản không thành công!', '', 'info');
+            }
+        });
+    }
+    window.lockuser = lockuser;
 
     // Xử lý sidebar responsive
     const menuButton = document.getElementById('menu-nav');
@@ -447,6 +741,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const sidebar = document.querySelector('.sidebar');
 
     if (menuButton && closeButton) {
+        console.log('Sidebar buttons found');
         menuButton.addEventListener('click', () => {
             sidebar.classList.add('open');
             menuButton.style.display = 'none';
@@ -458,243 +753,43 @@ document.addEventListener('DOMContentLoaded', () => {
             closeButton.style.display = 'none';
             menuButton.style.display = 'block';
         });
-    }
-
-    // Xử lý modal cho Students
-    const btnOpenModalStudents = document.querySelector('#Students .btn-add');
-    const modalStudents = document.querySelector('#addAccountModal');
-    const btnCloseStudents = modalStudents ? modalStudents.querySelector('.btn-close') : null;
-    const btnConfirmAdd = modalStudents ? modalStudents.querySelector('#confirmAdd') : null;
-    const addAccountForm = modalStudents ? modalStudents.querySelector('#addAccountForm') : null;
-
-    // Mở modal
-    if (btnOpenModalStudents) {
-        btnOpenModalStudents.addEventListener('click', () => {
-            if (modalStudents) {
-                modalStudents.classList.remove('hidden');
-                addAccountForm?.reset();
-            }
-        });
     } else {
-        console.log('Không tìm thấy nút mở modal (Students)');
+        console.error('Sidebar buttons not found');
     }
 
-    // Đóng modal
-    if (btnCloseStudents) {
-        btnCloseStudents.addEventListener('click', () => {
-            if (modalStudents) modalStudents.classList.add('hidden');
+    // Xử lý xem chi tiết sinh viên
+    function seeDetails(id) {
+        let user = listAccount.find(acc => acc.id === id);
+        console.log('Viewing details for user:', user);
+        let modalDetails = document.getElementById('seeDetails');
+        openModal(modalDetails);
+        let detailsContent = document.getElementById('pointExam');
+        detailsContent.innerHTML = '';
+        let btn = document.getElementById('closeDetails');
+        btn.addEventListener('click', () => {
+            closeModal(modalDetails);
         });
-    } else {
-        console.log('Không tìm thấy nút đóng modal (Students)');
+        let infoUser = document.getElementById('infoStudent');
+        infoUser.innerHTML = `
+            <p style="font-weight: 640;">Tên: ${user.nameUser}</p>
+            <p style="font-weight: 640;">Ngày sinh: ${user.date || 'N/A'}</p>
+            <p style="font-weight: 640;">Email: ${user.email}</p>
+        `;
+        if (user.history && user.history.length > 0) {
+            user.history.forEach((item) => {
+                detailsContent.innerHTML += `
+                <tr>
+                    <td>${item.examName}</td>
+                    <td>${item.time}</td>
+                    <td>${item.morningExam?.score || 'N/A'}</td>
+                </tr>`;
+            });
+        } else {
+            detailsContent.innerHTML = '<tr><td colspan="3">Không có lịch sử thi</td></tr>';
+        }
     }
-
-    // Xử lý thêm tài khoản
-    if (btnConfirmAdd && addAccountForm) {
-        btnConfirmAdd.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (addAccountForm.checkValidity()) {
-                const formData = new FormData(addAccountForm);
-                const nameUser = formData.get('username');
-                const email = formData.get('email');
-                const password = formData.get('password');
-
-                const isDuplicate = listAccount.some(acc => acc.email === email
-                );
-
-                if (isDuplicate) {
-                    alert('Tên tài khoản hoặc email đã tồn tại!');
-                    return;
-                }
-
-                // Tạo ID ngẫu nhiên
-                function generateRandomId() {
-                    const random3Digit = Math.floor(Math.random() * 900) + 100;
-                    let checkId = listAccount.some(acc => acc.id === random3Digit);
-                    return checkId ? generateRandomId() : random3Digit;
-                }
-
-                const newAccount = {
-                    id: generateRandomId(),
-                    nameUser: nameUser,
-                    email: email,
-                    password: password,
-                    status: true
-                };
-
-                listAccount.push(newAccount);
-                listAccount.reverse();
-                localStorage.setItem('listAccount', JSON.stringify(listAccount));
-                
-                // Cập nhật member trong listExam
-                const listExam = JSON.parse(localStorage.getItem('listExam')) || [];
-                listExam.forEach(exam => {
-                    exam.member = listAccount.length;
-                });
-                localStorage.setItem('listExam', JSON.stringify(listExam));
-                
-                init(listAccount, 'Students', 'userTableBody');
-                modalStudents.classList.add('hidden');
-                addAccountForm.reset();
-            } else {
-                addAccountForm.reportValidity();
-            }
-        });
-    }
-
-    function lockuser(id) {
-        const user = listAccount.find(acc => acc.id === id);
-        Swal.fire({
-            title: "Có chắc muốn khóa hay mở khóa tài khản này",
-            showDenyButton: true,
-            // showCancelButton: true,
-            confirmButtonText: "Đồng ý",
-            denyButtonText: `Không`
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire("Thay đổi trạng thái tài khoản thành công!", "", "success");
-                if (user) {
-                    user.status = !user.status; // Đảo ngược trạng thái
-                    localStorage.setItem('listAccount', JSON.stringify(listAccount));
-                    
-                    // Cập nhật member trong listExam
-                    const listExam = JSON.parse(localStorage.getItem('listExam')) || [];
-                    listExam.forEach(exam => {
-                        exam.member = listAccount.length;
-                    });
-                    localStorage.setItem('listExam', JSON.stringify(listExam));
-                    
-                    init(listAccount, 'Students', 'userTableBody');
-                }
-            } else if (result.isDenied) {
-                Swal.fire("Thay đổi trạng thái tài khoản không thành công!", "", "info");
-            }
-        });
-    }
-    window.lockuser = lockuser;
-
-    // Mở/đóng modal
-    function openModalQues(modal) { document.getElementById(modal).classList.remove('hidden'); }
-    function closeModalQues(modal) { document.getElementById(modal).classList.add('hidden'); }
-
-    function openModal(modal) { modal.classList.remove('hidden'); }
-    function closeModal(modal) { modal.classList.add('hidden'); }
-
-    // Modal
-    const modalAdd = document.querySelector('.modal-add');
-    const modalEdit = document.querySelector('.modal-edit');
-    const modalDelete = document.querySelector('.modal-delete');
-
-    // Form
-    const formAdd = document.querySelector('.modal-form-add');
-    const formEdit = document.querySelector('.modal-form-edit');
-
-    // Button
-    const btnAddPost = document.querySelector('#Article .btn-add');
-    const btnCloseAdd = modalAdd.querySelector('.btn-close');
-    const btnCloseEdit = modalEdit.querySelector('.btn-close');
-    const btnCloseDelete = modalDelete.querySelector('.btn-close-delete');
-    const btnConfirmDelete = modalDelete.querySelector('.btn-confirm-delete');
-
-    // ID tạm để chỉnh sửa/xóa
-    let currentEditId = null;
-    let currentDeleteId = null;
-
-    // Nút mở modal
-    btnAddPost.addEventListener('click', () => openModal(modalAdd));
-    btnCloseAdd.addEventListener('click', () => closeModal(modalAdd));
-    btnCloseEdit.addEventListener('click', () => closeModal(modalEdit));
-    btnCloseDelete.addEventListener('click', () => closeModal(modalDelete));
-
-    // Thêm bài viết
-    formAdd.addEventListener('submit', e => {
-        e.preventDefault();
-        const [title, content, time, author] = [...formAdd.querySelectorAll('input')].map(i => i.value.trim());
-        const today = new Date().toISOString().split('T')[0];
-
-        if (!title || !content || !time || !author || isNaN(time) || time < 5 || time > 120 || /[a-zA-Z]/.test(time)) {
-            showErrorModal('Vui lòng nhập đầy đủ và hợp lệ');
-            return;
-        }
-
-
-        const articles = getArticleList();
-        const newId = articles.length > 0 ? Math.max(...articles.map(a => a.id)) + 1 : 1;
-        articles.unshift({ id: newId, title, content, date: today, time, author });
-        closeModal(modalAdd);
-        saveArticleList(articles);
-        init(articles, 'Article', 'articleTableBody');
-
-    });
-
-    // Sửa & Xóa bằng delegation
-    document.getElementById('articleTableBody').addEventListener('click', e => {
-        const target = e.target.closest('button');
-        if (!target) return;
-
-        const id = +target.dataset.id;
-        const list = JSON.parse(localStorage.getItem('listArticle')) || [];
-        const article = list.find(a => a.id === id);
-        if (!article) return;
-
-        if (target.classList.contains('btn-edit')) {
-            currentEditId = id;
-            formEdit.title.value = article.title;
-            formEdit.content.value = article.content;
-            formEdit.date.value = article.date;
-            formEdit.time.value = article.time;
-            formEdit.author.value = article.author;
-            openModal(modalEdit);
-        }
-
-        if (target.classList.contains('btn-delete')) {
-            currentDeleteId = id;
-            openModal(modalDelete);
-        }
-    });
-
-    // Cập nhật bài viết
-    formEdit.addEventListener('submit', e => {
-        e.preventDefault();
-        const [title, content, date, time, author] = [
-            formEdit.title.value.trim(),
-            formEdit.content.value.trim(),
-            formEdit.date.value,
-            formEdit.time.value.trim(),
-            formEdit.author.value.trim()
-        ];
-
-        if (!title || !content || !date || !time || !author || isNaN(time) || time < 5 || time > 120 || /[a-zA-Z]/.test(time)) {
-            showErrorModal('Thông tin không hợp lệ');
-            return;
-        }
-
-        const articles = getArticleList();
-        const index = articles.findIndex(a => a.id === currentEditId);
-        if (index !== -1) {
-            articles[index] = { id: currentEditId, title, content, date, time, author };
-            saveArticleList(articles);
-            closeModal(modalEdit);
-            init(articles, 'Article', 'articleTableBody');
-        }
-
-
-    });
-
-    // Xóa bài viết
-    btnConfirmDelete.addEventListener('click', () => {
-
-        let articles = getArticleList();
-        articles = articles.filter(a => a.id !== currentDeleteId);
-        saveArticleList(articles);
-        closeModal(modalDelete);
-        init(articles, 'Article', 'articleTableBody');
-
-    });
-
+    window.seeDetails = seeDetails;
 });
-
-
-
 
 function showErrorModal(message) {
     const errorModal = document.querySelector('.modal-error');
@@ -706,9 +801,10 @@ function showErrorModal(message) {
         setTimeout(() => {
             errorModal.classList.remove('show');
         }, 1500);
+    } else {
+        console.error('Error modal or notification not found');
     }
 }
-
 
 function getArticleList() {
     return JSON.parse(localStorage.getItem('listArticle')) || [];
@@ -716,32 +812,4 @@ function getArticleList() {
 
 function saveArticleList(list) {
     localStorage.setItem('listArticle', JSON.stringify(list));
-}
-
-function seeDetails(id) {
-    let user = listAccount.find(acc => acc.id === id);
-    console.log(user);
-    let modalDetails = document.getElementById('seeDetails');
-    modalDetails.classList.remove('hidden');
-    let detailsContent = document.getElementById('pointExam');
-    detailsContent.innerHTML="";
-    let btn = document.getElementById('closeDetails');
-    btn.addEventListener('click', () => {
-        modalDetails.classList.add('hidden');
-    });
-    let infoUser = document.getElementById('infoStudent');
-    infoUser.innerHTML = `
-        <p style="font-weight: 640;">Tên: ${user.nameUser}</p>
-        <p style="font-weight: 640;">Ngày sinh: ${user.date}</p>
-        <p style="font-weight: 640;">email: ${user.email}</p>
-    `;
-    user.history.forEach((item, index) => {
-        detailsContent.innerHTML += `
-        <tr>
-            <td>${item.examName}</td>
-            <td>${item.time}</td>
-            <td>${item.morningExam.score}</td>
-            <td>${item.afternoonExam.score}</td>
-        </tr>`;
-    });
 }
