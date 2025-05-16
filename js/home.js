@@ -138,16 +138,44 @@ function renderArticles() {
             <h4>${article.title}</h4>
             <p>${article.content}</p>
             <div class="time-minutes">
-                <i class="fa-solid fa-clock"></i>
+                <i class="fa-solid fa-clock"></i> 
                 <span>${getTimeAgo(article.date)}</span>
                 <i class="fas fa-book-open"></i>
                 <span>${article.time} phút đọc </span>
             </div>
         `;
+        li.addEventListener('click', () => {
+            const modalContent = document.querySelector('.modal-content');
 
+            modalContent.innerHTML = `
+                <h4 class="nameArticle">${article.title}</h4>
+                <div class="articleInformation">
+                    <p class="authorArticle">${article.author}</p>
+                    <p class="postingDate">
+                        <i class="fa-solid fa-clock"></i> 
+                        <span>${getTimeAgo(article.date)}</span>
+                    </p>
+                    <p class="timeRead">
+                        <i class="fas fa-book-open"></i>
+                        <span>${article.time} phút đọc </span>
+                    </p>
+                </div>
+                <p class="contentArticle">${article.content}</p>
+                <button class="exitModalArticle">Đóng</button>
+            `;
+            document.querySelector('.modal-article').style.display = 'block';
+            document.querySelector('.list-post').style.display = "none";
+
+            // Gắn sự kiện cho nút đóng sau khi render nội dung mới
+            modalContent.querySelector('.exitModalArticle').addEventListener('click', () => {
+                document.querySelector('.modal-article').style.display = 'none';
+                document.querySelector('.list-post').style.display = "block";
+            });
+        });
         listPostElement.appendChild(li);
     });
 }
+
 renderArticles()
 function getTimeAgo(dateString) {
     const now = new Date();

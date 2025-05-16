@@ -45,7 +45,9 @@ const listAccount = JSON.parse(localStorage.getItem("listAccount")) || [
     }
 ];
 
-
+if (!localStorage.getItem("listAccount")) {
+    localStorage.setItem("listAccount", JSON.stringify(listAccount));
+}
 
 const listQuestion = JSON.parse(localStorage.getItem("listQuestion")) || [
     {
@@ -392,12 +394,20 @@ const listExam = JSON.parse(localStorage.getItem("listExam")) || [
         totalQuest: 20
     }
 ];
+
+if (!localStorage.getItem("listExam")) {
+    localStorage.setItem("listExam", JSON.stringify(listExam));
+}
+
 const listArticle = JSON.parse(localStorage.getItem("listArticle")) || [
     {
         id: 1,
         title: "Authentication & Authorization",
         date: "2025-05-15",
-        content: "Chào bạn! Nếu bạn đã là học viên khóa Pro của Rikkei Academy...",
+        content: `Chào bạn! Nếu bạn đã là học viên khóa Pro của Rikkei Academy, chắc hẳn bạn đã từng nghe tới hai khái niệm rất quan trọng trong lập trình web là "Authentication" (Xác thực) và "Authorization" (Phân quyền). Đây là hai bước bảo mật riêng biệt nhưng thường bị nhầm lẫn. 
+                Authentication là quá trình kiểm tra xem người dùng là ai — thường thông qua email, mật khẩu, mã OTP hoặc các hình thức đăng nhập khác. 
+                Còn Authorization là quá trình kiểm tra xem người dùng đã xác thực có được quyền truy cập vào tài nguyên nào đó hay không, ví dụ như quyền xem bảng quản trị hay chỉnh sửa bài viết.
+                Việc hiểu và áp dụng đúng cả hai sẽ giúp bạn xây dựng được hệ thống an toàn, bảo mật và hiệu quả hơn.`,
         author: "Admin",
         time: "10"
     },
@@ -405,12 +415,20 @@ const listArticle = JSON.parse(localStorage.getItem("listArticle")) || [
         id: 2,
         title: "ReactJS Best Practices",
         date: "2025-05-10",
-        content: "Các best practices trong ReactJS giúp bạn viết code tốt hơn...",
+        content: `Trong quá trình phát triển ứng dụng ReactJS, việc áp dụng những best practices giúp bạn duy trì mã nguồn sạch sẽ, dễ bảo trì và nâng cấp. Dưới đây là một số phương pháp hay bạn nên tham khảo khi làm việc với ReactJS:
+            - **Component-based architecture**: Chia ứng dụng thành các components nhỏ, dễ tái sử dụng.
+            - **Functional Components**: Ưu tiên sử dụng functional components thay vì class components, vì chúng dễ đọc, dễ kiểm thử và dễ tối ưu hóa.
+            - **State Management**: Sử dụng các thư viện như Redux, Context API để quản lý state một cách rõ ràng và hiệu quả.
+            - **Hooks**: Dùng React hooks (useState, useEffect, custom hooks) để quản lý state và side-effects.
+            - **Avoid Inline Functions**: Tránh sử dụng hàm inline trong JSX để tối ưu hiệu suất, vì mỗi lần render lại sẽ tạo ra một hàm mới.
+            Việc tuân thủ các best practices sẽ giúp bạn xây dựng ứng dụng ReactJS mạnh mẽ và dễ bảo trì hơn.`,
         author: "Admin",
         time: "15"
     }
 ];
+
 if (!localStorage.getItem("listArticle")) {
     localStorage.setItem("listArticle", JSON.stringify(listArticle));
 }
+
 // localStorage.setItem("listExam", JSON.stringify(listExam))

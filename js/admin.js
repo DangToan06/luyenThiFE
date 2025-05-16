@@ -353,6 +353,8 @@ document.addEventListener('DOMContentLoaded', () => {
             switch (linkText) {
                 case 'Bảng điều khiển':
                     sectionId = 'Dashboard';
+                    localStorage.setItem('currentSection', 'Dashboard');
+                    location.reload();
                     break;
                 case 'Sinh viên':
                     sectionId = 'Students';
@@ -393,121 +395,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Xử lý modal cho Article
-    const modalAdd = document.querySelector('.modal-add'); 
-    const modalEdit = document.querySelector('.modal-edit');
-    const modalDelete = document.querySelector('.modal-delete');
-    const formAdd = modalAdd ? modalAdd.querySelector('.modal-form-add') : null;
-    const formEdit = modalEdit ? modalEdit.querySelector('.modal-form-edit') : null;
-    const btnAddPost = document.querySelector('#Article .btn-add');
-    const btnCloseAdd = modalAdd ? modalAdd.querySelector('.btn-close') : null;
-    const btnCloseEdit = modalEdit ? modalEdit.querySelector('.btn-close') : null;
-    const btnCloseDelete = modalDelete ? modalDelete.querySelector('.btn-close-delete') : null;
-    const btnConfirmDelete = modalDelete ? modalDelete.querySelector('.btn-confirm-delete') : null;
-
-    let currentEditId = null;
-    let currentDeleteId = null;
-
-    if (btnAddPost) {
-        console.log('Add article button found');
-        btnAddPost.addEventListener('click', () => {
-            console.log('Opening add article modal');
-            if (modalAdd) {
-                openModal(modalAdd);
-                formAdd?.reset();
-            } else {
-                console.error('Add article modal not found');
-            }
-        });
-    } else {
-        console.error('Add article button not found');
-    }
-
-    if (btnCloseAdd) {
-        btnCloseAdd.addEventListener('click', () => {
-            closeModal(modalAdd);
-            formAdd?.reset();
-        });
-    }
-
-    if (btnCloseEdit) {
-        btnCloseEdit.addEventListener('click', () => {
-            closeModal(modalEdit);
-            formEdit?.reset();
-        });
-    }
-
-    if (btnCloseDelete) {
-        btnCloseDelete.addEventListener('click', () => {
-            closeModal(modalDelete);
-        });
-    }
-
-    if (formAdd) {
-        formAdd.addEventListener('submit', (e) => {
-            e.preventDefault();
-            console.log('Add article form submitted');
-            const inputs = formAdd.querySelectorAll('input');
-            if (inputs.length !== 4) {
-                console.error('Unexpected number of inputs in add article form:', inputs.length);
-                showErrorModal('Lỗi cấu trúc form');
-                return;
-            }
-            const [title, content, time, author] = Array.from(inputs).map(i => i.value.trim());
-            const today = new Date().toISOString().split('T')[0];
-
-            if (!title || !content || !time || !author || isNaN(time) || time < 5 || time > 120 || /[a-zA-Z]/.test(time)) {
-                showErrorModal('Vui lòng nhập đầy đủ và hợp lệ');
-                return;
-            }
-
-            const articles = getArticleList();
-            const newId = articles.length > 0 ? Math.max(...articles.map(a => a.id)) + 1 : 1;
-            articles.unshift({ id: newId, title, content, date: today, time, author });
-            saveArticleList(articles);
-            closeModal(modalAdd);
-            formAdd.reset();
-            init(articles, 'Article', 'articleTableBody');
-        });
-    }
-
-    if (formEdit) {
-        formEdit.addEventListener('submit', (e) => {
-            e.preventDefault();
-            console.log('Edit article form submitted');
-            const title = formEdit.querySelector('input[name="title"]').value.trim();
-            const content = formEdit.querySelector('input[name="content"]').value.trim();
-            const date = formEdit.querySelector('input[name="date"]').value;
-            const time = formEdit.querySelector('input[name="time"]').value.trim();
-            const author = formEdit.querySelector('input[name="author"]').value.trim();
-
-            if (!title || !content || !date || !time || !author || isNaN(time) || time < 5 || time > 120 || /[a-zA-Z]/.test(time)) {
-                showErrorModal('Thông tin không hợp lệ');
-                return;
-            }
-
-            const articles = getArticleList();
-            const index = articles.findIndex(a => a.id === currentEditId);
-            if (index !== -1) {
-                articles[index] = { id: currentEditId, title, content, date, time, author };
-                saveArticleList(articles);
-                closeModal(modalEdit);
-                formEdit.reset();
-                init(articles, 'Article', 'articleTableBody');
-            }
-        });
-    }
-
-    if (btnConfirmDelete) {
-        btnConfirmDelete.addEventListener('click', () => {
-            console.log('Delete article confirmed');
-            let articles = getArticleList();
-            articles = articles.filter(a => a.id !== currentDeleteId);
-            saveArticleList(articles);
-            closeModal(modalDelete);
-            init(articles, 'Article', 'articleTableBody');
-        });
-    }
 
     // Xử lý modal cho Question
     const btnAddQuestion = document.querySelector('#Question .btn-add');
@@ -789,59 +676,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Xử lý thêm tài khoản
-    if (btnConfirmAdd && addAccountForm) {
-        btnConfirmAdd.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (addAccountForm.checkValidity()) {
-                const formData = new FormData(addAccountForm);
-                const nameUser = formData.get('username');
-                const email = formData.get('email');
-                const password = formData.get('password');
-
-                const isDuplicate = listAccount.some(acc => acc.email === email
-                );
-
-                if (isDuplicate) {
-                    alert('Tên tài khoản hoặc email đã tồn tại!');
-                    return;
-                }
-
-                // Tạo ID ngẫu nhiên
-                function generateRandomId() {
-                    const random3Digit = Math.floor(Math.random() * 900) + 100;
-                    let checkId = listAccount.some(acc => acc.id === random3Digit);
-                    return checkId ? generateRandomId() : random3Digit;
-                }
-
-                const newAccount = {
-                    id: generateRandomId(),
-                    nameUser: nameUser,
-                    email: email,
-                    password: password,
-                    status: true,
-                    history: [],
-                };
-
-                listAccount.push(newAccount);
-                listAccount.reverse();
-                localStorage.setItem('listAccount', JSON.stringify(listAccount));
-                
-                // Cập nhật member trong listExam
-                const listExam = JSON.parse(localStorage.getItem('listExam')) || [];
-                listExam.forEach(exam => {
-                    exam.member = listAccount.length;
-                });
-                localStorage.setItem('listExam', JSON.stringify(listExam));
-                
-                init(listAccount, 'Students', 'userTableBody');
-                modalStudents.classList.add('hidden');
-                addAccountForm.reset();
-            } else {
-                addAccountForm.reportValidity();
-            }
-        });
-    }
+    
 
     function lockuser(id) {
         const user = listAccount.find(acc => acc.id === id);
@@ -1017,3 +852,24 @@ function getArticleList() {
 function saveArticleList(list) {
     localStorage.setItem('listArticle', JSON.stringify(list));
 }
+
+function getlistAccount() {
+    return JSON.parse(localStorage.getItem('listAccount')) || [];
+}
+
+function getlistExam() {
+    return JSON.parse(localStorage.getItem('listExam')) || [];
+}
+
+window.onload = function () {
+    let totalStudent = document.getElementsByClassName("stat-value")[0];
+    let listAccount = getlistAccount();
+    if (totalStudent) {
+        totalStudent.innerHTML = listAccount.length;
+    }
+    let totalExam = document.getElementsByClassName("stat-value")[1];
+    let listExam = getlistExam();
+    if (totalExam) {
+        totalExam.innerHTML = listExam.length;
+    }
+};
