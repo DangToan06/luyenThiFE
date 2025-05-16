@@ -17,7 +17,6 @@ let editInfoModal = document.getElementById("editInfo");
 
 boxName.innerHTML = "";
 editInfoModal.innerHTML = "";
-
 boxName.innerHTML = `
         <div class="form-group">
           <label for="lastName">Họ và Tên</label>
@@ -29,7 +28,7 @@ boxName.innerHTML = `
         </div>
         <div class="form-group">
           <label for="birthday">Ngày sinh</label>
-          <input type="date" id="birthday" value="${accNow.date}" disabled />
+          <input type="text" id="birthday" value="${accNow.date}" disabled />
         </div>
     `;
 
