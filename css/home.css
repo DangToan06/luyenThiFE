@@ -62,7 +62,7 @@
 }
 
 .content-exam-ruler {
-    width: 100%;
+    width: 80%;
 }
 
 .main-content aside {
@@ -130,7 +130,7 @@
     text-overflow: ellipsis;
     display: block;
     width: 100%;
-    max-width: 100%;
+    max-width: 50%;
     font-size: 14px;
     color: #3d3d3d;
     cursor: pointer;
@@ -368,6 +368,7 @@
 .pagination button:hover {
     background: #ddd;
 }
+
 /* Nút đang được chọn */
 .pagination {
     display: flex;
@@ -380,7 +381,8 @@
     margin-top: 40px;
 }
 
-.pagination button, .pagination .page-button {
+.pagination button,
+.pagination .page-button {
     margin: 0 5px;
     padding: 5px 10px;
     border: 1px solid #ccc;
@@ -402,7 +404,71 @@
 .pagination span {
     margin: 0 5px;
 }
+
+.modal-article {
+    display: none;
+    flex-direction: column;
+    max-width: auto;
+    background-color: #FFFFFF;
+    border: 0;
+    border-radius: 15px;
+    padding-left: 15px;
+    padding-top: 15px;
+    width: 100%;
+    max-width: 100%;
+}
+
+.nameArticle {
+    margin-bottom: 5px;
+    font-size: 20px;
+}
+
+.contentArticle {
+    margin-bottom: 5px;
+    padding-right: 5px;
+    width: 100%;
+    max-width: 110%;
+    display: flex;
+    flex-wrap: wrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+}
+
+.articleInformation {
+    display: flex;
+    flex-direction: row;
+}
+
+.authorArticle {
+    margin-bottom: 7px;
+    margin-right: 5%;
+}
+
+.postingDate {
+    margin-bottom: 3px;
+    margin-right: 5%;
+}
+
+.timeRead {
+    margin-bottom: 3px;
+    margin-right: 5%;
+}
+
+.exitModalArticle {
+    margin-left: 85%;
+    width: 10%;
+    background-color: #BC2228;
+    color: #FFFFFF;
+    border: 5px solid #BC2228;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
 @media screen and (max-width: 768px) {
+    .content-exam-ruler {
+        width: 100%;
+    }
 
     .list-post li p {
         white-space: nowrap;
@@ -443,6 +509,15 @@
 
     .main-content aside img {
         width: 100%;
+    }
+
+    .modal-article {
+        max-width: 100%;
+    }
+
+    .exitModalArticle {
+        width: 20%;
+        margin-left: 75%;
     }
 
     /* ////////// */
