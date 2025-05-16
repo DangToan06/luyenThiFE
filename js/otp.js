@@ -27,6 +27,7 @@ function nextPage() {
     let AccountTemp = JSON.parse(sessionStorage.getItem("AccountTemp"));
     listAccount.push(AccountTemp);
     localStorage.setItem("listAccount", JSON.stringify(listAccount));
+    showSuccessful("Tạo Tài Khoản Thành Công")
     window.location.href = "../index.html";
 }
 function setupInputBehavior() {
