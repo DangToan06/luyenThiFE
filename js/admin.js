@@ -518,7 +518,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     nameUser: nameUser,
                     email: email,
                     password: password,
-                    status: true
+                    status: true,
+                    history: [],
                 };
 
                 listAccount.push(newAccount);

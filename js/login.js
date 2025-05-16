@@ -79,11 +79,11 @@ btnSignUp.addEventListener("click", () => {
         Account.email = inputEmailSignUpValue;
         Account.password = inputPasswdSignUpValue;
         Account.status = true;
+        Account.history = [];
         sessionStorage.setItem("AccountTemp", JSON.stringify(Account));
         // ????????????????????????
         let otp = generateOTP();
         sessionStorage.setItem("OTP", otp);
-        showSuccessful("Creative account successful")
         emailjs.init('ctukBCXWCujNRHSar');
         emailjs.send(
             'service_trdu09h', // service ID
