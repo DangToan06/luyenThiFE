@@ -8,21 +8,22 @@ const listAccount = JSON.parse(localStorage.getItem("listAccount")) || [
         status: true,
         avata: "https://i.pinimg.com/474x/95/2f/a5/952fa53028d4770ddea0333d27550f8f.jpg",
         history: [
-            {
-                examId: "exam001",
-                examName: "Đề thi số 1",
-                time: 10,
-                morningExam:
-                {
-                    score: 70,
-                    answers: []
-                },
-                afternoonExam:
-                {
-                    score: 70,
-                    answers: []
-                }
-            },
+            // {
+            //     examId: "exam001",
+            //     examName: "Đề thi số 1",
+            //     time: 10,
+            //     morningExam:
+            //     {
+            //         score: 70,
+            //         answers: []
+            //     },
+            //     afternoonExam:
+            //     {
+            //         score: 70,
+            //         answers: []
+            //     },
+            //     date: 0
+            // },
         ]
     },
     {
@@ -32,7 +33,9 @@ const listAccount = JSON.parse(localStorage.getItem("listAccount")) || [
         email: "quangngu@gmail.com",
         password: "22222222",
         status: true,
-        avata: "https://i.pinimg.com/474x/95/2f/a5/952fa53028d4770ddea0333d27550f8f.jpg"
+        avata: "https://i.pinimg.com/474x/95/2f/a5/952fa53028d4770ddea0333d27550f8f.jpg",
+        history: [
+        ]
     },
     {
         id: 3,
@@ -41,7 +44,9 @@ const listAccount = JSON.parse(localStorage.getItem("listAccount")) || [
         email: "quangchsga@gmail.com",
         password: "33333333",
         status: true,
-        avata: "https://i.pinimg.com/474x/95/2f/a5/952fa53028d4770ddea0333d27550f8f.jpg"
+        avata: "https://i.pinimg.com/474x/95/2f/a5/952fa53028d4770ddea0333d27550f8f.jpg",
+        history: [       
+        ]
     }
 ];
 

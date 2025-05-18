@@ -3,6 +3,11 @@ let listQuesDoAfternoon = JSON.parse(localStorage.getItem("questionInProgress2")
 let listSelectedAwsMorning = JSON.parse(localStorage.getItem("listSelectedAwsMorning"));
 let listSelectedAwsAfternoon = JSON.parse(localStorage.getItem("listSelectedAwsAfternoon"));
 let statusExam = sessionStorage.getItem("statusExam");
+let examInProgress = JSON.parse(localStorage.getItem("examInProgress"));
+let AccountNow = JSON.parse(localStorage.getItem("AccountNow"));
+
+//Lưu lịch sử bài vừa làm
+let historyExamDo = localStorage.setItem("historyExamDo", JSON.stringify(examInProgress));
 
 // if (statusExam === "sáng") {
 
@@ -81,6 +86,49 @@ document.getElementById("totalResu").textContent = `Kết Quả ${totalResult}/1
 document.getElementById("totalResuAfter").textContent = `Kết Quả ${totalResultAfternoon}/100`;
 // localStorage.setItem("totalExam", JSON.stringify(totalResult));
 
+// Đọc biến isRetake từ localStorage
+const isRetake = localStorage.getItem("isRetake") === "true";
+localStorage.removeItem("isRetake"); // Xoá để tránh dùng lại lần sau
+
+// Tạo đối tượng lịch sử bài thi
+let historyDo = {
+    examId: examInProgress.id,
+    examName: examInProgress.title,
+    time: examInProgress.durationMinutes,
+    morningExam: {
+        score: totalResult,
+        answers: listSelectedAwsMorning
+    },
+    afternoonExam: {
+        score: totalResultAfternoon,
+        answers: listSelectedAwsAfternoon
+    },
+    date: getCurrentDateTime()
+};
+
+// Nếu là làm lại: luôn thêm mới vào đầu mảng
+if (isRetake) {
+    AccountNow.history.unshift(historyDo);
+} else {
+    // Nếu không phải làm lại thì tìm xem đã có chưa → cập nhật hoặc thêm mới
+    let index = AccountNow.history.findIndex(e => e.examId === examInProgress.id);
+    if (index === -1) {
+        AccountNow.history.unshift(historyDo);
+    } else {
+        AccountNow.history[index] = historyDo;
+    }
+}
+
+// Lưu vào localStorage
+localStorage.setItem("AccountNow", JSON.stringify(AccountNow));
+
+// Cập nhật tài khoản trong listAccount
+const idx = listAccount.findIndex(acc => acc.id === AccountNow.id);
+if (idx !== -1) {
+    listAccount[idx] = AccountNow;
+    localStorage.setItem("listAccount", JSON.stringify(listAccount));
+}
+
 
 // xem kết quả đúng sai
 
@@ -139,6 +187,7 @@ btnShowResult.addEventListener('click', () => {
     showTotal.style.display = "none";
     showResult.style.display = "block";
     ShowTotalAfternoon.style.display = "none";
+    notDoExam.style.display = "none";
 });
 
 btnShowTotalAfternoon.addEventListener('click', () => {
@@ -240,16 +289,40 @@ document.getElementById("go-home-page").addEventListener('click', () => {
     homePage()
 });
 
-//Nút làm lại bài kiểm tra
-[...document.getElementsByClassName("retake-th-exam")].forEach(e => {
-    e.addEventListener('click', () => {
-        location.href = "doExam.html";
-    });
-});
-
 //Hiển thị đề hiện tại
 
 document.querySelectorAll(".app-title").forEach(e => {
     e.textContent = "";
     e.textContent = examInPro.title;
+});
+
+//Hàm lấy ngày tháng năm hiện tại
+
+function getCurrentDateTime() {
+    const now = new Date();
+
+    const day = String(now.getDate()).padStart(2, '0');
+    const month = String(now.getMonth() + 1).padStart(2, '0'); // Tháng bắt đầu từ 0
+    const year = now.getFullYear();
+
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+
+    return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+}
+
+//Hiển thị nút làm lại khi làm xong cả 2 đề sáng chiều
+
+let btnRetake = document.getElementById("retake-th-exam");
+
+if (checkDoExamMorning === true && checkDoExamAfternoon === true) {
+    btnRetake.style.display = "block";
+} else {
+    btnRetake.style.display = "none";
+}
+
+btnRetake.addEventListener('click', () => {
+    localStorage.setItem("isRetake", "true");
+    location.href = "exam.html";
 });

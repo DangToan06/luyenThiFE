@@ -1,6 +1,15 @@
 // render đề thi từ localStorage
 init(listExam);
 
+let quest1 = [];
+let quest2 = [];
+let examInProgress = [];
+
+localStorage.setItem("questionInProgress", JSON.stringify(quest1));
+localStorage.setItem("questionInProgress2", JSON.stringify(quest2));
+localStorage.setItem("examInProgress", JSON.stringify(examInProgress));
+let AccountNow = JSON.parse(localStorage.getItem("AccountNow"));
+
 function init(renderListd) {
     const itemsPerPage = 6;
     let currentPage = 1;
@@ -40,10 +49,30 @@ function init(renderListd) {
         btnDoExam.forEach((btn, idx) => {
             btn.addEventListener("click", () => {
                 const exam = itemsToShow[idx];
-                localStorage.setItem("examInProgress", JSON.stringify(exam));
-                location.href = "exam.html";
+                const examInHistory = AccountNow.history.find(e => e.examId === exam.id);
+
+                if (examInHistory) {
+                    // Nếu đề đã làm rồi chuyển sang kết thúc
+                    // Lưu lại dữ liệu để hiển thị khi vào Endexam.html
+                    const quest1 = exam.questionIds.map(qid => listQuestion.find(q => q.id === qid)).filter(Boolean);
+                    const quest2 = exam.questionIds2.map(qid => listQuestion.find(q => q.id === qid)).filter(Boolean);
+
+                    localStorage.setItem("questionInProgress", JSON.stringify(quest1));
+                    localStorage.setItem("questionInProgress2", JSON.stringify(quest2));
+                    localStorage.setItem("listSelectedAwsMorning", JSON.stringify(examInHistory.morningExam.answers));
+                    localStorage.setItem("listSelectedAwsAfternoon", JSON.stringify(examInHistory.afternoonExam.answers));
+                    localStorage.setItem("examInProgress", JSON.stringify(exam));
+
+                    location.href = "Endexam.html";
+                } else {
+                    // chưa làm bài thi này thì sẽ bắt dầu làm
+                    localStorage.setItem("examInProgress", JSON.stringify(exam));
+                    location.href = "exam.html";
+                }
             });
         });
+
+
 
         renderPagination();
     }
