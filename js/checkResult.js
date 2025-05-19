@@ -13,6 +13,9 @@ if (statusExam === "sáng") {
 let examInPro = JSON.parse(localStorage.getItem("examInProgress"));
 //render câu hỏi
 renderQuestion();
+console.log(listQuesDo);
+console.log(listSelectedAws);
+
 
 function renderQuestion() {
   let questionDo = document.getElementById("homework-section");

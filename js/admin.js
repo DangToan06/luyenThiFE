@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Hàm init cho phân trang
     function init(renderList, nameList, nameId) {
-        const itemsPerPage = 3;
+        const itemsPerPage = 5;
         let currentPage = 1;
         const totalItems = renderList.length;
         const totalPages = Math.ceil(totalItems / itemsPerPage);

@@ -43,6 +43,7 @@
                <img src="" alt="avatar" class="avatar" id="avatar" style="object-fit: cover;"/>
                <div class="avatar-dropdown" id="avatar-dropdown" style="display: none;">
                  <div class="dropdown-option" onclick="viewProfile()">Thông Tin</div>
+                 <div class="dropdown-option" onclick="viewHistory()">Lịch sử làm bài thi</div>
                  <div class="dropdown-option" onclick="signOut()"><button style="border: none; background-color: white; cursor: pointer; font-size: 20px;" onclick="signOutAdmin()" ><i class="fa-solid fa-right-from-bracket"></i></button>Đăng xuất</div>
                </div> 
              </div>
@@ -61,8 +62,11 @@
       <li>Tiếng Nhật</li>
          </ul>
     <div class="menu-account" >
-             <div onclick="viewProfile()">
-                 <div class="name-email-nav">
+             <div style="display: flex;flex-direction: column;">
+                  <div onclick="viewHistory()" style="cursor: pointer;">
+                        <span>Lịch Sử Làm Bài THi</span>
+                 </div>
+                 <div class="name-email-nav" onclick="viewProfile()" style="cursor: pointer;">
                      <span id="navName">Đặng Toàn</span>
                      <span id="navEmail">toan@gmail.com</span>
                  </div>
