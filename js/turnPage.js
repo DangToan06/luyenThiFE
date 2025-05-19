@@ -15,3 +15,6 @@ function forgotpassword() {
 function viewProfile() {
     window.location.href = "/page/editInformation.html"
 }
+function viewHistory() {
+    window.location.href = "/page/history.html"
+}
