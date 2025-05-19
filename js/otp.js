@@ -1,5 +1,3 @@
-
-
 function getUserOTP() {
     var inputs = document.querySelectorAll("#input-number-OTP input");
     var userOtp = '';
