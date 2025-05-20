@@ -336,7 +336,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         renderContent();
     }
-
+    function seeDetails(id) {
+        console.log('See details button clicked for ID:', id);
+    }
     // Xử lý nav links
     const navLinks = document.querySelectorAll('.nav-link');
     const sections = document.querySelectorAll('section');
@@ -598,7 +600,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-
     // Xử lý khóa/mở khóa tài khoản
     function lockuser(id) {
         const user = listAccount.find(acc => acc.id === id);
@@ -621,7 +622,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     window.lockuser = lockuser;
-
     // Xử lý sidebar responsive
     const menuButton = document.getElementById('menu-nav');
     const closeButton = document.getElementById('close-menu-nav');
@@ -645,38 +645,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Xử lý xem chi tiết sinh viên
-    function seeDetails(id) {
-        let user = listAccount.find(acc => acc.id === id);
-        console.log('Viewing details for user:', user);
-        let modalDetails = document.getElementById('seeDetails');
-        openModal(modalDetails);
-        let detailsContent = document.getElementById('pointExam');
-        detailsContent.innerHTML = '';
-        let btn = document.getElementById('closeDetails');
-        btn.addEventListener('click', () => {
-            closeModal(modalDetails);
-        });
-        let infoUser = document.getElementById('infoStudent');
-        infoUser.innerHTML = `
-            <p style="font-weight: 640;">Tên: ${user.nameUser}</p>
-            <p style="font-weight: 640;">Ngày sinh: ${user.date || 'N/A'}</p>
-            <p style="font-weight: 640;">Email: ${user.email}</p>
-        `;
-        if (user.history && user.history.length > 0) {
-            user.history.forEach((item) => {
-                detailsContent.innerHTML += `
-                <tr>
-                    <td>${item.examName}</td>
-                    <td>${item.time}</td>
-                    <td>${item.morningExam?.score || 'N/A'}</td>
-                </tr>`;
-            });
-        } else {
-            detailsContent.innerHTML = '<tr><td colspan="3">Không có lịch sử thi</td></tr>';
-        }
-    }
 
-    
 
     function lockuser(id) {
         const user = listAccount.find(acc => acc.id === id);
@@ -692,14 +661,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (user) {
                     user.status = !user.status; // Đảo ngược trạng thái
                     localStorage.setItem('listAccount', JSON.stringify(listAccount));
-                    
+
                     // Cập nhật member trong listExam
                     const listExam = JSON.parse(localStorage.getItem('listExam')) || [];
                     listExam.forEach(exam => {
                         exam.member = listAccount.length;
                     });
                     localStorage.setItem('listExam', JSON.stringify(listExam));
-                    
+
                     init(listAccount, 'Students', 'userTableBody');
                 }
             } else if (result.isDenied) {
@@ -844,7 +813,19 @@ function showErrorModal(message) {
         console.error('Error modal or notification not found');
     }
 }
-
+function seeDetails(id) {
+    let user = listAccount.find(acc => acc.id === id);
+    let modalDetails = document.getElementById('seeDetails');
+    modalDetails.classList.remove('hidden');
+    let detailsContent = document.getElementById('pointExam');
+    let btn = document.getElementById('closeDetails');
+    btn.addEventListener('click', () => {
+        modalDetails.classList.add('hidden');
+    });
+    console.log(user);
+    let history = user.history;
+    init(history);
+}
 function getArticleList() {
     return JSON.parse(localStorage.getItem('listArticle')) || [];
 }

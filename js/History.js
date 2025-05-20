@@ -1,6 +1,21 @@
-
+let page = sessionStorage.getItem("page")
 function init(renderListd) {
-    const itemsPerPage = 10;
+    console.log(renderListd);
+    
+    let itemsPerPage;
+    if (page === "adminPage") {
+        itemsPerPage = 5;
+    }else if (page === "userPage") {
+        itemsPerPage = 10;
+    }
+    if (renderListd.length === 0) {
+        document.getElementById("listHistory").innerHTML = `
+        <div id="tableHistory">
+            <div style="width: 100%; text-align: center;">Không có lịch sử thi nào</div>
+        </div>`;
+        return;
+        
+    }
     let currentPage = 1;
     const totalItems = renderListd.length;
     const totalPages = Math.ceil(totalItems / itemsPerPage);
@@ -18,7 +33,7 @@ function init(renderListd) {
         const end = start + itemsPerPage;
         const itemsToShow = renderListd.slice(start, end);
 
-        itemsToShow.forEach((item,index) => {
+        itemsToShow.forEach((item, index) => {
             contentList.innerHTML += `
             <div id="tableHistory" onclick="eventBtn(${index})">
                 <div style="width: 25%;">${item.examName}</div>
@@ -31,7 +46,7 @@ function init(renderListd) {
         // // const btnDoExam = document.querySelectorAll(".btn-do-exam");
         // btnDoExam.forEach((btn, idx) => {
         //     btn.addEventListener("click", () => {
-                
+
         //     });
         // });
 
@@ -91,9 +106,13 @@ function init(renderListd) {
 let acc = JSON.parse(localStorage.getItem("AccountNow"))
 let history = acc.history
 let status = "sáng"
-init(history);
+if (page === "adminPage") {
+
+} else if (page === "userPage") {
+    init(history);
+}
 function eventBtn(index) {
-    let item = history[index]; 
+    let item = history[index];
     let status = "sáng";
     const btn = document.getElementById("seeDetailsUser");
 
@@ -129,52 +148,52 @@ function eventBtn(index) {
 
         document.getElementById("btn-add-post").addEventListener("click", () => {
             status = status === "sáng" ? "chiều" : "sáng";
-            renderDetail(); 
+            renderDetail();
         });
         let exam = listExam.find((element) => element.id === item.examId);
         let answers = status === "sáng" ? item.morningExam.answers : item.afternoonExam.answers;
-        let questionIds  = status === "sáng" ? exam.questionIds : exam.questionIds2;
+        let questionIds = status === "sáng" ? exam.questionIds : exam.questionIds2;
         let exam1 = listQuestion.filter(q => questionIds.includes(q.id));
         console.log(exam1);
         console.log(answers);
-        
+
         renderQuestion(exam1, answers)
     }
 
 }
 
 
-function renderQuestion(listQuesDo,listSelectedAws) {
-  let questionDo = document.getElementById("homework-section");
-  questionDo.innerHTML = "";
+function renderQuestion(listQuesDo, listSelectedAws) {
+    let questionDo = document.getElementById("homework-section");
+    questionDo.innerHTML = "";
 
-  listQuesDo.forEach((element, i) => {
-    let optionsHTML = "";
-    // Tìm đối tượng đã chọn theo ID
-    const answerObj = listSelectedAws.find(ans => ans.id === element.id);
+    listQuesDo.forEach((element, i) => {
+        let optionsHTML = "";
+        // Tìm đối tượng đã chọn theo ID
+        const answerObj = listSelectedAws.find(ans => ans.id === element.id);
 
-    element.options.forEach(opt => {
-      const escaped = escapeHTML(opt);
-      let checked = "";
-      let style = "";
-      let styleBtn = "";
-      // Nếu người dùng đã chọn câu này và đáp án là option hiện tại
-      if (answerObj && answerObj.choice === opt) {
-        checked = "checked";
+        element.options.forEach(opt => {
+            const escaped = escapeHTML(opt);
+            let checked = "";
+            let style = "";
+            let styleBtn = "";
+            // Nếu người dùng đã chọn câu này và đáp án là option hiện tại
+            if (answerObj && answerObj.choice === opt) {
+                checked = "checked";
 
-        // Tô màu theo đúng/sai
-        if (opt === element.correctAnswer) {
-          styleBtn = `style="border: 1px solid #039855;background: #ECFDF3;color: #039855;"`
-          renderBtnQues(i + 1, styleBtn);
-          style = 'style="background: #039855; color: #fff; font-weight: 500;"'; // xanh: đúng
-        } else {
-          styleBtn = `style="border: 1px solid #BC2228;background: #FFF6F7;color: #BC2228;"`
-          renderBtnQues(i + 1, styleBtn);
-          style = 'style="background: #BC2228; color: #fff; font-weight: 500;"'; // đỏ: sai
-        }
-      }
+                // Tô màu theo đúng/sai
+                if (opt === element.correctAnswer) {
+                    styleBtn = `style="border: 1px solid #039855;background: #ECFDF3;color: #039855;"`
+                    renderBtnQues(i + 1, styleBtn);
+                    style = 'style="background: #039855; color: #fff; font-weight: 500;"'; // xanh: đúng
+                } else {
+                    styleBtn = `style="border: 1px solid #BC2228;background: #FFF6F7;color: #BC2228;"`
+                    renderBtnQues(i + 1, styleBtn);
+                    style = 'style="background: #BC2228; color: #fff; font-weight: 500;"'; // đỏ: sai
+                }
+            }
 
-      optionsHTML += `
+            optionsHTML += `
         <li>
           <label ${style}>
             <input type="radio" name="question${i}" value="${escaped}" ${checked} disabled>
@@ -182,9 +201,9 @@ function renderQuestion(listQuesDo,listSelectedAws) {
           </label>
         </li>
       `;
-    });
+        });
 
-    questionDo.innerHTML += `
+        questionDo.innerHTML += `
       <div id="containerQuestion" class="question">
         <p id="question">Câu số ${i + 1}</p>
         <p id="topic">Front-end</p>
@@ -195,28 +214,30 @@ function renderQuestion(listQuesDo,listSelectedAws) {
         </ul>
       </div>
     `;
-  });
+    });
 }
 
 function renderBtnQues(i, style) {
-  let btnQues = document.getElementById("number-question");
-  btnQues.innerHTML += `<button ${style}>${i}</button>`;
+    let btnQues = document.getElementById("number-question");
+    btnQues.innerHTML += `<button ${style}>${i}</button>`;
 }
 
 
 function escapeHTML(str) {
-  return str
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+    return str
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
 
-document.getElementById("internal-article").addEventListener('click', () => {
-  location.href = "Endexam.html";
-});
+// if (page === "userPage") {
+//     document.getElementById("internal-article").addEventListener('click', () => {
+//         location.href = "Endexam.html";
+//     });
 
+// }
 //Tên đề thi hiện tại
 
 // document.querySelectorAll(".name-test").forEach(e => {
