@@ -209,6 +209,7 @@ btnLogin.addEventListener('click', () => {
         if (AccountNow.status === true) {
             showSuccessful("Đăng Nhập Thành Công");
             setTimeout(() => {
+                sessionStorage.setItem("page", "userPage");
                 window.location.href = "page/home.html";
             }, 800)
         }else {

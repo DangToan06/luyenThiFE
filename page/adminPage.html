@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../css/footer.css" />
     <link rel="stylesheet" href="../css/addArticle.css" />
     <link rel="stylesheet" href="../css/editExamAdmin.css" />
+    <link rel="stylesheet" href="../css/history.css">
 </head>
 
 <body>
@@ -656,24 +657,31 @@
     <div class="modal hidden" id="seeDetails">
         <div class="modal-overlay"></div>
         <div class="modal-content" style="width: 50%;">
-            <h3>Thông Tin Học sinh</h3>
-            <div style="margin-bottom: 20px;display: flex; flex-direction: column; gap: 5px;" id="infoStudent">
+            <div class="tip-box">
+                <h2><i class="fa-solid fa-clock-rotate-left"></i>Lịch sử làm bài thi</h2>
+
+                <div>
+                    <table>
+                        <thead style="margin-bottom: 40px;">
+                            <th>Tên bài thi</th>
+                            <th>Ngày Làm bài</th>
+                            <th>Diểm Sáng</th>
+                            <th>Diểm chiều</th>
+                        </thead>
+                    </table>
+                    <div id="listHistory">
+
+                    </div>
+                </div>
+
+                <div class="pagination">
+                    <button id="firstPageHistory">&laquo;</button>
+                    <button id="prevPageHistory">&lsaquo;</button>
+                    <span id="pageNumbersHistory"></span>
+                    <button id="nextPageHistory">&rsaquo;</button>
+                    <button id="lastPageHistorry">&raquo;</button>
+                </div>
             </div>
-            <table style="width: 100%; text-align: center;">
-                <thead>
-                    <th>
-                        Tên Bài Thi
-                    </th>
-                    <th>
-                        Thời gian làm bài
-                    </th>
-                    <th>
-                        Điểm
-                    </th>
-                </thead>
-                <Tbody id="pointExam">
-                </Tbody>
-            </table>
             <div class="modal-actions">
                 <button type="button" class="btn-close" id="closeDetails">
                     Đóng
@@ -681,6 +689,7 @@
             </div>
         </div>
     </div>
+    <div class="modal hidden " id="seeDetailsUser"></div>
     <script src="/js/data.js"></script>
     <script src="/js/changeLanguage.js"></script>
     <script src="../js/navMenu.js"></script>
@@ -689,6 +698,7 @@
     <script src="../js/editExamAdmin.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="sweetalert2.all.min.js"></script>
+    <script src="../js/History.js"></script>
 </body>
 
 </html>
