@@ -47,7 +47,7 @@ handleResponsiveLayout();
 
 // mã OTP 
 function generateOTP() {
-  return Math.floor(100000 + Math.random() * 900000).toString();
+    return Math.floor(100000 + Math.random() * 900000).toString();
 }
 // VALID ĐĂNG KÝ
 const btnSignUp = document.getElementById("btn-sign-up");
@@ -70,7 +70,7 @@ btnSignUp.addEventListener("click", () => {
         showWarning("Mật Khẩu không khớp");
     } else if (existEmail(inputEmailSignUpValue)) {
         showWarning("Email đã tồn tại");
-    }else if (valiDate(inputDateSignUpValue) === false) {
+    } else if (valiDate(inputDateSignUpValue) === false) {
         showWarning("Ngày sinh không hợp lệ");
     } else {
         Account.id = Math.floor(1000 + Math.random() * 9000);
@@ -88,9 +88,10 @@ btnSignUp.addEventListener("click", () => {
         emailjs.send(
             'service_trdu09h', // service ID
             'template_ecdruua', // template_ecdruua
-            { email: inputEmailSignUpValue,
+            {
+                email: inputEmailSignUpValue,
                 OTP: otp,
-            }, 
+            },
             'ctukBCXWCujNRHSar' // public key
         )
             .then((result) => {
@@ -100,7 +101,7 @@ btnSignUp.addEventListener("click", () => {
                 console.error('FAILED...', error);
             });
         // setTimeout(() => {
-            
+
         // }, 500);
     }
 });
@@ -212,7 +213,7 @@ btnLogin.addEventListener('click', () => {
                 sessionStorage.setItem("page", "userPage");
                 window.location.href = "page/home.html";
             }, 800)
-        }else {
+        } else {
             showWarning("Tài Khản đã bị khóa");
         }
     }
@@ -234,10 +235,17 @@ const togglePasswordLogin = document.getElementById('toggle-password');
 const passwordInputLogin = document.getElementById('input-passwd-sign-in');
 
 togglePasswordLogin.addEventListener('click', () => {
-    const isPassword = passwordInput.type === 'password';
-    passwordInputLogin.type = isPassword ? 'text' : 'password';
-    togglePasswordLogin.classList.toggle('fa-eye');
-    togglePasswordLogin.classList.toggle('fa-eye-slash');
+    const type = passwordInputLogin.getAttribute('type');
+
+    if (type === 'password') {
+        passwordInputLogin.setAttribute('type', 'text');
+        togglePasswordLogin.classList.remove('fa-eye');
+        togglePasswordLogin.classList.add('fa-eye-slash');
+    } else {
+        passwordInputLogin.setAttribute('type', 'password');
+        togglePasswordLogin.classList.remove('fa-eye-slash');
+        togglePasswordLogin.classList.add('fa-eye');
+    }
 });
 
 // Thông báo nhập sai passwd
@@ -288,7 +296,7 @@ function showSuccessful(message) {
     // }, 3000);
 }
 
-function valiDate(date){
+function valiDate(date) {
     let today = new Date();
     today.setHours(0, 0, 0, 0);
     date = new Date(date);
