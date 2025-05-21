@@ -63,7 +63,6 @@ btnEdit.addEventListener("click", () => {
         Swal.fire({
             title: "Bạn có muốn lưu thay đổi",
             showDenyButton: true,
-            showCancelButton: true,
             confirmButtonText: "Lưu",
             denyButtonText: `Không lưu`
         }).then((result) => {
@@ -148,7 +147,6 @@ btnChangePass.addEventListener("click", () => {
         Swal.fire({
             title: "Bạn có muốn lưu thay đổi hiện tại",
             showDenyButton: true,
-            showCancelButton: true,
             confirmButtonText: "Lưu",
             denyButtonText: `Không lưu`
         }).then((result) => {

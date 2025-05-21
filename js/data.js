@@ -45,8 +45,7 @@ const listAccount = JSON.parse(localStorage.getItem("listAccount")) || [
         password: "33333333",
         status: true,
         avata: "https://i.pinimg.com/474x/95/2f/a5/952fa53028d4770ddea0333d27550f8f.jpg",
-        history: [       
-        ]
+        history: []
     }
 ];
 

@@ -292,6 +292,7 @@ button {
 #internal-article:hover{
     background-color: #BC2228;
     color: #FFFFFF;
+    cursor: pointer;
 }
 
 

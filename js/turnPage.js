@@ -1,4 +1,3 @@
-// const { functions, functionsIn } = require("lodash");
 
 function homePage() {
     window.location.href = "home.html";
