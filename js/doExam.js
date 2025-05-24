@@ -107,7 +107,7 @@ function updateTimer() {
         });
         setTimeout(() => {
             addAwsAtLocal()
-            location.href = "Endexam.html"
+            location.href = "../page/Endexam.html"
         }, 1000);
     }
 }
@@ -255,7 +255,7 @@ btnSubmit.addEventListener('click', () => {
     if (listSelectedQuestion.length === questionButtons.length) {
         setTimeout(() => {
             addAwsAtLocal();
-            location.href = "Endexam.html"
+            location.href = "../page/Endexam.html"
         }, 1000);
     } else {
         Swal.fire({

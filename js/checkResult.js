@@ -4,10 +4,10 @@ let statusExam = sessionStorage.getItem("statusExam");
 
 if (statusExam === "sáng") {
   listQuesDo = JSON.parse(localStorage.getItem("questionInProgress"));
-  listSelectedAws =  JSON.parse(localStorage.getItem("listSelectedAwsMorning"));
+  listSelectedAws = JSON.parse(localStorage.getItem("listSelectedAwsMorning"));
 } else if (statusExam === "chiều") {
   listQuesDo = JSON.parse(localStorage.getItem("questionInProgress2"));
-  listSelectedAws =  JSON.parse(localStorage.getItem("listSelectedAwsAfternoon"));
+  listSelectedAws = JSON.parse(localStorage.getItem("listSelectedAwsAfternoon"));
 }
 // Hiển thị tất cả câu hỏi và hết quả 
 let examInPro = JSON.parse(localStorage.getItem("examInProgress"));
@@ -87,7 +87,7 @@ function escapeHTML(str) {
 }
 
 document.getElementById("internal-article").addEventListener('click', () => {
-  location.href = "Endexam.html";
+  location.href = "../page/Endexam.html";
 });
 
 //Tên đề thi hiện tại

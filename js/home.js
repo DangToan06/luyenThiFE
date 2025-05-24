@@ -63,11 +63,11 @@ function init(renderListd) {
                     localStorage.setItem("listSelectedAwsAfternoon", JSON.stringify(examInHistory.afternoonExam.answers));
                     localStorage.setItem("examInProgress", JSON.stringify(exam));
 
-                    location.href = "Endexam.html";
+                    location.href = "../page/Endexam.html";
                 } else {
                     // chưa làm bài thi này thì sẽ bắt dầu làm
                     localStorage.setItem("examInProgress", JSON.stringify(exam));
-                    location.href = "exam.html";
+                    location.href = "../page/exam.html";
                 }
             });
         });

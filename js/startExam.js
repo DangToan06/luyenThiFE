@@ -6,7 +6,7 @@ let questionInProgress = [];
 let questionInProgress2 = [];
 startBtn.addEventListener('click', () => {
     setTimeout(() => {
-        location.href = "doExam.html";
+        location.href = "../page/forgotPassworddoExam.html";
     }, 500);
 });
 
@@ -22,17 +22,17 @@ document.getElementById("breadcrumb").textContent = `${examInPro.title}`;
 
 for (let i = 0; i < examInPro.questionIds.length; i++) {
     for (let j = 0; j < listQuestion.length; j++) {
-        if(examInPro.questionIds[i] === listQuestion[j].id){
+        if (examInPro.questionIds[i] === listQuestion[j].id) {
             questionInProgress.push(listQuestion[j]);
-        }   
+        }
     }
 }
 
 for (let i = 0; i < examInPro.questionIds2.length; i++) {
     for (let j = 0; j < listQuestion.length; j++) {
-        if(examInPro.questionIds2[i] === listQuestion[j].id){
+        if (examInPro.questionIds2[i] === listQuestion[j].id) {
             questionInProgress2.push(listQuestion[j]);
-        }   
+        }
     }
 }
 import _ from 'https://cdn.skypack.dev/lodash';

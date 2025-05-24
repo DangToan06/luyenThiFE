@@ -134,7 +134,7 @@ if (idx !== -1) {
 
 [...document.getElementsByClassName("btn-show-result")].forEach(btnCheckResult => {
     btnCheckResult.addEventListener('click', () => {
-        location.href = "checkResult.html";
+        location.href = "../page/checkResult.html";
     });
 });
 
@@ -211,7 +211,7 @@ btnShowTotalAfternoon.addEventListener('click', () => {
 
 //Làm bài thi ca tiếp theo
 document.getElementById("btn-do-this-exam").addEventListener('click', () => {
-    location.href = "doExam.html"
+    location.href = "../page/doExam.html"
 });
 
 //Biểu đồ tính điểm
@@ -305,9 +305,9 @@ function getCurrentDateTime() {
     const month = String(now.getMonth() + 1).padStart(2, '0'); // Tháng bắt đầu từ 0
     const year = now.getFullYear();
 
-      const hours = String(now.getHours()).padStart(2, '0');
-      const minutes = String(now.getMinutes()).padStart(2, '0');
-      const seconds = String(now.getSeconds()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
 
     return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
 }
@@ -324,5 +324,5 @@ if (checkDoExamMorning === true && checkDoExamAfternoon === true) {
 
 btnRetake.addEventListener('click', () => {
     localStorage.setItem("isRetake", "true");
-    location.href = "exam.html";
+    location.href = "../page/exam.html";
 });
