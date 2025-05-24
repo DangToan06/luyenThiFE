@@ -96,7 +96,7 @@ btnSignUp.addEventListener("click", () => {
         )
             .then((result) => {
                 console.log("gửi thành công" + result.text);
-                window.location.href = "otp.html";
+                location.href = "../page/otp.html";
             }, (error) => {
                 console.error('FAILED...', error);
             });
@@ -211,7 +211,7 @@ btnLogin.addEventListener('click', () => {
             showSuccessful("Đăng Nhập Thành Công");
             setTimeout(() => {
                 sessionStorage.setItem("page", "userPage");
-                window.location.href = "home.html";
+                location.href = "../page/home.html";
             }, 800)
         } else {
             showWarning("Tài Khản đã bị khóa");
