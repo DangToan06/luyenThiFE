@@ -14,68 +14,72 @@
 <body>
     <header>
         <nav class="header-page-admin">
-             <img src="../assets/img/logoRikkei.png" alt="logo" class="logo-head" onclick="homePage()" />
-             <div class="acc-lang">
-               <div class="language-wrapper">
-                 <button class="language-toggle">
-                   <img src="../assets/img/global.png" alt="icon-global" class="icon-global" />
-                   <span>VN</span>
-                   <i class="fa-solid fa-chevron-down"></i>
-                 </button>
-                 <div class="language-dropdown">
-                   <div class="language-option">
-                     <img src="../assets/img/VN.png" alt="VN" />
-                     Tiếng Việt
-                   </div>
-                   <div class="language-option">
-                     <img src="../assets/img/JP.png" alt="JP" />
-                     Tiếng Nhật
-                   </div>
-                   <div class="language-option">
-                     <img src="../assets/img/GB.png" alt="EN" />
-                     Tiếng Anh
-                   </div>
-                 </div>
-               </div>
-               <div class="divider"></div>
-               <img src="" alt="avatar" class="avatar" id="avatar" style="object-fit: cover;"/>
-               <div class="avatar-dropdown" id="avatar-dropdown" style="display: none;">
-                 <div class="dropdown-option" onclick="viewProfile()">Thông Tin</div>
-                 <div class="dropdown-option" onclick="viewHistory()">Lịch sử làm bài thi</div>
-                 <div class="dropdown-option" onclick="signOut()"><button style="border: none; background-color: white; cursor: pointer; font-size: 20px;" onclick="signOutAdmin()" ><i class="fa-solid fa-right-from-bracket"></i></button>Đăng xuất</div>
-               </div> 
-             </div>
-             <i class="fa-solid fa-bars" id="menu-nav"></i>
-             <i class="fa-solid fa-xmark" style="display: none;" id="close-menu-nav"></i>
-         </nav>
-     
-       <div class="menu" id="menu" style="display: none;">
-         <div class="menu-header" id="menu-header">
-           <span>Ngôn ngữ</span>
-           <i class="fa-solid fa-chevron-down" id="arrow"></i>
-         </div>
-    <ul class="menu-content" id="menuContent">
-           <li>Tiếng Việt</li>
-           <li>Tiếng Anh</li>
-      <li>Tiếng Nhật</li>
-         </ul>
-    <div class="menu-account" >
-             <div style="display: flex;flex-direction: column;">
-                  <div onclick="viewHistory()" style="cursor: pointer;">
+            <img src="../assets/img/logoRikkei.png" alt="logo" class="logo-head" onclick="homePage()" />
+            <div class="acc-lang">
+                <div class="language-wrapper">
+                    <button class="language-toggle">
+                        <img src="../assets/img/global.png" alt="icon-global" class="icon-global" />
+                        <span>VN</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="language-dropdown">
+                        <div class="language-option">
+                            <img src="../assets/img/VN.png" alt="VN" />
+                            Tiếng Việt
+                        </div>
+                        <div class="language-option">
+                            <img src="../assets/img/JP.png" alt="JP" />
+                            Tiếng Nhật
+                        </div>
+                        <div class="language-option">
+                            <img src="../assets/img/GB.png" alt="EN" />
+                            Tiếng Anh
+                        </div>
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <img src="" alt="avatar" class="avatar" id="avatar" style="object-fit: cover;" />
+                <div class="avatar-dropdown" id="avatar-dropdown" style="display: none;">
+                    <div class="dropdown-option" onclick="viewProfile()">Thông Tin</div>
+                    <div class="dropdown-option" onclick="viewHistory()">Lịch sử làm bài thi</div>
+                    <div class="dropdown-option" onclick="signOut()"><button
+                            style="border: none; background-color: white; cursor: pointer; font-size: 20px;"
+                            onclick="signOutAdmin()"><i class="fa-solid fa-right-from-bracket"></i></button>Đăng xuất
+                    </div>
+                </div>
+            </div>
+            <i class="fa-solid fa-bars" id="menu-nav"></i>
+            <i class="fa-solid fa-xmark" style="display: none;" id="close-menu-nav"></i>
+        </nav>
+
+        <div class="menu" id="menu" style="display: none;">
+            <div class="menu-header" id="menu-header">
+                <span>Ngôn ngữ</span>
+                <i class="fa-solid fa-chevron-down" id="arrow"></i>
+            </div>
+            <ul class="menu-content" id="menuContent">
+                <li>Tiếng Việt</li>
+                <li>Tiếng Anh</li>
+                <li>Tiếng Nhật</li>
+            </ul>
+            <div class="menu-account">
+                <div style="display: flex;flex-direction: column;">
+                    <div onclick="viewHistory()" style="cursor: pointer;">
                         <span>Lịch Sử Làm Bài THi</span>
-                 </div>
-                 <div class="name-email-nav" onclick="viewProfile()" style="cursor: pointer;">
-                     <span id="navName">Đặng Toàn</span>
-                     <span id="navEmail">toan@gmail.com</span>
-                 </div>
-             </div>
-             <i class="fa-solid fa-arrow-right-from-bracket"  onclick="signOut()"></i>
-         </div>
-       </div>
+                    </div>
+                    <div class="name-email-nav" onclick="viewProfile()" style="cursor: pointer;">
+                        <span id="navName">Đặng Toàn</span>
+                        <span id="navEmail">toan@gmail.com</span>
+                    </div>
+                </div>
+                <i class="fa-solid fa-arrow-right-from-bracket" onclick="signOut()"></i>
+            </div>
+        </div>
 
     </header>
     <section>
-        <p id="nav"><a href="link tranh chủ">Trang chủ /</a><span class="name-test" style="font-size: 0.9rem; font-weight: 600;">Đề thi số 1</span></p>
+        <p id="nav"><a href="link tranh chủ">Trang chủ /</a><span class="name-test"
+                style="font-size: 0.9rem; font-weight: 600;">Đề thi số 1</span></p>
         <p class="name-test">Đề thi số 1</p>
         <div id="exam-section">
             <div id="homework-section">
@@ -85,10 +89,13 @@
                     <p id="topic">Lập trình</p>
                     <p id="name-question">Có thể không sử dụng CSS vẫn layout được hay không?</p>
                     <ul id="class-answer">
-                        <li><label style="background-color: #BC2228; color: #fff; font-weight: 500;"><input type="radio" name="question1" value="Đúng" checked><span>Đúng</span></label></li>
+                        <li><label style="background-color: #BC2228; color: #fff; font-weight: 500;"><input type="radio"
+                                    name="question1" value="Đúng" checked><span>Đúng</span></label></li>
                         <li><label><input type="radio" name="question1" value="Sai"><span>Sai</span></label></li>
-                        <li><label><input type="radio" name="question1" value="Vừa vừa"><span>Vừa vừa</span></label></li>
-                        <li><label><input type="radio" name="question1" value="Cả 3 đáp án trên đều đúng"><span>Cả 3 đáp án trên đều đúng</span></label></li>
+                        <li><label><input type="radio" name="question1" value="Vừa vừa"><span>Vừa vừa</span></label>
+                        </li>
+                        <li><label><input type="radio" name="question1" value="Cả 3 đáp án trên đều đúng"><span>Cả 3 đáp
+                                    án trên đều đúng</span></label></li>
                     </ul>
                 </div>
                 <div style="display: flex; gap: 5%; justify-content: end; margin-top: 2%;">
@@ -194,7 +201,7 @@
     <script src="../js/navMenu.js"></script>
     <script src="../js/changeLanguage.js"></script>
     <script src="../js/doExam.js"></script>
-    <script src="/js/turnPage.js"></script>
+    <script src="../js/turnPage.js"></script>
 </body>
 
 </html>
