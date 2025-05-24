@@ -1,7 +1,7 @@
 // const { functions } = require("lodash");
 function searchEmail() {
     let email = document.getElementById("inputSeachEmail").value;
-    sessionStorage.setItem("emailTemp",email);
+    sessionStorage.setItem("emailTemp", email);
     let checkEmail = listAccount.find(acc => acc.email === email);
     if (checkEmail) {
         let forgotPassword = document.getElementById("forgotPassword");
@@ -131,7 +131,7 @@ function nextPage() {
     localStorage.setItem("listAccount", JSON.stringify(listAccount));
     showSuccessful("Đổi Mật KHẩu Thành Công")
     setTimeout(() => {
-        window.location.href = "../index.html";
+        window.location.href = "index.html";
     }, 500);
 }
 function generateOTP() {

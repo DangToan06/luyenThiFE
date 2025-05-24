@@ -26,7 +26,7 @@ function nextPage() {
     listAccount.push(AccountTemp);
     localStorage.setItem("listAccount", JSON.stringify(listAccount));
     // showSuccessful("Tạo Tài Khoản Thành Công")
-    window.location.href = "../index.html";
+    window.location.href = "index.html";
 }
 function setupInputBehavior() {
     var inputs = document.querySelectorAll("#input-number-OTP input");
