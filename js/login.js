@@ -200,6 +200,13 @@ btnLogin.addEventListener('click', () => {
         showWarning("Email hoặc mật khẩu sai");
     } else {
         //Lưu vị trí tài khoản hiện tại
+        if (inputNameSignInValue === "admin" && inputPasswdSignInValue === "admin") {
+            showSuccessful("Chuyển sang admin");
+            setTimeout(() => {
+                sessionStorage.setItem("page", "userPage");
+                location.href = "../page/loginadmin";
+            }, 800)
+        }
 
         listAccount.forEach(element => {
             if (element.email === inputNameSignInValue) {
@@ -211,7 +218,7 @@ btnLogin.addEventListener('click', () => {
             showSuccessful("Đăng Nhập Thành Công");
             setTimeout(() => {
                 sessionStorage.setItem("page", "userPage");
-                location.href = "../page/home.html";
+                location.href = "../luyenThiFE/page/home.html";
             }, 800)
         } else {
             showWarning("Tài Khản đã bị khóa");
